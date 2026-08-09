@@ -120,15 +120,56 @@
   width: 100%;
   text-align: center;
 }
+
+/* Each photo sits in a simple rose line frame: a padded mat with a hairline
+   border, plus a second hairline drawn just inside the photo edge. The frame
+   is on the wrapper rather than the media so the inner rule stays crisp while
+   the photo scales on hover. */
 .gallery-item__media {
   display: block;
+  position: relative;
   aspect-ratio: 1 / 1;
+  padding: 7px;
+  border: 1px solid var(--c-rose-soft);
   border-radius: var(--card-radius);
+  background: var(--c-bg);
   overflow: hidden;
-  background: var(--c-bg-alt);
+  transition:
+    border-color .4s cubic-bezier(.22, 1, .36, 1),
+    box-shadow .4s cubic-bezier(.22, 1, .36, 1);
 }
-.gallery-item__media img {
+/* Inner hairline, sitting on the photo edge */
+.gallery-item__media::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  z-index: 2;
+  border: 1px solid rgba(var(--c-rose-rgb), .35);
+  border-radius: 1px;
+  pointer-events: none;
+  transition: border-color .4s cubic-bezier(.22, 1, .36, 1);
+}
+/* Inset by the mat padding. `inset` alone is not enough: base.css sets
+   width/height 100% on .media > img, which over-constrains the absolute box
+   so the right and bottom insets get dropped and the mat only shows on two
+   sides. The extra class raises specificity enough to reset them to auto. */
+.gallery-item .gallery-item__media img {
+  position: absolute;
+  inset: 7px;
+  width: auto;
+  height: auto;
+  object-fit: cover;
   transition: transform .6s cubic-bezier(.2, .6, .3, 1), filter .3s ease;
+}
+
+.gallery-item__button:hover .gallery-item__media,
+.gallery-item__button:focus-visible .gallery-item__media {
+  border-color: var(--c-rose);
+  box-shadow: 0 12px 26px -18px rgba(160, 70, 95, .6);
+}
+.gallery-item__button:hover .gallery-item__media::after,
+.gallery-item__button:focus-visible .gallery-item__media::after {
+  border-color: rgba(var(--c-rose-rgb), .75);
 }
 .gallery-item__button:hover .gallery-item__media img { transform: scale(1.05); }
 .gallery-item__caption {

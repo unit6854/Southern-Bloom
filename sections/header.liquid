@@ -4,7 +4,7 @@
   assign split_at = section.settings.split_after | default: 2
 -%}
 
-<header class="header stripe-bg" data-header>
+<header class="header stripe-bg{% if section.settings.sticky %} header--sticky{% endif %}" data-header>
   <div class="header__inner container container--wide">
 
     {%- comment -%} Mobile: hamburger {%- endcomment -%}

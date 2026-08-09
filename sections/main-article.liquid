@@ -17,7 +17,7 @@
     <div class="article__content rte">{{ article.content }}</div>
 
     <div class="article__back">
-      <a href="{{ blog.url }}" class="btn btn--outline btn--sm">Back to {{ blog.title }}</a>
+      <a href="{{ blog.url }}" class="btn btn--outline btn--sm">{{ 'blog.back_to' | t: title: blog.title }}</a>
     </div>
   </div>
 </article>

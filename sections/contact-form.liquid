@@ -18,7 +18,7 @@
             <li class="contact__detail">
               <span class="contact__detail-icon">{% render 'icon', name: 'phone' %}</span>
               <span>
-                <span class="contact__detail-label">Call or text</span>
+                <span class="contact__detail-label">{{ section.settings.label_phone | default: 'Call or text' }}</span>
                 <a href="tel:{{ tel }}">{{ settings.contact_phone }}</a>
               </span>
             </li>
@@ -28,7 +28,7 @@
             <li class="contact__detail">
               <span class="contact__detail-icon">{% render 'icon', name: 'mail' %}</span>
               <span>
-                <span class="contact__detail-label">Email</span>
+                <span class="contact__detail-label">{{ section.settings.label_email | default: 'Email' }}</span>
                 <a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a>
               </span>
             </li>
@@ -38,7 +38,7 @@
             <li class="contact__detail">
               <span class="contact__detail-icon">{% render 'icon', name: 'pin' %}</span>
               <span>
-                <span class="contact__detail-label">Serving</span>
+                <span class="contact__detail-label">{{ section.settings.label_area | default: 'Serving' }}</span>
                 {{ settings.service_area }}
               </span>
             </li>
@@ -48,7 +48,7 @@
             <li class="contact__detail">
               <span class="contact__detail-icon">{% render 'icon', name: 'clock' %}</span>
               <span>
-                <span class="contact__detail-label">Hours</span>
+                <span class="contact__detail-label">{{ section.settings.label_hours | default: 'Hours' }}</span>
                 {{ settings.business_hours | newline_to_br }}
               </span>
             </li>
@@ -115,7 +115,7 @@
             </div>
             <div class="field">
               <label class="field__label" for="ContactQty">{{ 'contact.form.quantity' | t }}</label>
-              <input class="input" id="ContactQty" type="text" name="contact[quantity]" placeholder="e.g. 2 dozen">
+              <input class="input" id="ContactQty" type="text" name="contact[quantity]" placeholder="{{ 'contact.form.quantity_placeholder' | t }}">
             </div>
           </div>
 
@@ -140,7 +140,11 @@
   "tag": "section",
   "class": "contact-section",
   "settings": [
-    { "type": "header", "content": "Details column" },
+    { "type": "header", "content": "Contact detail labels" },
+    { "type": "text", "id": "label_phone", "label": "Phone label",   "default": "Call or text" },
+    { "type": "text", "id": "label_email", "label": "Email label",   "default": "Email" },
+    { "type": "text", "id": "label_area",  "label": "Service area label", "default": "Serving" },
+    { "type": "text", "id": "label_hours", "label": "Hours label",   "default": "Hours" },    { "type": "header", "content": "Details column" },
     {
       "type": "text",
       "id": "aside_heading",

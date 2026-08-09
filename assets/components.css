@@ -44,6 +44,16 @@
   z-index: 20;
   border-bottom: 1px solid var(--c-line);
 }
+
+/* Opt-in via the section's "Stick to top when scrolling" setting.
+   background-color is set explicitly because .stripe-bg only paints the
+   stripe image — without it the page would show through once it detaches. */
+.header--sticky {
+  position: sticky;
+  top: 0;
+  background-color: var(--c-bg);
+  box-shadow: 0 6px 20px -18px rgba(74, 50, 50, .55);
+}
 .header__inner {
   display: grid;
   grid-template-columns: auto 1fr auto;
