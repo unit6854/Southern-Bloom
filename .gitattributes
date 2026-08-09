@@ -1,0 +1,8 @@
+# Keep LF in the repo so Shopify and the CLI see consistent files
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
