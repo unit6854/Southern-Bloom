@@ -258,6 +258,11 @@
 
 /* ==========================================================================
    HERO
+   Two layouts share one DOM:
+     .hero--overlay  full-bleed photo, text sitting on top of it (default)
+     .hero--split    text column beside the photo
+   The text hugs the LEFT EDGE OF THE PAGE, not the centred container, so it
+   does not drift inward on wide screens.
    ========================================================================== */
 .hero { position: relative; overflow: hidden; }
 .hero__track { display: grid; }
@@ -275,7 +280,7 @@
 .hero__content {
   display: flex;
   align-items: center;
-  padding: 40px var(--gutter) 46px;
+  padding: 38px var(--gutter) 44px;
 }
 .hero__content-inner { width: 100%; max-width: 520px; }
 
@@ -304,8 +309,11 @@
 
 .hero__media {
   aspect-ratio: var(--hero-media-ratio, 4 / 3);
-  order: -1;               /* image sits above the text on mobile */
+  order: -1;               /* photo above the text on mobile */
 }
+.hero__media img { object-position: var(--hero-focal, center center); }
+
+.hero__scrim { display: none; }
 
 /* Slideshow controls */
 .hero__arrow {
@@ -321,12 +329,14 @@
   background: rgba(255, 255, 255, .22);
   color: #fff;
   backdrop-filter: blur(2px);
-  transition: background-color .25s ease;
+  transition: background-color .3s cubic-bezier(.22,1,.36,1), transform .3s cubic-bezier(.22,1,.36,1);
 }
 .hero__arrow:hover { background: rgba(255, 255, 255, .45); }
 .hero__arrow svg { width: 20px; height: 20px; }
 .hero__arrow--prev { left: 14px; }
+.hero__arrow--prev:hover { transform: translateY(-50%) translateX(-3px); }
 .hero__arrow--next { right: 14px; }
+.hero__arrow--next:hover { transform: translateY(-50%) translateX(3px); }
 
 .hero__dots {
   position: absolute;
@@ -341,33 +351,67 @@
   width: 7px; height: 7px;
   border-radius: 50%;
   background: var(--c-rose-soft);
-  transition: background-color .25s ease, transform .25s ease;
+  transition: background-color .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1);
 }
+.hero__dot:hover { transform: scale(1.25); }
 .hero__dot.is-active { background: var(--c-rose); transform: scale(1.18); }
 
 @media (min-width: 750px) {
   .hero__arrow { display: grid; }
 }
 
+/* ---- Desktop ---- */
 @media (min-width: 990px) {
   .hero__slide {
-    grid-template-columns: 45% 55%;
     align-items: stretch;
-    min-height: clamp(520px, 54vw, 740px);
+    min-height: clamp(420px, var(--hero-min-height, 42vw), 720px);
   }
-  /* Top-aligned and hard against the left gutter, so the headline sits close
-     under the nav and the button clears the fold on a laptop screen. */
+
+  /* Left padding is a plain gutter, NOT the centred-container offset, so the
+     headline stays near the page edge however wide the window gets. */
   .hero__content {
     align-items: flex-start;
     justify-content: flex-start;
-    padding: 42px clamp(24px, 2.6vw, 44px) 56px max(var(--gutter), calc((100vw - var(--page-width)) / 2 + var(--gutter)));
+    padding: clamp(38px, 4vw, 62px) clamp(24px, 3vw, 48px)
+             clamp(38px, 4vw, 62px) clamp(28px, 4.5vw, 84px);
   }
-  .hero__content-inner { max-width: 540px; }
-  .hero__media { order: 0; aspect-ratio: auto; height: 100%; }
-  .hero__dots { bottom: 20px; left: auto; right: 42%; transform: translateX(50%); }
-  .hero__arrow--prev { left: calc(42% + 14px); }
-}
+  .hero__content-inner { max-width: 560px; }
 
+  /* Overlay: photo fills the whole hero, text floats over the clear side. */
+  .hero--overlay .hero__slide { position: relative; display: block; }
+  .hero--overlay .hero__media {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+    order: 0;
+  }
+  .hero--overlay .hero__scrim {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to right,
+      rgba(253, 249, 248, var(--hero-scrim, 0)) 0%,
+      rgba(253, 249, 248, calc(var(--hero-scrim, 0) * 0.75)) 45%,
+      rgba(253, 249, 248, 0) 72%
+    );
+  }
+  .hero--overlay .hero__content {
+    position: relative;
+    z-index: 2;
+    width: var(--hero-text-width, 45%);
+    min-height: clamp(420px, var(--hero-min-height, 42vw), 720px);
+  }
+
+  /* Split: classic two-column. */
+  .hero--split .hero__slide {
+    grid-template-columns: var(--hero-text-width, 45%) 1fr;
+  }
+  .hero--split .hero__media { order: 0; aspect-ratio: auto; height: 100%; }
+  .hero--split .hero__dots { bottom: 20px; left: auto; right: 55%; transform: translateX(50%); }
+  .hero--split .hero__arrow--prev { left: calc(var(--hero-text-width, 45%) + 14px); }
+}
 /* ==========================================================================
    SECTION HEAD SHARED
    ========================================================================== */

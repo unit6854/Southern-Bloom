@@ -75,13 +75,39 @@ them through the matching image picker — no code change needed.
 
 | Asset | Used by | Replace via |
 |---|---|---|
-| `placeholder-hero-1.webp` | Hero slide 1 | Customize → Hero slideshow → Slide → Image |
 | `placeholder-cat-*.webp` (5) | Category tiles | Customize → Category tiles → Tile → Image |
 | `placeholder-cta-left/right.webp` | CTA banner sides | Customize → Call to action banner |
-| `about-jessica.webp` | About section | Customize → About feature → Photo |
 
-The hero and category placeholders were cut from the low-resolution design
+The category and CTA placeholders were cut from the low-resolution design
 mockup, so they are soft. They are intentionally temporary.
+
+`hero-bg.webp`, `hero-bg-mobile.webp` and `about-jessica.webp` are **real
+supplied photography**, not placeholders.
+
+---
+
+## The hero
+
+Two layouts, switchable in Customize → Hero slideshow → **Layout**:
+
+- **Full-width photo, text on top** (default) — the banner fills the section
+  edge to edge and the copy sits over the clear side of the photo. Suits a wide
+  image with empty space on one side, like the supplied `hero-bg.webp`.
+- **Text beside photo** — the original split column layout.
+
+Useful controls:
+
+| Setting | What it does |
+|---|---|
+| Height | Section height as a share of screen width. 42vw matches the supplied banner. |
+| Text column width | How much of the width the copy occupies. |
+| Keep this part of the photo in view | Focal point used when the photo gets cropped. Set to **Right** for the supplied banner so the cookie plate is never cut off. |
+| Fade behind the text | A blush scrim behind the copy. Leave at 0 for the supplied banner; raise it if a busier photo makes the text hard to read. |
+| Photo — mobile | Optional taller crop for phones. |
+
+On phones the hero always stacks: photo band on top, copy beneath. The hero
+copy aligns to the **left edge of the page**, not the centred content
+container, so it does not drift inward on wide monitors.
 
 ---
 

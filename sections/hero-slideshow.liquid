@@ -4,17 +4,34 @@
   if slides.size > 1
     assign multiple = true
   endif
+  assign layout = section.settings.layout | default: 'overlay'
 -%}
 
 <div
-  class="hero stripe-bg"
+  class="hero hero--{{ layout }} stripe-bg"
   data-hero
   data-autoplay="{{ section.settings.autoplay }}"
   data-interval="{{ section.settings.autoplay_speed | times: 1000 }}"
-  style="--hero-media-ratio: {{ section.settings.image_ratio }};"
+  style="
+    --hero-media-ratio: {{ section.settings.image_ratio }};
+    --hero-min-height: {{ section.settings.min_height }}vw;
+    --hero-text-width: {{ section.settings.text_width }}%;
+    --hero-focal: {{ section.settings.focal_point }};
+  "
 >
   <div class="hero__track" data-hero-track>
     {%- for block in slides -%}
+      {%- liquid
+        if forloop.first
+          assign img_loading = 'eager'
+          assign img_priority = 'high'
+        else
+          assign img_loading = 'lazy'
+          assign img_priority = 'auto'
+        endif
+        assign img_alt = block.settings.image_alt | default: block.settings.heading_top | default: shop.name
+        assign mobile_img = block.settings.mobile_image | default: block.settings.image
+      -%}
       <div
         class="hero__slide{% if forloop.first %} is-active{% endif %}"
         data-hero-slide
@@ -22,6 +39,41 @@
         {% unless forloop.first %}aria-hidden="true"{% endunless %}
         {{ block.shopify_attributes }}
       >
+        <div class="hero__media media">
+          {%- if block.settings.image != blank -%}
+            <picture>
+              {%- if mobile_img != blank -%}
+                <source
+                  media="(max-width: 749px)"
+                  srcset="{{ mobile_img | image_url: width: 750 }} 750w, {{ mobile_img | image_url: width: 1100 }} 1100w"
+                  sizes="100vw">
+              {%- endif -%}
+              <source
+                srcset="{{ block.settings.image | image_url: width: 1200 }} 1200w, {{ block.settings.image | image_url: width: 1800 }} 1800w, {{ block.settings.image | image_url: width: 2400 }} 2400w"
+                sizes="100vw">
+              <img
+                src="{{ block.settings.image | image_url: width: 1800 }}"
+                alt="{{ img_alt | escape }}"
+                loading="{{ img_loading }}"
+                fetchpriority="{{ img_priority }}">
+            </picture>
+          {%- else -%}
+            <picture>
+              <source media="(max-width: 749px)" srcset="{{ 'hero-bg-mobile.webp' | asset_url }}">
+              <img
+                src="{{ 'hero-bg.webp' | asset_url }}"
+                alt="{{ img_alt | escape }}"
+                width="1584" height="672"
+                loading="{{ img_loading }}"
+                fetchpriority="{{ img_priority }}">
+            </picture>
+          {%- endif -%}
+        </div>
+
+        {%- if layout == 'overlay' and section.settings.scrim > 0 -%}
+          <span class="hero__scrim" aria-hidden="true" style="--hero-scrim: {{ section.settings.scrim | divided_by: 100.0 }};"></span>
+        {%- endif -%}
+
         <div class="hero__content">
           <div class="hero__content-inner">
             {%- if block.settings.eyebrow != blank -%}
@@ -63,37 +115,6 @@
             {%- endif -%}
           </div>
         </div>
-
-        <div class="hero__media media">
-          {%- liquid
-            if forloop.first
-              assign img_loading = 'eager'
-              assign img_priority = 'high'
-            else
-              assign img_loading = 'lazy'
-              assign img_priority = 'auto'
-            endif
-            assign img_alt = block.settings.image_alt | default: block.settings.heading_top
-          -%}
-          {%- if block.settings.image != blank -%}
-            {{
-              block.settings.image
-              | image_url: width: 1800
-              | image_tag:
-                widths: '600,800,1000,1400,1800',
-                sizes: '(min-width: 990px) 58vw, 100vw',
-                alt: img_alt,
-                loading: img_loading,
-                fetchpriority: img_priority
-            }}
-          {%- else -%}
-            <img
-              src="{{ 'placeholder-hero-1.webp' | asset_url }}"
-              alt=""
-              width="960" height="1044"
-              {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}>
-          {%- endif -%}
-        </div>
       </div>
     {%- endfor -%}
   </div>
@@ -130,6 +151,62 @@
   "max_blocks": 6,
   "settings": [
     {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "overlay", "label": "Full-width photo, text on top" },
+        { "value": "split", "label": "Text beside photo" }
+      ],
+      "default": "overlay",
+      "info": "Full-width suits a wide banner with empty space on one side."
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Height (desktop)",
+      "min": 28,
+      "max": 60,
+      "step": 1,
+      "unit": "vw",
+      "default": 42,
+      "info": "Relative to screen width. 42 matches the supplied banner."
+    },
+    {
+      "type": "range",
+      "id": "text_width",
+      "label": "Text column width",
+      "min": 30,
+      "max": 70,
+      "step": 1,
+      "unit": "%",
+      "default": 45
+    },
+    {
+      "type": "select",
+      "id": "focal_point",
+      "label": "Keep this part of the photo in view",
+      "options": [
+        { "value": "left center", "label": "Left" },
+        { "value": "center center", "label": "Centre" },
+        { "value": "right center", "label": "Right" }
+      ],
+      "default": "right center",
+      "info": "Used when the photo has to be cropped to fit."
+    },
+    {
+      "type": "range",
+      "id": "scrim",
+      "label": "Fade behind the text",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 0,
+      "info": "Raise this if you use a busy photo and the text is hard to read."
+    },
+    { "type": "header", "content": "Slideshow" },
+    {
       "type": "checkbox",
       "id": "autoplay",
       "label": "Rotate slides automatically",
@@ -148,7 +225,7 @@
     {
       "type": "select",
       "id": "image_ratio",
-      "label": "Image shape (mobile)",
+      "label": "Photo shape (mobile)",
       "options": [
         { "value": "1 / 1", "label": "Square" },
         { "value": "4 / 3", "label": "Landscape" },
@@ -166,13 +243,19 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Image",
-          "info": "Landscape or square works best. Leave empty to use the placeholder."
+          "label": "Photo",
+          "info": "A wide banner with clear space on one side works best. Leave empty to use the supplied hero banner."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Photo — mobile",
+          "info": "Optional. A taller crop for phones. Falls back to the photo above."
         },
         {
           "type": "text",
           "id": "image_alt",
-          "label": "Image description (for screen readers)"
+          "label": "Photo description (for screen readers)"
         },
         { "type": "header", "content": "Text" },
         {
