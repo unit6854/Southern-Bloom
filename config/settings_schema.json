@@ -112,6 +112,13 @@
         "label": "Show soft stripe texture",
         "default": true
       },
+      {
+        "type": "checkbox",
+        "id": "enable_custom_cursor",
+        "label": "Use the dandelion mouse pointer",
+        "default": true,
+        "info": "A small pink dandelion replaces the arrow on desktop. Touch screens are unaffected, and text boxes keep a normal caret."
+      },
 
       { "type": "header", "content": "Text" },
       {

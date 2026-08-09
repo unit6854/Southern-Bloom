@@ -83,6 +83,34 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'components.css' | asset_url | stylesheet_tag }}
+
+    {%- if settings.enable_custom_cursor -%}
+      {%- comment -%}
+        Must come AFTER the stylesheets: base.css sets `cursor: pointer` on
+        buttons and .btn, and at equal specificity the later rule wins.
+        It lives in Liquid rather than base.css because the images need
+        asset_url. Hotspot (16 10) is the centre of the seed head.
+        Fine pointers only — a cursor is meaningless on touch, and this way
+        phones never download the images.
+      {%- endcomment -%}
+      <style>
+        @media (hover: hover) and (pointer: fine) {
+          body {
+            cursor: url("{{ 'cursor-bloom.png' | asset_url }}") 16 10, auto;
+          }
+          a, button, summary, label[for], [role="button"], [role="tab"],
+          .btn, .cat-tile, .gallery-item, .occasions__link, select {
+            cursor: url("{{ 'cursor-bloom-link.png' | asset_url }}") 16 10, pointer;
+          }
+          /* Text entry keeps a real caret — a flower here would be unusable. */
+          input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="reset"]),
+          textarea {
+            cursor: text;
+          }
+          [disabled], .btn[disabled], button[disabled] { cursor: not-allowed; }
+        }
+      </style>
+    {%- endif -%}
     {{ 'pages.css' | asset_url | stylesheet_tag }}
 
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>

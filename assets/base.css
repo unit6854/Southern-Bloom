@@ -396,6 +396,44 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 @media (min-width: 750px)  { .hide-desktop { display: none !important; } }
 
 /* Media wrappers keep a stable aspect ratio so nothing jumps while loading */
+/* ==========================================================================
+   SCROLLBAR
+   The two mechanisms are mutually exclusive: once `scrollbar-width` or
+   `scrollbar-color` is set to anything but auto, Chrome ignores the
+   ::-webkit-scrollbar pseudo-elements entirely (measured — the thumb stayed
+   at the native 10px instead of the 13px asked for). So the standard
+   properties are fenced off to engines that lack the pseudo-elements,
+   which is Firefox, and WebKit/Blink get the detailed version.
+   ========================================================================== */
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--c-rose) var(--c-bg-alt);
+  }
+}
+
+html::-webkit-scrollbar {
+  width: 13px;
+  height: 13px;
+}
+html::-webkit-scrollbar-track {
+  background: var(--c-bg-alt);
+  border-left: 1px solid var(--c-line);
+}
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--c-rose-soft), var(--c-rose) 45%, var(--c-rose-deep));
+  border-radius: 99px;
+  /* transparent border + background-clip keeps the thumb slimmer than the
+     track without needing a second element */
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--c-rose), var(--c-rose-deep));
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+html::-webkit-scrollbar-corner { background: var(--c-bg-alt); }
 .media {
   position: relative;
   overflow: hidden;

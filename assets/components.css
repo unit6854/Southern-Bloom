@@ -307,22 +307,22 @@
    The palette stays within readable rose values: going pastel would drop the
    headline below usable contrast on the pale linen behind it. */
 .hero--animate-heading .hero__heading-accent {
-  /* Tile roughly the width of the headline, so one full colour pass is
-     visible across the phrase rather than a single flat tone drifting. */
-  --sweep: max(340px, 30vw);
+  /* Tile a little narrower than the headline so a full light -> rose -> plum
+     pass is visible across the phrase at any moment, not one flat tone. */
+  --sweep: max(300px, 26vw);
 
-  /* The linen behind the headline samples #E3CECE at its lightest, where even
-     the existing rose sits near the contrast floor for large text. So the
-     sweep runs DOWNWARD from that rose into deeper plums — more drama, and
-     every stop is at least as legible as the static colour it replaced. */
+  /* Three clearly separated shades, as asked for: light pink, the brand rose,
+     and the deep plum. The light stop is the least legible point of the cycle
+     against the pale linen — the hero's "Fade behind the text" setting lifts
+     the backdrop if it ever reads too faint. */
   background-image: linear-gradient(
     90deg,
-    var(--c-rose-deep) 0%,     /* lightest stop = the original flat colour */
-    #8b3d56            35%,    /* deep plum */
-    #a8536e            70%,    /* mid */
-    var(--c-rose-deep) 100%    /* back to the start, so tiles join cleanly */
-  );
-  background-size: var(--sweep) 100%;
+    #f2b6c8            0%,     /* light pink */
+    var(--c-rose)      30%,    /* regular rose */
+    #9c3f5e            60%,    /* deep plum */
+    var(--c-rose)      85%,    /* back through rose ... */
+    #f2b6c8            100%    /* ... to light, so tiles join cleanly */
+  );  background-size: var(--sweep) 100%;
   background-repeat: repeat;
   background-position: 0 0;
   -webkit-background-clip: text;

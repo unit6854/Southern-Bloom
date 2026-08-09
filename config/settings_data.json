@@ -12,6 +12,7 @@
     "color_bg": "#fdf9f8",
     "color_bg_alt": "#f9f0f1",
     "enable_stripe_texture": true,
+    "enable_custom_cursor": true,
     "color_ink": "#4a3232",
     "color_text": "#5e5555",
     "color_text_soft": "#8a7b7b",
