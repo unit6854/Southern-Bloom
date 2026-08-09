@@ -1,20 +1,27 @@
 <div class="about-feature stripe-bg {% if section.settings.image_position == 'right' %}about-feature--flip{% endif %}">
   <div class="about-feature__grid">
 
-    <div class="about-feature__media media">
-      {%- if section.settings.image != blank -%}
-        {{
-          section.settings.image
-          | image_url: width: 1400
-          | image_tag:
-            widths: '500,700,900,1100,1400',
-            sizes: '(min-width: 990px) 48vw, 100vw',
-            alt: section.settings.image_alt | default: section.settings.name,
-            loading: 'lazy'
-        }}
-      {%- else -%}
-        <img src="{{ 'about-jessica.webp' | asset_url }}" alt="{{ section.settings.name }}" width="1200" height="1200" loading="lazy">
-      {%- endif -%}
+    <div class="about-feature__figure">
+      <div
+        class="about-feature__frame{% if section.settings.show_frame == false %} about-feature__frame--plain{% endif %}"
+        style="--about-ratio: {{ section.settings.image_ratio }}; --about-focal: {{ section.settings.image_focal }};"
+      >
+        <div class="about-feature__media media">
+          {%- if section.settings.image != blank -%}
+            {{
+              section.settings.image
+              | image_url: width: 1400
+              | image_tag:
+                widths: '500,700,900,1100,1400',
+                sizes: '(min-width: 990px) 46vw, 92vw',
+                alt: section.settings.image_alt | default: section.settings.name,
+                loading: 'lazy'
+            }}
+          {%- else -%}
+            <img src="{{ 'about-jessica.webp' | asset_url }}" alt="{{ section.settings.name }}" width="1200" height="1200" loading="lazy">
+          {%- endif -%}
+        </div>
+      </div>
     </div>
 
     <div class="about-feature__body">
@@ -66,6 +73,36 @@
       "id": "image",
       "label": "Photo",
       "info": "Portrait or square. Falls back to the supplied photo of Jessica."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_frame",
+      "label": "Show decorative frame",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Photo shape",
+      "options": [
+        { "value": "4 / 5", "label": "Portrait" },
+        { "value": "1 / 1", "label": "Square" },
+        { "value": "3 / 4", "label": "Tall" },
+        { "value": "4 / 3", "label": "Landscape" }
+      ],
+      "default": "4 / 5"
+    },
+    {
+      "type": "select",
+      "id": "image_focal",
+      "label": "Keep this part of the photo in view",
+      "options": [
+        { "value": "center top", "label": "Top (best for faces)" },
+        { "value": "center center", "label": "Centre" },
+        { "value": "center bottom", "label": "Bottom" }
+      ],
+      "default": "center top",
+      "info": "Used when the photo has to be cropped to fit the shape above."
     },
     { "type": "text", "id": "image_alt", "label": "Photo description (for screen readers)" },
     {

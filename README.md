@@ -75,7 +75,7 @@ them through the matching image picker — no code change needed.
 
 | Asset | Used by | Replace via |
 |---|---|---|
-| `placeholder-cat-*.webp` (4) | Category tiles 2–5 | Customize → Category tiles → Tile → Image |
+
 | `placeholder-cta-left/right.webp` | CTA banner sides | Customize → Call to action banner |
 
 The category and CTA placeholders were cut from the low-resolution design
