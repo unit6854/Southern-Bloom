@@ -72,8 +72,9 @@
   font-family: var(--font-script);
   color: var(--c-ink);
   font-size: clamp(1.65rem, 1.05rem + 3vw, 2.9rem);
-  line-height: 1.15;
+  line-height: 1.24;
   white-space: nowrap;
+  padding-inline: 0.05em;
 }
 .header__wordmark-caps {
   display: block;
@@ -133,10 +134,13 @@
   height: 1px;
   background: var(--c-rose);
   transform: scaleX(0);
-  transform-origin: center;
-  transition: transform .25s ease;
+  transform-origin: left center;
+  transition: transform .35s cubic-bezier(.22, 1, .36, 1);
 }
-.header__link:hover { color: var(--c-rose); }
+.header__link:hover,
+.header__link:focus-visible { color: var(--c-rose); }
+.header__link:hover::after,
+.header__link:focus-visible::after { transform: scaleX(1); }
 .header__link:hover::after { transform: scaleX(1); }
 .header__link.is-active { color: var(--c-rose); }
 .header__link.is-active::after { transform: scaleX(1); }
@@ -213,7 +217,8 @@
   font-family: var(--font-script);
   font-size: 1.75rem;
   color: var(--c-ink);
-  line-height: 1.1;
+  line-height: 1.3;
+  padding-inline: 0.05em;
 }
 .mobile-nav__close {
   display: grid; place-items: center;
@@ -350,9 +355,12 @@
     align-items: stretch;
     min-height: clamp(520px, 54vw, 740px);
   }
+  /* Top-aligned and hard against the left gutter, so the headline sits close
+     under the nav and the button clears the fold on a laptop screen. */
   .hero__content {
-    padding: 60px clamp(24px, 2.6vw, 44px) 60px max(var(--gutter), calc((100vw - var(--page-width)) / 2 + var(--gutter)));
-    justify-content: flex-end;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 42px clamp(24px, 2.6vw, 44px) 56px max(var(--gutter), calc((100vw - var(--page-width)) / 2 + var(--gutter)));
   }
   .hero__content-inner { max-width: 540px; }
   .hero__media { order: 0; aspect-ratio: auto; height: 100%; }
@@ -505,12 +513,21 @@ a.occasions__link:hover { transform: translateY(-3px); }
   color: var(--c-rose-deep);
   line-height: 1.3;
   box-shadow: 0 6px 16px -12px rgba(74, 50, 50, .5);
-  transition: background-color .25s ease, color .25s ease, border-color .25s ease;
+  background-image: linear-gradient(var(--c-rose), var(--c-rose));
+  background-size: 0% 100%;
+  background-position: left center;
+  background-repeat: no-repeat;
+  transition: background-size .45s cubic-bezier(.22,1,.36,1),
+              color .35s cubic-bezier(.22,1,.36,1),
+              border-color .35s cubic-bezier(.22,1,.36,1),
+              box-shadow .35s cubic-bezier(.22,1,.36,1);
 }
-.cat-tile:hover .cat-tile__label {
-  background: var(--c-rose);
+.cat-tile:hover .cat-tile__label,
+.cat-tile:focus-visible .cat-tile__label {
+  background-size: 100% 100%;
   border-color: var(--c-rose);
   color: #fff;
+  box-shadow: 0 10px 22px -14px rgba(160, 70, 95, .6);
 }
 
 .cat-tiles__cta { margin-top: clamp(24px, 3vw, 38px); text-align: center; }
@@ -533,12 +550,19 @@ a.occasions__link:hover { transform: translateY(-3px); }
 
 .about-feature__eyebrow { margin-bottom: 4px; }
 
+/* The script capital (the J in "Jessica") overhangs its box on the left and
+   drops a long tail below the baseline. The negative margin pulls the glyph's
+   visual stem back into line with the eyebrow and body copy, while the padding
+   keeps the swash from being clipped by the section's overflow. */
 .about-feature__name {
   font-family: var(--font-script);
   color: var(--c-ink);
   font-size: clamp(2.55rem, 1.75rem + 3.9vw, 4.9rem);
-  line-height: 1.05;
-  margin-bottom: 12px;
+  line-height: 1.26;
+  margin-bottom: 4px;
+  margin-left: -0.05em;
+  padding-left: 0.14em;
+  padding-bottom: 0.05em;
 }
 
 .about-feature__sub {
@@ -755,16 +779,29 @@ a.occasions__link:hover { transform: translateY(-3px); }
   align-items: center;
   gap: 0.65em;
   padding: 13px clamp(16px, 2.6vw, 26px);
-  background: var(--c-rose);
+  background-color: var(--c-rose);
+  background-image: linear-gradient(115deg, transparent 28%, rgba(255,255,255,.30) 48%, rgba(255,255,255,.10) 58%, transparent 74%);
+  background-size: 230% 100%;
+  background-position: 150% 0;
+  background-repeat: no-repeat;
   color: #fff;
   border-radius: 0 var(--btn-radius) var(--btn-radius) 0;
   font-size: clamp(0.6rem, 0.54rem + 0.26vw, 0.72rem);
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  transition: background-color .25s ease;
+  transition: background-color .4s cubic-bezier(.22,1,.36,1),
+              background-position .8s cubic-bezier(.22,1,.36,1),
+              letter-spacing .4s cubic-bezier(.22,1,.36,1);
 }
-.newsletter-form__button:hover { background: var(--c-rose-deep); }
+.newsletter-form__button:hover,
+.newsletter-form__button:focus-visible {
+  background-color: var(--c-rose-deep);
+  background-position: -50% 0;
+  letter-spacing: 0.17em;
+}
+.newsletter-form__button .btn__arrow { transition: transform .4s cubic-bezier(.22,1,.36,1); }
+.newsletter-form__button:hover .btn__arrow { transform: translateX(5px); }
 .newsletter-form__msg { margin-top: 10px; font-size: 0.84rem; }
 .newsletter-form__msg--error { color: #a33552; }
 .newsletter-form__msg--success { color: #2f6b47; }
@@ -775,10 +812,14 @@ a.occasions__link:hover { transform: translateY(-3px); }
   place-items: center;
   width: 38px; height: 38px;
   color: var(--c-rose);
-  transition: color .22s ease, transform .22s ease;
+  transition: color .3s cubic-bezier(.22,1,.36,1), transform .35s cubic-bezier(.34,1.56,.64,1);
 }
 .social-icons__link svg { width: 100%; height: 100%; }
-.social-icons__link:hover { color: var(--c-rose-deep); transform: translateY(-2px); }
+.social-icons__link:hover,
+.social-icons__link:focus-visible {
+  color: var(--c-rose-deep);
+  transform: translateY(-3px) scale(1.06);
+}
 
 .footer__columns {
   display: grid;

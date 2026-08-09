@@ -126,13 +126,18 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
    4. Typography
    -------------------------------------------------------------------------- */
 
-/* Script — logo wordmark and section titles ("Sweetest Occasions") */
+/* Script — logo wordmark and section titles ("Sweetest Occasions")
+   Calligraphic faces carry tall ascenders and deep descenders, so these need
+   a looser line box than a normal heading or the swashes get clipped and
+   collide with the line beneath. `padding-inline` gives the overhanging
+   capitals (J, S, F) somewhere to go without escaping the section. */
 .script {
   font-family: var(--font-script);
   font-weight: 400;
-  line-height: 1.05;
+  line-height: 1.32;
   color: var(--c-ink);
   letter-spacing: 0;
+  padding-inline: 0.06em;
 }
 
 /* Display serif — hero headline, CTA headline, "THE HEART BEHIND ..." */
@@ -163,8 +168,9 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   font-family: var(--font-script);
   color: var(--c-ink);
   font-size: clamp(2.3rem, 1.35rem + 4.4vw, 4.6rem);
-  line-height: 1.06;
+  line-height: 1.28;
   font-weight: 400;
+  padding-inline: 0.06em;
 }
 .section-head__title .heart {
   font-family: var(--font-body);
@@ -194,7 +200,13 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 /* --------------------------------------------------------------------------
    5. Buttons
    -------------------------------------------------------------------------- */
+/* Buttons animate with background-image rather than a pseudo-element, because
+   section labels are emitted as bare text nodes that cannot be z-indexed above
+   an overlay. A background-image paints above background-color but below text,
+   which is exactly the layer needed — and it keeps every button a single box. */
 .btn {
+  --btn-ease: cubic-bezier(.22, 1, .36, 1);
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -207,35 +219,87 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   text-transform: uppercase;
   line-height: 1;
   border-radius: var(--btn-radius);
-  transition: background-color .25s ease, color .25s ease,
-              border-color .25s ease, transform .25s ease, box-shadow .25s ease;
   cursor: pointer;
   text-align: center;
+  background-repeat: no-repeat;
+  will-change: transform;
+  transition:
+    color .4s var(--btn-ease),
+    background-color .4s var(--btn-ease),
+    background-size .55s var(--btn-ease),
+    background-position .8s var(--btn-ease),
+    border-color .4s var(--btn-ease),
+    transform .4s var(--btn-ease),
+    box-shadow .4s var(--btn-ease),
+    letter-spacing .4s var(--btn-ease);
 }
-.btn:hover { transform: translateY(-2px); }
-.btn:active { transform: translateY(0); }
+.btn:hover,
+.btn:focus-visible { transform: translateY(-2px); letter-spacing: 0.19em; }
+.btn:active { transform: translateY(0) scale(.985); transition-duration: .09s; }
 
+/* Filled: a soft light sweeps diagonally across on hover. */
 .btn--primary {
-  background: var(--c-rose);
+  background-color: var(--c-rose);
+  background-image: linear-gradient(
+    115deg,
+    transparent 28%,
+    rgba(255, 255, 255, .30) 48%,
+    rgba(255, 255, 255, .10) 58%,
+    transparent 74%
+  );
+  background-size: 230% 100%;
+  background-position: 150% 0;
   color: #fff;
   border: 1px solid var(--c-rose);
   box-shadow: 0 6px 18px -10px rgba(160, 70, 95, .55);
 }
-.btn--primary:hover { background: var(--c-rose-deep); border-color: var(--c-rose-deep); }
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background-color: var(--c-rose-deep);
+  border-color: var(--c-rose-deep);
+  background-position: -50% 0;
+  box-shadow: 0 14px 30px -14px rgba(160, 70, 95, .68);
+}
 
+/* Outlined: the rose fill wipes in from the left. */
 .btn--outline {
-  background: transparent;
+  background-color: transparent;
+  background-image: linear-gradient(var(--c-rose), var(--c-rose));
+  background-size: 0% 100%;
+  background-position: left center;
   color: var(--c-rose-deep);
   border: 1px solid var(--c-rose);
 }
-.btn--outline:hover { background: var(--c-rose); color: #fff; }
+.btn--outline:hover,
+.btn--outline:focus-visible {
+  background-size: 100% 100%;
+  color: #fff;
+  box-shadow: 0 12px 26px -14px rgba(160, 70, 95, .5);
+}
 
 .btn--ghost {
-  background: #fff;
+  background-color: #fff;
+  background-image: linear-gradient(var(--c-rose), var(--c-rose));
+  background-size: 0% 100%;
+  background-position: left center;
   color: var(--c-rose-deep);
   border: 1px solid var(--c-rose-soft);
 }
-.btn--ghost:hover { background: var(--c-rose); color: #fff; border-color: var(--c-rose); }
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  background-size: 100% 100%;
+  color: #fff;
+  border-color: var(--c-rose);
+  box-shadow: 0 12px 26px -14px rgba(160, 70, 95, .5);
+}
+
+.btn[disabled],
+.btn:disabled {
+  opacity: .5;
+  pointer-events: none;
+  transform: none;
+  box-shadow: none;
+}
 
 .btn--wide { width: 100%; }
 .btn--sm { padding: 11px 20px; letter-spacing: 0.14em; }
@@ -245,9 +309,10 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   width: 1.05em;
   height: 1.05em;
   flex: none;
-  transition: transform .25s ease;
+  transition: transform .4s cubic-bezier(.22, 1, .36, 1);
 }
-.btn:hover .btn__arrow { transform: translateX(4px); }
+.btn:hover .btn__arrow,
+.btn:focus-visible .btn__arrow { transform: translateX(5px); }
 
 @media (max-width: 479px) {
   .btn { padding: 13px 22px; }

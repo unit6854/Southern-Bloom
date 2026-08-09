@@ -21,7 +21,8 @@
   font-family: var(--font-script);
   color: var(--c-ink);
   font-size: clamp(2.6rem, 1.5rem + 5vw, 5rem);
-  line-height: 1.05;
+  line-height: 1.26;
+  padding-inline: 0.06em;
   font-weight: 400;
 }
 .page-hero__heading--serif {
@@ -67,11 +68,29 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   line-height: 1;
-  transition: background-color .22s ease, color .22s ease, border-color .22s ease;
+  background-image: linear-gradient(var(--c-rose), var(--c-rose));
+  background-size: 0% 100%;
+  background-position: left center;
+  background-repeat: no-repeat;
+  transition: background-color .3s cubic-bezier(.22,1,.36,1),
+              background-size .4s cubic-bezier(.22,1,.36,1),
+              color .3s cubic-bezier(.22,1,.36,1),
+              border-color .3s cubic-bezier(.22,1,.36,1),
+              transform .3s cubic-bezier(.22,1,.36,1),
+              box-shadow .3s cubic-bezier(.22,1,.36,1);
 }
-.gallery-filter__pill:hover { border-color: var(--c-rose); }
+.gallery-filter__pill:hover,
+.gallery-filter__pill:focus-visible {
+  background-size: 100% 100%;
+  border-color: var(--c-rose);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -12px rgba(160, 70, 95, .55);
+}
+.gallery-filter__pill:active { transform: translateY(0); }
 .gallery-filter__pill.is-active {
-  background: var(--c-rose);
+  background-color: var(--c-rose);
+  background-size: 100% 100%;
   border-color: var(--c-rose);
   color: #fff;
 }
@@ -721,7 +740,8 @@
   font-family: var(--font-script);
   color: var(--c-ink);
   font-size: clamp(2.1rem, 1.4rem + 3.2vw, 3.8rem);
-  line-height: 1.05;
+  line-height: 1.26;
+  padding-inline: 0.06em;
   margin-bottom: 16px;
 }
 .rich-text__heading--serif {
