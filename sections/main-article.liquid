@@ -1,0 +1,27 @@
+<article class="article stripe-bg section">
+  <div class="container container--narrow">
+    <header class="article__head">
+      <p class="eyebrow">{{ article.published_at | date: '%B %-d, %Y' }}</p>
+      <h1 class="article__title display">{{ article.title }}</h1>
+      {%- if article.author != blank -%}
+        <p class="article__author">{{ article.author }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- if article.image -%}
+      <div class="article__media media">
+        {{ article.image | image_url: width: 1400 | image_tag: widths: '600,900,1400', sizes: '(min-width: 820px) 780px, 92vw', alt: article.title, loading: 'eager' }}
+      </div>
+    {%- endif -%}
+
+    <div class="article__content rte">{{ article.content }}</div>
+
+    <div class="article__back">
+      <a href="{{ blog.url }}" class="btn btn--outline btn--sm">Back to {{ blog.title }}</a>
+    </div>
+  </div>
+</article>
+
+{% schema %}
+{ "name": "Article", "tag": "section", "class": "article-section", "settings": [] }
+{% endschema %}

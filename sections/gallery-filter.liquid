@@ -1,0 +1,87 @@
+{%- comment -%}
+  Category pills for the gallery. Filters every [data-gallery-item] on the page,
+  so it works across more than one "Gallery grid" section.
+{%- endcomment -%}
+
+{%- if section.blocks.size > 0 -%}
+  <div class="gallery-filter stripe-bg">
+    <div class="container">
+      <div class="gallery-filter__bar" role="group" aria-label="{{ section.settings.label | default: 'Filter gallery' }}">
+        {%- if section.settings.show_all -%}
+          <button
+            class="gallery-filter__pill is-active"
+            type="button"
+            data-gallery-filter
+            data-category="all"
+            aria-pressed="true"
+          >{{ section.settings.all_label | default: 'All' }}</button>
+        {%- endif -%}
+
+        {%- for block in section.blocks -%}
+          {%- assign handle = block.settings.category | handleize -%}
+          <button
+            class="gallery-filter__pill"
+            type="button"
+            data-gallery-filter
+            data-category="{{ handle }}"
+            aria-pressed="false"
+            {{ block.shopify_attributes }}
+          >{{ block.settings.category }}</button>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Gallery filter",
+  "tag": "section",
+  "class": "gallery-filter-section",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Each pill filters the photos below. The pill name must match the Category typed on each photo in the Gallery grid."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_all",
+      "label": "Show an 'All' pill",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "all_label",
+      "label": "'All' pill label",
+      "default": "All"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category name",
+          "default": "Birthdays"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gallery filter",
+      "blocks": [
+        { "type": "category", "settings": { "category": "Birthdays" } },
+        { "type": "category", "settings": { "category": "Baby showers" } },
+        { "type": "category", "settings": { "category": "Weddings" } },
+        { "type": "category", "settings": { "category": "Graduations" } },
+        { "type": "category", "settings": { "category": "And more" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

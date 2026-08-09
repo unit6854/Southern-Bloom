@@ -1,0 +1,84 @@
+<div class="cart-drawer" data-cart-drawer hidden>
+  <div class="cart-drawer__overlay" data-cart-close></div>
+
+  <aside class="cart-drawer__panel stripe-bg" role="dialog" aria-modal="true" aria-label="{{ 'cart.general.title' | t }}">
+    <header class="cart-drawer__head">
+      <h2 class="cart-drawer__title">
+        {{ 'cart.general.title' | t }}
+        <span class="cart-drawer__count">({{ cart.item_count }})</span>
+      </h2>
+      <button class="cart-drawer__close" type="button" aria-label="{{ 'accessibility.close' | t }}" data-cart-close>
+        {% render 'icon', name: 'close' %}
+      </button>
+    </header>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate class="cart-drawer__form">
+        <ul class="cart-drawer__items">
+          {%- for item in cart.items -%}
+            <li class="cart-line">
+              <a class="cart-line__media media" href="{{ item.url }}">
+                {%- if item.image -%}
+                  {{ item.image | image_url: width: 240 | image_tag: alt: item.title, loading: 'lazy' }}
+                {%- endif -%}
+              </a>
+
+              <div class="cart-line__info">
+                <a class="cart-line__title" href="{{ item.url }}">{{ item.product.title }}</a>
+                {%- unless item.product.has_only_default_variant -%}
+                  <p class="cart-line__variant">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                <p class="cart-line__price">{{ item.final_line_price | money }}</p>
+
+                <div class="cart-line__actions">
+                  <div class="qty" data-qty>
+                    <button type="button" data-qty-change="-1" aria-label="{{ 'products.product.decrease' | t }}">&minus;</button>
+                    <input
+                      type="number"
+                      name="updates[]"
+                      value="{{ item.quantity }}"
+                      min="0"
+                      aria-label="{{ 'cart.general.quantity' | t }}">
+                    <button type="button" data-qty-change="1" aria-label="{{ 'products.product.increase' | t }}">+</button>
+                  </div>
+                  <a class="cart-line__remove" href="{{ item.url_to_remove }}">{{ 'cart.general.remove' | t }}</a>
+                </div>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- if settings.show_cart_note -%}
+          <label class="field__label cart-drawer__note-label" for="CartDrawerNote">{{ 'cart.general.note' | t }}</label>
+          <textarea
+            id="CartDrawerNote"
+            name="note"
+            class="textarea cart-drawer__note"
+            placeholder="{{ 'cart.general.note_placeholder' | t }}">{{ cart.note }}</textarea>
+        {%- endif -%}
+
+        <footer class="cart-drawer__foot">
+          <div class="cart-drawer__subtotal">
+            <span>{{ 'cart.general.subtotal' | t }}</span>
+            <strong>{{ cart.total_price | money }}</strong>
+          </div>
+          <p class="cart-drawer__tax">{{ 'cart.general.taxes_and_shipping_at_checkout' | t }}</p>
+          <button type="submit" name="checkout" class="btn btn--primary btn--wide">
+            {{ 'cart.general.checkout' | t }}
+            {% render 'icon', name: 'arrow-right', class: 'btn__arrow' %}
+          </button>
+          <a href="{{ routes.cart_url }}" class="cart-drawer__view">{{ 'cart.general.title' | t }}</a>
+        </footer>
+      </form>
+    {%- else -%}
+      <div class="cart-drawer__empty">
+        <span class="cart-drawer__empty-icon">{% render 'icon', name: 'cookie' %}</span>
+        <p>{{ 'cart.general.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">
+          {{ 'cart.general.continue_shopping' | t }}
+          {% render 'icon', name: 'arrow-right', class: 'btn__arrow' %}
+        </a>
+      </div>
+    {%- endif -%}
+  </aside>
+</div>

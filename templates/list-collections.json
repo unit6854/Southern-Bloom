@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "Browse by",
+        "show_heart": true,
+        "heading": "Shop by Occasion",
+        "heading_style": "script",
+        "show_divider": true,
+        "text": "",
+        "overlay": 55,
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "main": {
+      "type": "main-list-collections",
+      "settings": { "columns": 3, "show_count": true }
+    }
+  },
+  "order": ["banner", "main"]
+}

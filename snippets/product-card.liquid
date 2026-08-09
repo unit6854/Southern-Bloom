@@ -1,0 +1,53 @@
+{%- comment -%}
+  Usage: {% render 'product-card', product: product, index: forloop.index %}
+{%- endcomment -%}
+
+{%- liquid
+  assign img = product.featured_media.preview_image | default: product.featured_image
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+  endif
+-%}
+
+<div class="product-card">
+  <a class="product-card__link" href="{{ product.url }}">
+    <span class="product-card__media media">
+      {%- if img -%}
+        {{
+          img
+          | image_url: width: 900
+          | image_tag:
+            widths: '260,400,560,760,900',
+            sizes: '(min-width: 990px) 24vw, (min-width: 750px) 33vw, 47vw',
+            alt: product.title,
+            loading: 'lazy',
+            class: 'product-card__img'
+        }}
+      {%- else -%}
+        <span class="media__placeholder">{% render 'icon', name: 'cookie' %}</span>
+      {%- endif -%}
+
+      {%- if on_sale -%}
+        <span class="product-card__badge">{{ 'products.product.sale' | t }}</span>
+      {%- elsif product.available == false -%}
+        <span class="product-card__badge product-card__badge--muted">{{ 'products.product.sold_out' | t }}</span>
+      {%- endif -%}
+    </span>
+
+    <span class="product-card__body">
+      <span class="product-card__title">{{ product.title }}</span>
+      <span class="product-card__price">
+        {%- if product.price_varies -%}
+          <span class="product-card__from">{{ 'products.product.from_price' | t }}</span>
+        {%- endif -%}
+        <span class="product-card__amount{% if on_sale %} product-card__amount--sale{% endif %}">
+          {{- product.price | money -}}
+        </span>
+        {%- if on_sale -%}
+          <s class="product-card__compare">{{ product.compare_at_price | money }}</s>
+        {%- endif -%}
+      </span>
+    </span>
+  </a>
+</div>

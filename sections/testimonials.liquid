@@ -1,0 +1,136 @@
+<div class="testimonials stripe-bg section section--tight">
+  <div class="container">
+
+    <div class="section-head testimonials__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">
+          {{ section.settings.eyebrow }}
+          {%- if section.settings.show_heart -%}<span class="heart">{% render 'icon', name: 'heart' %}</span>{%- endif -%}
+        </span>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="section-head__title">
+          {{ section.settings.heading }}
+          {%- if section.settings.heading_heart -%}<span class="heart">{% render 'icon', name: 'heart' %}</span>{%- endif -%}
+        </h2>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="testimonials__list" style="--testimonials-count: {{ section.blocks.size }};">
+        {%- for block in section.blocks -%}
+          <li class="testimonial" {{ block.shopify_attributes }}>
+            {%- if block.settings.rating > 0 -%}
+              <div class="testimonial__stars" role="img" aria-label="{{ block.settings.rating }} out of 5 stars">
+                {%- for i in (1..block.settings.rating) -%}
+                  {% render 'icon', name: 'star', class: 'testimonial__star' %}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.quote != blank -%}
+              <blockquote class="testimonial__quote">{{ block.settings.quote }}</blockquote>
+            {%- endif -%}
+
+            {%- if block.settings.author != blank -%}
+              <p class="testimonial__author">&ndash; {{ block.settings.author }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "testimonials-section",
+  "max_blocks": 9,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small label",
+      "default": "Kind words"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_heart",
+      "label": "Show heart after label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (script)",
+      "default": "From Happy Clients"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_heart",
+      "label": "Show heart after heading",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Stars",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "\"The cookies were absolutely beautiful and tasted even better than they looked!\""
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Name",
+          "default": "Jessica M."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "\"The cookies were absolutely beautiful and tasted even better than they looked!\"",
+            "author": "Jessica M."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "\"Southern Bloom Bakery Co. made our day so special. Can't recommend enough!\"",
+            "author": "Amy L."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "\"Every detail was perfect and you can taste the love in every bite.\"",
+            "author": "Brittany W."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

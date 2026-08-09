@@ -1,0 +1,197 @@
+<div class="contact stripe-bg section">
+  <div class="container">
+    <div class="contact__grid">
+
+      {%- comment -%} Details column {%- endcomment -%}
+      <aside class="contact__aside">
+        {%- if section.settings.aside_heading != blank -%}
+          <h2 class="contact__aside-heading display">{{ section.settings.aside_heading }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.aside_text != blank -%}
+          <div class="contact__aside-text rte">{{ section.settings.aside_text }}</div>
+        {%- endif -%}
+
+        <ul class="contact__details">
+          {%- if settings.contact_phone != blank -%}
+            {%- assign tel = settings.contact_phone | strip | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', '' -%}
+            <li class="contact__detail">
+              <span class="contact__detail-icon">{% render 'icon', name: 'phone' %}</span>
+              <span>
+                <span class="contact__detail-label">Call or text</span>
+                <a href="tel:{{ tel }}">{{ settings.contact_phone }}</a>
+              </span>
+            </li>
+          {%- endif -%}
+
+          {%- if settings.contact_email != blank -%}
+            <li class="contact__detail">
+              <span class="contact__detail-icon">{% render 'icon', name: 'mail' %}</span>
+              <span>
+                <span class="contact__detail-label">Email</span>
+                <a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a>
+              </span>
+            </li>
+          {%- endif -%}
+
+          {%- if settings.service_area != blank -%}
+            <li class="contact__detail">
+              <span class="contact__detail-icon">{% render 'icon', name: 'pin' %}</span>
+              <span>
+                <span class="contact__detail-label">Serving</span>
+                {{ settings.service_area }}
+              </span>
+            </li>
+          {%- endif -%}
+
+          {%- if settings.business_hours != blank -%}
+            <li class="contact__detail">
+              <span class="contact__detail-icon">{% render 'icon', name: 'clock' %}</span>
+              <span>
+                <span class="contact__detail-label">Hours</span>
+                {{ settings.business_hours | newline_to_br }}
+              </span>
+            </li>
+          {%- endif -%}
+        </ul>
+
+        {%- if section.settings.show_order_button -%}
+          <a href="{{ settings.order_form_url }}" class="btn btn--primary contact__order-btn">
+            {{ section.settings.order_button_label | default: 'Start a custom order' }}
+            {% render 'icon', name: 'arrow-right', class: 'btn__arrow' %}
+          </a>
+          {%- if section.settings.order_button_note != blank -%}
+            <p class="contact__order-note">{{ section.settings.order_button_note }}</p>
+          {%- endif -%}
+        {%- endif -%}
+
+        {% render 'social-icons', class: 'contact__social' %}
+      </aside>
+
+      {%- comment -%} Form column {%- endcomment -%}
+      <div class="contact__form-wrap">
+        {%- if section.settings.form_heading != blank -%}
+          <h2 class="contact__form-heading display">{{ section.settings.form_heading }}</h2>
+        {%- endif -%}
+
+        {%- form 'contact', class: 'contact-form' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="form-status form-status--success">{{ 'contact.form.success' | t }}</p>
+          {%- elsif form.errors -%}
+            <p class="form-status form-status--error">{{ 'contact.form.error' | t }}</p>
+          {%- endif -%}
+
+          <div class="contact-form__row">
+            <div class="field">
+              <label class="field__label" for="ContactName">{{ 'contact.form.name' | t }}</label>
+              <input class="input" id="ContactName" type="text" name="contact[name]" value="{{ form.name }}" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label class="field__label" for="ContactEmail">{{ 'contact.form.email' | t }}</label>
+              <input class="input" id="ContactEmail" type="email" name="contact[email]" value="{{ form.email }}" autocomplete="email" required>
+            </div>
+          </div>
+
+          <div class="contact-form__row">
+            <div class="field">
+              <label class="field__label" for="ContactPhone">{{ 'contact.form.phone' | t }}</label>
+              <input class="input" id="ContactPhone" type="tel" name="contact[phone]" autocomplete="tel">
+            </div>
+            <div class="field">
+              <label class="field__label" for="ContactDate">{{ 'contact.form.event_date' | t }}</label>
+              <input class="input" id="ContactDate" type="date" name="contact[event date]">
+            </div>
+          </div>
+
+          <div class="contact-form__row">
+            <div class="field">
+              <label class="field__label" for="ContactOccasion">{{ 'contact.form.occasion' | t }}</label>
+              <select class="select" id="ContactOccasion" name="contact[occasion]">
+                {%- assign occasions = section.settings.occasions | split: ',' -%}
+                {%- for o in occasions -%}
+                  <option value="{{ o | strip | escape }}">{{ o | strip }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
+            <div class="field">
+              <label class="field__label" for="ContactQty">{{ 'contact.form.quantity' | t }}</label>
+              <input class="input" id="ContactQty" type="text" name="contact[quantity]" placeholder="e.g. 2 dozen">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="ContactBody">{{ 'contact.form.message' | t }}</label>
+            <textarea class="textarea" id="ContactBody" name="contact[body]" required>{{ form.body }}</textarea>
+          </div>
+
+          <button type="submit" class="btn btn--primary contact-form__submit">
+            {{ section.settings.submit_label | default: 'Send enquiry' }}
+            {% render 'icon', name: 'arrow-right', class: 'btn__arrow' %}
+          </button>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "tag": "section",
+  "class": "contact-section",
+  "settings": [
+    { "type": "header", "content": "Details column" },
+    {
+      "type": "text",
+      "id": "aside_heading",
+      "label": "Heading",
+      "default": "Let's talk cookies"
+    },
+    {
+      "type": "richtext",
+      "id": "aside_text",
+      "label": "Text",
+      "default": "<p>Tell me about your celebration and I'll get back to you with ideas, pricing and availability.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_order_button",
+      "label": "Show custom order button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "order_button_label",
+      "label": "Order button label",
+      "default": "Start a custom order"
+    },
+    {
+      "type": "text",
+      "id": "order_button_note",
+      "label": "Note under the order button",
+      "default": "Opens my custom order form."
+    },
+    { "type": "header", "content": "Form" },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form heading",
+      "default": "Send a message"
+    },
+    {
+      "type": "textarea",
+      "id": "occasions",
+      "label": "Occasion options",
+      "info": "Separate each option with a comma.",
+      "default": "Birthday, Baby shower, Wedding, Graduation, Holiday, Corporate, Other"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit button label",
+      "default": "Send enquiry"
+    }
+  ],
+  "presets": [{ "name": "Contact form" }]
+}
+{% endschema %}

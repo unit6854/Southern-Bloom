@@ -1,0 +1,129 @@
+<div class="about-feature stripe-bg {% if section.settings.image_position == 'right' %}about-feature--flip{% endif %}">
+  <div class="about-feature__grid">
+
+    <div class="about-feature__media media">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1400
+          | image_tag:
+            widths: '500,700,900,1100,1400',
+            sizes: '(min-width: 990px) 48vw, 100vw',
+            alt: section.settings.image_alt | default: section.settings.name,
+            loading: 'lazy'
+        }}
+      {%- else -%}
+        <img src="{{ 'about-jessica.webp' | asset_url }}" alt="{{ section.settings.name }}" width="1200" height="1200" loading="lazy">
+      {%- endif -%}
+    </div>
+
+    <div class="about-feature__body">
+      <div class="about-feature__inner">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow about-feature__eyebrow">
+            {{ section.settings.eyebrow }}
+            {%- if section.settings.show_heart -%}<span class="heart">{% render 'icon', name: 'heart' %}</span>{%- endif -%}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.name != blank -%}
+          <p class="about-feature__name script">{{ section.settings.name }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          <h2 class="about-feature__sub display">{{ section.settings.subheading | newline_to_br }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.text != blank -%}
+          <div class="about-feature__text rte">{{ section.settings.text }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link | default: routes.root_url }}" class="btn btn--primary about-feature__button">
+            {{ section.settings.button_label }}
+            {% render 'icon', name: 'arrow-right', class: 'btn__arrow' %}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.show_dandelion -%}
+        <div class="about-feature__dandelion" aria-hidden="true">
+          {% render 'icon', name: 'dandelion' %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About feature",
+  "tag": "section",
+  "class": "about-feature-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photo",
+      "info": "Portrait or square. Falls back to the supplied photo of Jessica."
+    },
+    { "type": "text", "id": "image_alt", "label": "Photo description (for screen readers)" },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Photo position (desktop)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    { "type": "header", "content": "Text" },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small label",
+      "default": "Hi, I'm"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_heart",
+      "label": "Show heart after label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Name (script)",
+      "default": "Jessica"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading (serif caps)",
+      "default": "The heart behind\nSouthern Bloom"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Body text",
+      "default": "<p>I believe every celebration deserves something sweet and every detail matters. Each cookie is thoughtfully designed and handcrafted with love, so your moments can bloom with joy.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dandelion",
+      "label": "Show dandelion illustration",
+      "default": true
+    },
+    { "type": "header", "content": "Button" },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Label",
+      "default": "Learn more about me"
+    },
+    { "type": "url", "id": "button_link", "label": "Link" }
+  ],
+  "presets": [{ "name": "About feature" }]
+}
+{% endschema %}

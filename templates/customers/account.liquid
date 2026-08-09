@@ -1,0 +1,26 @@
+<div class="account stripe-bg section">
+  <div class="container container--narrow">
+    <h1 class="account__title script">My account</h1>
+    <p class="account__intro">Hello {{ customer.first_name | default: customer.email }}.</p>
+    <p class="account__link"><a href="{{ routes.account_addresses_url }}">Manage addresses</a> &middot; <a href="{{ routes.account_logout_url }}">Log out</a></p>
+
+    <h2 class="account__subtitle">Order history</h2>
+    {%- paginate customer.orders by 20 -%}
+      {%- if customer.orders.size > 0 -%}
+        <ul class="account__orders">
+          {%- for order in customer.orders -%}
+            <li class="account__order">
+              <a href="{{ order.customer_url }}"><strong>{{ order.name }}</strong></a>
+              <span>{{ order.created_at | date: '%B %-d, %Y' }}</span>
+              <span>{{ order.financial_status_label }}</span>
+              <span>{{ order.total_price | money }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+        {% render 'pagination', paginate: paginate %}
+      {%- else -%}
+        <p>You haven't placed any orders yet.</p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</div>

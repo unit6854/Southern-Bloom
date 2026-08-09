@@ -1,0 +1,45 @@
+{
+  "current": {
+    "wordmark_script": "Southern Bloom",
+    "wordmark_caps": "Bakery Co.",
+    "logo_image_width": 190,
+
+    "color_rose": "#d5738a",
+    "color_rose_deep": "#c05f79",
+    "color_rose_soft": "#e6b7c3",
+    "color_announcement": "#da90a1",
+    "color_sage": "#8fbca6",
+    "color_bg": "#fdf9f8",
+    "color_bg_alt": "#f9f0f1",
+    "enable_stripe_texture": true,
+    "color_ink": "#4a3232",
+    "color_text": "#5e5555",
+    "color_text_soft": "#8a7b7b",
+    "color_line": "#eddfe1",
+
+    "font_script": "Great Vibes",
+    "font_heading": "Cormorant Garamond",
+    "font_body": "Montserrat",
+    "body_size": 16,
+    "page_width": 1280,
+    "btn_radius": 2,
+    "card_radius": 2,
+
+    "contact_phone": "(615) 584-8190",
+    "contact_email": "southernbloombakeryco@gmail.com",
+    "order_form_url": "https://siftinquiry.com/order/ldyes5",
+    "service_area": "Nashville, Tennessee & surrounding areas",
+    "business_hours": "Monday – Friday: 9am – 6pm\nSaturday: 10am – 2pm\nSunday: Closed",
+
+    "social_instagram_link": "https://www.instagram.com/southernbloombakeryco/",
+    "social_facebook_link": "https://www.facebook.com/people/Southern-Bloom-Bakery-Co/61590796054985/",
+    "social_pinterest_link": "",
+    "social_tiktok_link": "",
+
+    "meta_description": "Creating beautiful custom sugar cookies that bring joy, celebrate milestones, and help life's sweetest moments bloom.",
+
+    "cart_type": "drawer",
+    "show_cart_note": true
+  },
+  "platform_customizations": {}
+}

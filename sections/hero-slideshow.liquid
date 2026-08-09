@@ -1,0 +1,238 @@
+{%- liquid
+  assign slides = section.blocks
+  assign multiple = false
+  if slides.size > 1
+    assign multiple = true
+  endif
+-%}
+
+<div
+  class="hero stripe-bg"
+  data-hero
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-interval="{{ section.settings.autoplay_speed | times: 1000 }}"
+  style="--hero-media-ratio: {{ section.settings.image_ratio }};"
+>
+  <div class="hero__track" data-hero-track>
+    {%- for block in slides -%}
+      <div
+        class="hero__slide{% if forloop.first %} is-active{% endif %}"
+        data-hero-slide
+        data-index="{{ forloop.index0 }}"
+        {% unless forloop.first %}aria-hidden="true"{% endunless %}
+        {{ block.shopify_attributes }}
+      >
+        <div class="hero__content">
+          <div class="hero__content-inner">
+            {%- if block.settings.eyebrow != blank -%}
+              <p class="eyebrow hero__eyebrow">
+                {{ block.settings.eyebrow }}
+                {%- if block.settings.show_heart -%}
+                  <span class="heart">{% render 'icon', name: 'heart' %}</span>
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+
+            {%- if block.settings.heading_top != blank or block.settings.heading_accent != blank -%}
+              <p class="hero__heading display">
+                {%- if block.settings.heading_top != blank -%}
+                  <span class="hero__heading-top">{{ block.settings.heading_top | newline_to_br }}</span>
+                {%- endif -%}
+                {%- if block.settings.heading_accent != blank -%}
+                  <span class="hero__heading-accent">{{ block.settings.heading_accent | newline_to_br }}</span>
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+
+            {%- if block.settings.show_divider -%}
+              <div class="divider-dandelion hero__divider">
+                {% render 'icon', name: 'dandelion-small' %}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.text != blank -%}
+              <div class="hero__text rte">{{ block.settings.text }}</div>
+            {%- endif -%}
+
+            {%- if block.settings.button_label != blank -%}
+              {%- assign btn_link = block.settings.button_link | default: settings.order_form_url -%}
+              <a href="{{ btn_link }}" class="btn btn--primary hero__button">
+                {{ block.settings.button_label }}
+                {% render 'icon', name: 'arrow-right', class: 'btn__arrow' %}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="hero__media media">
+          {%- liquid
+            if forloop.first
+              assign img_loading = 'eager'
+              assign img_priority = 'high'
+            else
+              assign img_loading = 'lazy'
+              assign img_priority = 'auto'
+            endif
+            assign img_alt = block.settings.image_alt | default: block.settings.heading_top
+          -%}
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 1800
+              | image_tag:
+                widths: '600,800,1000,1400,1800',
+                sizes: '(min-width: 990px) 58vw, 100vw',
+                alt: img_alt,
+                loading: img_loading,
+                fetchpriority: img_priority
+            }}
+          {%- else -%}
+            <img
+              src="{{ 'placeholder-hero-1.webp' | asset_url }}"
+              alt=""
+              width="960" height="1044"
+              {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if multiple -%}
+    <button class="hero__arrow hero__arrow--prev" type="button" data-hero-prev aria-label="{{ 'accessibility.previous_slide' | t }}">
+      {% render 'icon', name: 'chevron-left' %}
+    </button>
+    <button class="hero__arrow hero__arrow--next" type="button" data-hero-next aria-label="{{ 'accessibility.next_slide' | t }}">
+      {% render 'icon', name: 'chevron-right' %}
+    </button>
+
+    <div class="hero__dots" role="tablist" aria-label="{{ 'accessibility.slideshow' | t }}">
+      {%- for block in slides -%}
+        <button
+          class="hero__dot{% if forloop.first %} is-active{% endif %}"
+          type="button"
+          role="tab"
+          data-hero-dot
+          data-index="{{ forloop.index0 }}"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          aria-label="{{ 'accessibility.go_to_slide' | t: index: forloop.index }}"
+        ></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Hero slideshow",
+  "tag": "section",
+  "class": "hero-section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Rotate slides automatically",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Seconds per slide",
+      "min": 4,
+      "max": 14,
+      "step": 1,
+      "unit": "s",
+      "default": 7
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image shape (mobile)",
+      "options": [
+        { "value": "1 / 1", "label": "Square" },
+        { "value": "4 / 3", "label": "Landscape" },
+        { "value": "4 / 5", "label": "Portrait" },
+        { "value": "3 / 4", "label": "Tall" }
+      ],
+      "default": "4 / 3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Landscape or square works best. Leave empty to use the placeholder."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image description (for screen readers)"
+        },
+        { "type": "header", "content": "Text" },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Small label above heading",
+          "default": "Sweet moments"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_heart",
+          "label": "Show heart after label",
+          "default": true
+        },
+        {
+          "type": "textarea",
+          "id": "heading_top",
+          "label": "Heading — dark line(s)",
+          "default": "Handcrafted"
+        },
+        {
+          "type": "textarea",
+          "id": "heading_accent",
+          "label": "Heading — rose line(s)",
+          "info": "Press Enter for a new line.",
+          "default": "with Love,\nMade to Bloom"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_divider",
+          "label": "Show dandelion divider",
+          "default": true
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Body text",
+          "default": "<p>Custom sugar cookies for life's sweetest celebrations.</p>"
+        },
+        { "type": "header", "content": "Button" },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Label",
+          "default": "Order custom cookies"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Link",
+          "info": "Leave empty to use the custom order form URL from Theme settings."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero slideshow",
+      "blocks": [{ "type": "slide" }]
+    }
+  ]
+}
+{% endschema %}

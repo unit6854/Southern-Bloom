@@ -1,0 +1,342 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Southern Bloom",
+    "theme_version": "1.0.0",
+    "theme_author": "Southern Bloom Bakery Co.",
+    "theme_documentation_url": "https://github.com/unit6854/Southern-Bloom",
+    "theme_support_url": "https://github.com/unit6854/Southern-Bloom/issues"
+  },
+
+  {
+    "name": "Logo & branding",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "The header uses a text wordmark by default (matching the design). Upload a logo image below if you would rather show artwork."
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_image",
+        "label": "Header logo image",
+        "info": "Optional. Leave empty to use the script wordmark below."
+      },
+      {
+        "type": "range",
+        "id": "logo_image_width",
+        "label": "Header logo width",
+        "min": 80,
+        "max": 340,
+        "step": 5,
+        "unit": "px",
+        "default": 190
+      },
+      {
+        "type": "text",
+        "id": "wordmark_script",
+        "label": "Wordmark — script line",
+        "default": "Southern Bloom"
+      },
+      {
+        "type": "text",
+        "id": "wordmark_caps",
+        "label": "Wordmark — small caps line",
+        "default": "Bakery Co."
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_mark",
+        "label": "Circular logo mark (footer)",
+        "info": "The round badge logo. Shown in the footer."
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "32 x 32 px recommended."
+      }
+    ]
+  },
+
+  {
+    "name": "Colours",
+    "settings": [
+      { "type": "header", "content": "Brand" },
+      {
+        "type": "color",
+        "id": "color_rose",
+        "label": "Rose (buttons, accents)",
+        "default": "#d5738a"
+      },
+      {
+        "type": "color",
+        "id": "color_rose_deep",
+        "label": "Rose — deep (hover, serif headings)",
+        "default": "#c05f79"
+      },
+      {
+        "type": "color",
+        "id": "color_rose_soft",
+        "label": "Rose — soft (hairlines, icons)",
+        "default": "#e6b7c3"
+      },
+      {
+        "type": "color",
+        "id": "color_announcement",
+        "label": "Announcement bar",
+        "default": "#da90a1"
+      },
+      {
+        "type": "color",
+        "id": "color_sage",
+        "label": "Sage (secondary accent)",
+        "default": "#8fbca6"
+      },
+
+      { "type": "header", "content": "Backgrounds" },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Page background",
+        "default": "#fdf9f8"
+      },
+      {
+        "type": "color",
+        "id": "color_bg_alt",
+        "label": "Alternate background",
+        "default": "#f9f0f1"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_stripe_texture",
+        "label": "Show soft stripe texture",
+        "default": true
+      },
+
+      { "type": "header", "content": "Text" },
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Headings",
+        "default": "#4a3232"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Body text",
+        "default": "#5e5555"
+      },
+      {
+        "type": "color",
+        "id": "color_text_soft",
+        "label": "Muted text",
+        "default": "#8a7b7b"
+      },
+      {
+        "type": "color",
+        "id": "color_line",
+        "label": "Borders & rules",
+        "default": "#eddfe1"
+      }
+    ]
+  },
+
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Fonts load from Google Fonts. The defaults match the approved design."
+      },
+      {
+        "type": "select",
+        "id": "font_script",
+        "label": "Script font",
+        "options": [
+          { "value": "Great Vibes", "label": "Great Vibes (design default)" },
+          { "value": "Parisienne", "label": "Parisienne" },
+          { "value": "Pinyon Script", "label": "Pinyon Script" },
+          { "value": "Alex Brush", "label": "Alex Brush" },
+          { "value": "Dancing Script", "label": "Dancing Script" }
+        ],
+        "default": "Great Vibes"
+      },
+      {
+        "type": "select",
+        "id": "font_heading",
+        "label": "Serif heading font",
+        "options": [
+          { "value": "Cormorant Garamond", "label": "Cormorant Garamond (design default)" },
+          { "value": "EB Garamond", "label": "EB Garamond" },
+          { "value": "Playfair Display", "label": "Playfair Display" },
+          { "value": "Lora", "label": "Lora" }
+        ],
+        "default": "Cormorant Garamond"
+      },
+      {
+        "type": "select",
+        "id": "font_body",
+        "label": "Body / UI font",
+        "options": [
+          { "value": "Montserrat", "label": "Montserrat (design default)" },
+          { "value": "Jost", "label": "Jost" },
+          { "value": "Nunito Sans", "label": "Nunito Sans" },
+          { "value": "Poppins", "label": "Poppins" },
+          { "value": "Lato", "label": "Lato" }
+        ],
+        "default": "Montserrat"
+      },
+      {
+        "type": "range",
+        "id": "body_size",
+        "label": "Body text size",
+        "min": 14,
+        "max": 19,
+        "step": 1,
+        "unit": "px",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Maximum page width",
+        "min": 1100,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1280
+      },
+      {
+        "type": "range",
+        "id": "btn_radius",
+        "label": "Button & input corner radius",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "default": 2
+      },
+      {
+        "type": "range",
+        "id": "card_radius",
+        "label": "Card & image corner radius",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "default": 2
+      }
+    ]
+  },
+
+  {
+    "name": "Contact details",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Used by the contact page, footer and anywhere the shop's details appear."
+      },
+      {
+        "type": "text",
+        "id": "contact_phone",
+        "label": "Phone number",
+        "default": "(615) 584-8190"
+      },
+      {
+        "type": "text",
+        "id": "contact_email",
+        "label": "Email address",
+        "default": "southernbloombakeryco@gmail.com"
+      },
+      {
+        "type": "text",
+        "id": "order_form_url",
+        "label": "Custom order form URL",
+        "info": "Your Sift inquiry link. Used by the 'Order custom cookies' buttons.",
+        "default": "https://siftinquiry.com/order/ldyes5"
+      },
+      {
+        "type": "text",
+        "id": "service_area",
+        "label": "Service area",
+        "default": "Nashville, Tennessee & surrounding areas"
+      },
+      {
+        "type": "textarea",
+        "id": "business_hours",
+        "label": "Order & response hours",
+        "default": "Monday – Friday: 9am – 6pm\nSaturday: 10am – 2pm\nSunday: Closed"
+      }
+    ]
+  },
+
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "default": "https://www.instagram.com/southernbloombakeryco/"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "default": "https://www.facebook.com/people/Southern-Bloom-Bakery-Co/61590796054985/"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok_link",
+        "label": "TikTok",
+        "default": ""
+      }
+    ]
+  },
+
+  {
+    "name": "Social sharing image",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Default sharing image",
+        "info": "1200 x 630 px recommended. Shown when your links are shared."
+      },
+      {
+        "type": "textarea",
+        "id": "meta_description",
+        "label": "Default meta description",
+        "default": "Creating beautiful custom sugar cookies that bring joy, celebrate milestones, and help life's sweetest moments bloom."
+      }
+    ]
+  },
+
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart behaviour",
+        "options": [
+          { "value": "page", "label": "Go to cart page" },
+          { "value": "drawer", "label": "Open slide-out cart" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_cart_note",
+        "label": "Enable order notes",
+        "default": true
+      }
+    ]
+  }
+]

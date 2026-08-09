@@ -1,0 +1,18 @@
+<div class="account stripe-bg section">
+  <div class="container container--narrow">
+    <h1 class="account__title script">Activate account</h1>
+    {%- form 'activate_customer_password' -%}
+      {{ form.errors | default_errors }}
+      <div class="field">
+        <label class="field__label" for="ActPassword">Password</label>
+        <input class="input" id="ActPassword" type="password" name="customer[password]" autocomplete="new-password" required>
+      </div>
+      <div class="field">
+        <label class="field__label" for="ActConfirm">Confirm password</label>
+        <input class="input" id="ActConfirm" type="password" name="customer[password_confirmation]" autocomplete="new-password" required>
+      </div>
+      <button type="submit" class="btn btn--primary btn--wide" style="margin-top:20px;">Activate account</button>
+      <button type="submit" class="btn btn--outline btn--wide" name="decline" style="margin-top:12px;">Decline invitation</button>
+    {%- endform -%}
+  </div>
+</div>

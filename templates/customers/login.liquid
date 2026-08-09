@@ -1,0 +1,36 @@
+<div class="account stripe-bg section">
+  <div class="container container--narrow">
+    <h1 class="account__title script">Log in</h1>
+    {%- form 'customer_login' -%}
+      {{ form.errors | default_errors }}
+      <div class="field">
+        <label class="field__label" for="CustomerEmail">Email</label>
+        <input class="input" id="CustomerEmail" type="email" name="customer[email]" autocomplete="email" required>
+      </div>
+      {%- if form.password_needed -%}
+        <div class="field">
+          <label class="field__label" for="CustomerPassword">Password</label>
+          <input class="input" id="CustomerPassword" type="password" name="customer[password]" autocomplete="current-password">
+        </div>
+        <p class="account__link"><a href="#recover">Forgot your password?</a></p>
+      {%- endif -%}
+      <button type="submit" class="btn btn--primary btn--wide" style="margin-top:20px;">Log in</button>
+    {%- endform -%}
+
+    <p class="account__link">New here? <a href="{{ routes.account_register_url }}">Create an account</a></p>
+
+    <div id="recover" class="account__recover">
+      {%- form 'recover_customer_password' -%}
+        {{ form.errors | default_errors }}
+        {%- if form.posted_successfully? -%}
+          <p class="form-status form-status--success">We've sent you an email with a link to update your password.</p>
+        {%- endif -%}
+        <div class="field">
+          <label class="field__label" for="RecoverEmail">Email</label>
+          <input class="input" id="RecoverEmail" type="email" name="email" autocomplete="email" required>
+        </div>
+        <button type="submit" class="btn btn--outline btn--wide" style="margin-top:16px;">Send reset link</button>
+      {%- endform -%}
+    </div>
+  </div>
+</div>

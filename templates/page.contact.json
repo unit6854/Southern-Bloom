@@ -1,0 +1,46 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "Get in touch",
+        "show_heart": true,
+        "heading": "Say Hello",
+        "heading_style": "script",
+        "show_divider": true,
+        "text": "<p>Custom orders, questions, or just to say hi — I'd love to hear from you.</p>",
+        "overlay": 55,
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+
+    "contact": {
+      "type": "contact-form",
+      "settings": {
+        "aside_heading": "Let's talk cookies",
+        "aside_text": "<p>Tell me about your celebration and I'll get back to you with ideas, pricing and availability.</p>",
+        "show_order_button": true,
+        "order_button_label": "Start a custom order",
+        "order_button_note": "Opens my custom order form.",
+        "form_heading": "Send a message",
+        "occasions": "Birthday, Baby shower, Wedding, Graduation, Holiday, Corporate, Other",
+        "submit_label": "Send enquiry"
+      }
+    },
+
+    "cta": {
+      "type": "cta-banner",
+      "settings": {
+        "eyebrow": "Planning ahead?",
+        "show_heart": true,
+        "heading": "Custom sets book up quickly — reach out early.",
+        "text": "",
+        "button_label": "Start your order",
+        "button_link": "",
+        "hide_deco_mobile": false
+      }
+    }
+  },
+  "order": ["banner", "contact", "cta"]
+}

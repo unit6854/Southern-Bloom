@@ -1,0 +1,139 @@
+<div class="occasions {% if section.settings.bg == 'alt' %}stripe-bg stripe-bg--alt{% else %}stripe-bg{% endif %} section section--tight">
+  <div class="container">
+
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
+      <div class="section-head occasions__head">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="eyebrow">
+            {{ section.settings.eyebrow }}
+            {%- if section.settings.show_heart -%}<span class="heart">{% render 'icon', name: 'heart' %}</span>{%- endif -%}
+          </span>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="section-head__title">
+            {%- if section.settings.heading_hearts -%}<span class="heart">{% render 'icon', name: 'heart' %}</span>{%- endif -%}
+            {{ section.settings.heading }}
+            {%- if section.settings.heading_hearts -%}<span class="heart">{% render 'icon', name: 'heart' %}</span>{%- endif -%}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          <div class="section-head__sub rte">{{ section.settings.subheading }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="occasions__list" style="--occasions-count: {{ section.blocks.size }};">
+        {%- for block in section.blocks -%}
+          <li class="occasions__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.link != blank -%}<a class="occasions__link" href="{{ block.settings.link }}">{%- else -%}<div class="occasions__link">{%- endif -%}
+              <span class="occasions__icon">
+                {% render 'icon', name: block.settings.icon, class: 'occasion-icon' %}
+              </span>
+              <span class="occasions__label">{{ block.settings.label }}</span>
+            {%- if block.settings.link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Occasion icons",
+  "tag": "section",
+  "class": "occasions-section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small label",
+      "default": "Made for life's"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_heart",
+      "label": "Show heart after label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (script)",
+      "default": "Sweetest Occasions"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_hearts",
+      "label": "Show hearts either side of heading",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "select",
+      "id": "bg",
+      "label": "Background",
+      "options": [
+        { "value": "default", "label": "Page background" },
+        { "value": "alt", "label": "Alternate background" }
+      ],
+      "default": "default"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "occasion",
+      "name": "Occasion",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "cake", "label": "Tiered cake" },
+            { "value": "onesie", "label": "Baby onesie" },
+            { "value": "rings", "label": "Wedding rings" },
+            { "value": "graduation", "label": "Graduation cap" },
+            { "value": "party-hat", "label": "Party hat" },
+            { "value": "cookie", "label": "Cookie" },
+            { "value": "heart-line", "label": "Heart" },
+            { "value": "dandelion-small", "label": "Dandelion" }
+          ],
+          "default": "cake"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Birthdays"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Occasion icons",
+      "blocks": [
+        { "type": "occasion", "settings": { "icon": "cake", "label": "Birthdays" } },
+        { "type": "occasion", "settings": { "icon": "onesie", "label": "Baby showers" } },
+        { "type": "occasion", "settings": { "icon": "rings", "label": "Weddings" } },
+        { "type": "occasion", "settings": { "icon": "graduation", "label": "Graduations" } },
+        { "type": "occasion", "settings": { "icon": "party-hat", "label": "And more!" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

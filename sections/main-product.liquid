@@ -1,0 +1,200 @@
+<div class="product stripe-bg section">
+  <div class="container container--wide">
+    <div class="product__grid" data-product-media>
+
+      {%- comment -%} Media {%- endcomment -%}
+      <div class="product__media-col">
+        <div class="product__main media">
+          {%- if product.featured_media -%}
+            <img
+              src="{{ product.featured_media.preview_image | image_url: width: 1200 }}"
+              alt="{{ product.featured_media.alt | default: product.title | escape }}"
+              width="1200" height="1500"
+              loading="eager"
+              data-product-main-img>
+          {%- else -%}
+            <span class="media__placeholder">{% render 'icon', name: 'cookie' %}</span>
+          {%- endif -%}
+        </div>
+
+        {%- if product.media.size > 1 -%}
+          <ul class="product__thumbs">
+            {%- for media in product.media -%}
+              <li>
+                <button
+                  class="product__thumb{% if forloop.first %} is-active{% endif %}"
+                  type="button"
+                  data-product-thumb
+                  data-full="{{ media.preview_image | image_url: width: 1200 }}"
+                  data-alt="{{ media.alt | escape }}"
+                  aria-label="{{ media.alt | default: product.title | escape }}">
+                  <img src="{{ media.preview_image | image_url: width: 220 }}" alt="" width="110" height="110" loading="lazy">
+                </button>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Details {%- endcomment -%}
+      <div class="product__info">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+
+            {%- when 'vendor' -%}
+              {%- if product.vendor != blank -%}
+                <p class="eyebrow product__vendor" {{ block.shopify_attributes }}>{{ product.vendor }}</p>
+              {%- endif -%}
+
+            {%- when 'title' -%}
+              <h1 class="product__title display" {{ block.shopify_attributes }}>{{ product.title }}</h1>
+
+            {%- when 'price' -%}
+              <div class="product__price" {{ block.shopify_attributes }}>
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="product__price-now product__price-now--sale">{{ product.price | money }}</span>
+                  <s class="product__price-was">{{ product.compare_at_price | money }}</s>
+                {%- else -%}
+                  <span class="product__price-now">{{ product.price | money }}</span>
+                {%- endif -%}
+              </div>
+
+            {%- when 'divider' -%}
+              <div class="divider-dandelion product__divider" {{ block.shopify_attributes }}>
+                {% render 'icon', name: 'dandelion-small' %}
+              </div>
+
+            {%- when 'description' -%}
+              <div class="product__description rte" {{ block.shopify_attributes }}>{{ product.description }}</div>
+
+            {%- when 'text' -%}
+              <div class="product__custom-text rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+
+            {%- when 'buy_buttons' -%}
+              <div class="product__buy" {{ block.shopify_attributes }}>
+                {%- form 'product', product, class: 'product-form' -%}
+                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+                  {%- unless product.has_only_default_variant -%}
+                    <div class="product__options">
+                      {%- for option in product.options_with_values -%}
+                        <div class="field">
+                          <label class="field__label" for="Option-{{ forloop.index }}">{{ option.name }}</label>
+                          <select class="select" id="Option-{{ forloop.index }}" name="options[{{ option.name | escape }}]">
+                            {%- for value in option.values -%}
+                              <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                            {%- endfor -%}
+                          </select>
+                        </div>
+                      {%- endfor -%}
+                    </div>
+                  {%- endunless -%}
+
+                  <div class="product__qty-row">
+                    <div class="qty" data-qty>
+                      <button type="button" data-qty-change="-1" aria-label="{{ 'products.product.decrease' | t }}">&minus;</button>
+                      <label class="visually-hidden" for="Quantity">{{ 'products.product.quantity' | t }}</label>
+                      <input id="Quantity" type="number" name="quantity" value="1" min="1">
+                      <button type="button" data-qty-change="1" aria-label="{{ 'products.product.increase' | t }}">+</button>
+                    </div>
+
+                    <button
+                      type="submit"
+                      name="add"
+                      class="btn btn--primary product__add"
+                      {% unless product.available %}disabled{% endunless %}>
+                      {%- if product.available -%}
+                        {{ 'products.product.add_to_cart' | t }}
+                        {% render 'icon', name: 'arrow-right', class: 'btn__arrow' %}
+                      {%- else -%}
+                        {{ 'products.product.sold_out' | t }}
+                      {%- endif -%}
+                    </button>
+                  </div>
+                {%- endform -%}
+              </div>
+
+            {%- when 'custom_order' -%}
+              <div class="product__custom" {{ block.shopify_attributes }}>
+                <p>{{ block.settings.text | default: 'Looking for something custom? Start a custom order instead.' }}</p>
+                <a href="{{ block.settings.link | default: settings.order_form_url }}" class="btn btn--outline btn--sm">
+                  {{ block.settings.label | default: 'Request a custom order' }}
+                  {% render 'icon', name: 'arrow-right', class: 'btn__arrow' %}
+                </a>
+              </div>
+
+            {%- when 'contact' -%}
+              <ul class="product__contact" {{ block.shopify_attributes }}>
+                {%- if settings.contact_phone != blank -%}
+                  {%- assign tel = settings.contact_phone | strip | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', '' -%}
+                  <li>{% render 'icon', name: 'phone' %}<a href="tel:{{ tel }}">{{ settings.contact_phone }}</a></li>
+                {%- endif -%}
+                {%- if settings.contact_email != blank -%}
+                  <li>{% render 'icon', name: 'mail' %}<a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a></li>
+                {%- endif -%}
+              </ul>
+
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product details",
+  "tag": "section",
+  "class": "product-section",
+  "blocks": [
+    { "type": "vendor", "name": "Vendor", "limit": 1 },
+    { "type": "title", "name": "Title", "limit": 1 },
+    { "type": "price", "name": "Price", "limit": 1 },
+    { "type": "divider", "name": "Dandelion divider" },
+    { "type": "description", "name": "Description", "limit": 1 },
+    { "type": "buy_buttons", "name": "Quantity & add to cart", "limit": 1 },
+    {
+      "type": "text",
+      "name": "Custom text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Please allow two weeks notice for custom orders.</p>"
+        }
+      ]
+    },
+    {
+      "type": "custom_order",
+      "name": "Custom order prompt",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Looking for something custom? Start a custom order instead."
+        },
+        { "type": "text", "id": "label", "label": "Button label", "default": "Request a custom order" },
+        { "type": "url", "id": "link", "label": "Button link" }
+      ]
+    },
+    { "type": "contact", "name": "Contact details", "limit": 1 }
+  ],
+  "presets": [
+    {
+      "name": "Product details",
+      "blocks": [
+        { "type": "vendor" },
+        { "type": "title" },
+        { "type": "price" },
+        { "type": "divider" },
+        { "type": "description" },
+        { "type": "buy_buttons" },
+        { "type": "custom_order" }
+      ]
+    }
+  ]
+}
+{% endschema %}

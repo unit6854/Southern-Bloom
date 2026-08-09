@@ -1,0 +1,120 @@
+{%- liquid
+  assign heading = section.settings.heading | default: page.title | default: collection.title
+-%}
+
+<div class="page-hero stripe-bg{% if section.settings.image != blank %} page-hero--image{% endif %}">
+  {%- if section.settings.image != blank -%}
+    <div class="page-hero__bg media" aria-hidden="true">
+      {{
+        section.settings.image
+        | image_url: width: 2000
+        | image_tag: widths: '800,1200,1600,2000', sizes: '100vw', alt: '', loading: 'eager'
+      }}
+      <span class="page-hero__scrim" style="opacity: {{ section.settings.overlay | divided_by: 100.0 }};"></span>
+    </div>
+  {%- endif -%}
+
+  <div class="container page-hero__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="eyebrow page-hero__eyebrow">
+        {{ section.settings.eyebrow }}
+        {%- if section.settings.show_heart -%}<span class="heart">{% render 'icon', name: 'heart' %}</span>{%- endif -%}
+      </p>
+    {%- endif -%}
+
+    {%- if heading != blank -%}
+      {%- if section.settings.heading_style == 'script' -%}
+        <h1 class="page-hero__heading script">{{ heading }}</h1>
+      {%- else -%}
+        <h1 class="page-hero__heading page-hero__heading--serif display">{{ heading }}</h1>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if section.settings.show_divider -%}
+      <div class="divider-dandelion divider-dandelion--center page-hero__divider">
+        {% render 'icon', name: 'dandelion-small' %}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.text != blank -%}
+      <div class="page-hero__text rte">{{ section.settings.text }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      {%- assign ph_link = section.settings.button_link | default: settings.order_form_url -%}
+      <a href="{{ ph_link }}" class="btn btn--primary page-hero__button">
+        {{ section.settings.button_label }}
+        {% render 'icon', name: 'arrow-right', class: 'btn__arrow' %}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Page banner",
+  "tag": "section",
+  "class": "page-hero-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_heart",
+      "label": "Show heart after label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Leave empty to use the page title."
+    },
+    {
+      "type": "select",
+      "id": "heading_style",
+      "label": "Heading style",
+      "options": [
+        { "value": "script", "label": "Script" },
+        { "value": "serif", "label": "Serif" }
+      ],
+      "default": "script"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show dandelion divider",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    { "type": "header", "content": "Background image" },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Optional. Leave empty for the plain blush background."
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "label": "Image fade",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 55
+    },
+    { "type": "header", "content": "Button" },
+    { "type": "text", "id": "button_label", "label": "Label" },
+    { "type": "url", "id": "button_link", "label": "Link" }
+  ],
+  "presets": [{ "name": "Page banner" }]
+}
+{% endschema %}

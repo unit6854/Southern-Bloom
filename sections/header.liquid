@@ -1,0 +1,190 @@
+{%- liquid
+  assign menu = section.settings.menu
+  assign links = linklists[menu].links
+  assign split_at = section.settings.split_after | default: 2
+-%}
+
+<header class="header stripe-bg" data-header>
+  <div class="header__inner container container--wide">
+
+    {%- comment -%} Mobile: hamburger {%- endcomment -%}
+    <button
+      class="header__burger hide-desktop"
+      type="button"
+      aria-label="{{ 'accessibility.open_menu' | t }}"
+      aria-expanded="false"
+      aria-controls="MobileNav"
+      data-menu-toggle
+    >
+      {% render 'icon', name: 'menu', class: 'header__burger-icon' %}
+    </button>
+
+    {%- comment -%} Desktop: first half of the menu {%- endcomment -%}
+    <nav class="header__nav header__nav--left hide-mobile" aria-label="{{ 'accessibility.primary_nav' | t }}">
+      <ul class="header__nav-list">
+        {%- for link in links limit: split_at -%}
+          <li>
+            <a
+              href="{{ link.url }}"
+              class="header__link{% if link.active or link.child_active %} is-active{% endif %}"
+            >{{ link.title }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    {%- comment -%} Logo / wordmark {%- endcomment -%}
+    <div class="header__logo">
+      {%- capture logo_inner -%}
+        {%- if settings.logo_image != blank -%}
+          {{
+            settings.logo_image
+            | image_url: width: 800
+            | image_tag:
+              class: 'header__logo-img',
+              widths: '180,280,400,560,800',
+              sizes: '(min-width: 750px) 260px, 190px',
+              alt: shop.name,
+              loading: 'eager'
+          }}
+        {%- else -%}
+          <span class="header__wordmark">
+            <span class="header__wordmark-script script">{{ settings.wordmark_script }}</span>
+            <span class="header__wordmark-caps">{{ settings.wordmark_caps }}</span>
+          </span>
+        {%- endif -%}
+      {%- endcapture -%}
+
+      {%- if request.page_type == 'index' -%}
+        <h1 class="header__logo-heading">
+          <a href="{{ routes.root_url }}" class="header__logo-link">{{ logo_inner }}</a>
+        </h1>
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="header__logo-link">{{ logo_inner }}</a>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Desktop: second half of the menu + cart {%- endcomment -%}
+    <div class="header__right">
+      <nav class="header__nav header__nav--right hide-mobile" aria-label="{{ 'accessibility.secondary_nav' | t }}">
+        <ul class="header__nav-list">
+          {%- for link in links offset: split_at -%}
+            <li>
+              <a
+                href="{{ link.url }}"
+                class="header__link{% if link.active or link.child_active %} is-active{% endif %}"
+              >{{ link.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+
+      <a
+        href="{{ routes.cart_url }}"
+        class="header__cart"
+        aria-label="{{ 'accessibility.cart' | t }}"
+        {% if settings.cart_type == 'drawer' %}data-cart-open{% endif %}
+      >
+        {% render 'icon', name: 'bag', class: 'header__cart-icon' %}
+        <span class="header__cart-count{% if cart.item_count == 0 %} is-empty{% endif %}" data-cart-count>
+          {{ cart.item_count }}
+        </span>
+      </a>
+    </div>
+  </div>
+
+  {%- comment -%} Mobile drawer {%- endcomment -%}
+  <div class="mobile-nav" id="MobileNav" data-mobile-nav hidden>
+    <div class="mobile-nav__overlay" data-menu-close></div>
+    <div class="mobile-nav__panel stripe-bg" role="dialog" aria-modal="true" aria-label="{{ 'accessibility.primary_nav' | t }}">
+      <div class="mobile-nav__head">
+        <span class="mobile-nav__brand script">{{ settings.wordmark_script }}</span>
+        <button class="mobile-nav__close" type="button" aria-label="{{ 'accessibility.close' | t }}" data-menu-close>
+          {% render 'icon', name: 'close' %}
+        </button>
+      </div>
+
+      <ul class="mobile-nav__list">
+        {%- for link in links -%}
+          <li class="mobile-nav__item">
+            <a href="{{ link.url }}" class="mobile-nav__link{% if link.active %} is-active{% endif %}">
+              {{ link.title }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if section.settings.drawer_button_label != blank -%}
+        <a
+          href="{{ section.settings.drawer_button_link | default: settings.order_form_url }}"
+          class="btn btn--primary btn--wide mobile-nav__cta"
+        >
+          {{ section.settings.drawer_button_label }}
+          {% render 'icon', name: 'arrow-right', class: 'btn__arrow' %}
+        </a>
+      {%- endif -%}
+
+      <div class="mobile-nav__contact">
+        {%- if settings.contact_phone != blank -%}
+          <a href="tel:{{ settings.contact_phone | strip | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', '' }}" class="mobile-nav__contact-row">
+            {% render 'icon', name: 'phone' %}<span>{{ settings.contact_phone }}</span>
+          </a>
+        {%- endif -%}
+        {%- if settings.contact_email != blank -%}
+          <a href="mailto:{{ settings.contact_email }}" class="mobile-nav__contact-row">
+            {% render 'icon', name: 'mail' %}<span>{{ settings.contact_email }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+
+      {% render 'social-icons', class: 'mobile-nav__social' %}
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "section",
+  "class": "header-section",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "range",
+      "id": "split_after",
+      "label": "Menu items shown left of the logo",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2,
+      "info": "Desktop only. Remaining items appear to the right."
+    },
+    { "type": "header", "content": "Mobile menu" },
+    {
+      "type": "text",
+      "id": "drawer_button_label",
+      "label": "Button label",
+      "default": "Order custom cookies"
+    },
+    {
+      "type": "url",
+      "id": "drawer_button_link",
+      "label": "Button link",
+      "info": "Leave empty to use the custom order form URL from Theme settings."
+    },
+    { "type": "header", "content": "Behaviour" },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Stick to top when scrolling",
+      "default": true
+    }
+  ],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

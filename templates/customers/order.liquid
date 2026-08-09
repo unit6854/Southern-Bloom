@@ -1,0 +1,17 @@
+<div class="account stripe-bg section">
+  <div class="container container--narrow">
+    <h1 class="account__title script">{{ order.name }}</h1>
+    <p class="account__intro">Placed {{ order.created_at | date: '%B %-d, %Y' }}</p>
+    <ul class="account__orders">
+      {%- for line in order.line_items -%}
+        <li class="account__order">
+          <span>{{ line.title }}</span>
+          <span>&times; {{ line.quantity }}</span>
+          <span>{{ line.final_line_price | money }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+    <p class="account__intro"><strong>Total {{ order.total_price | money }}</strong></p>
+    <p class="account__link"><a href="{{ routes.account_url }}">Back to my account</a></p>
+  </div>
+</div>

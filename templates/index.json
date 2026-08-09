@@ -1,0 +1,133 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-slideshow",
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Sweet moments",
+            "show_heart": true,
+            "heading_top": "Handcrafted",
+            "heading_accent": "with Love,\nMade to Bloom",
+            "show_divider": true,
+            "text": "<p>Custom sugar cookies for life's sweetest celebrations.</p>",
+            "button_label": "Order custom cookies",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": ["slide-1"],
+      "settings": {
+        "autoplay": true,
+        "autoplay_speed": 7,
+        "image_ratio": "4 / 3"
+      }
+    },
+
+    "occasions": {
+      "type": "occasions-icons",
+      "blocks": {
+        "o1": { "type": "occasion", "settings": { "icon": "cake", "label": "Birthdays", "link": "" } },
+        "o2": { "type": "occasion", "settings": { "icon": "onesie", "label": "Baby showers", "link": "" } },
+        "o3": { "type": "occasion", "settings": { "icon": "rings", "label": "Weddings", "link": "" } },
+        "o4": { "type": "occasion", "settings": { "icon": "graduation", "label": "Graduations", "link": "" } },
+        "o5": { "type": "occasion", "settings": { "icon": "party-hat", "label": "And more!", "link": "" } }
+      },
+      "block_order": ["o1", "o2", "o3", "o4", "o5"],
+      "settings": {
+        "eyebrow": "Made for life's",
+        "show_heart": true,
+        "heading": "Sweetest Occasions",
+        "heading_hearts": true,
+        "subheading": "",
+        "bg": "default"
+      }
+    },
+
+    "category-tiles": {
+      "type": "category-tiles",
+      "blocks": {
+        "t1": { "type": "tile", "settings": { "label": "Birthdays", "link": "/pages/gallery" } },
+        "t2": { "type": "tile", "settings": { "label": "Baby showers", "link": "/pages/gallery" } },
+        "t3": { "type": "tile", "settings": { "label": "Weddings", "link": "/pages/gallery" } },
+        "t4": { "type": "tile", "settings": { "label": "Graduations", "link": "/pages/gallery" } },
+        "t5": { "type": "tile", "settings": { "label": "And more", "link": "/pages/gallery" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4", "t5"],
+      "settings": {
+        "eyebrow": "",
+        "heading": "",
+        "mobile_layout": "scroll",
+        "button_label": "View gallery",
+        "button_link": "/pages/gallery"
+      }
+    },
+
+    "about": {
+      "type": "about-feature",
+      "settings": {
+        "image_position": "left",
+        "eyebrow": "Hi, I'm",
+        "show_heart": true,
+        "name": "Jessica",
+        "subheading": "The heart behind\nSouthern Bloom",
+        "text": "<p>I believe every celebration deserves something sweet and every detail matters. Each cookie is thoughtfully designed and handcrafted with love, so your moments can bloom with joy.</p>",
+        "show_dandelion": true,
+        "button_label": "Learn more about me",
+        "button_link": "/pages/about"
+      }
+    },
+
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "r1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "\"The cookies were absolutely beautiful and tasted even better than they looked!\"",
+            "author": "Jessica M."
+          }
+        },
+        "r2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "\"Southern Bloom Bakery Co. made our day so special. Can't recommend enough!\"",
+            "author": "Amy L."
+          }
+        },
+        "r3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "\"Every detail was perfect and you can taste the love in every bite.\"",
+            "author": "Brittany W."
+          }
+        }
+      },
+      "block_order": ["r1", "r2", "r3"],
+      "settings": {
+        "eyebrow": "Kind words",
+        "show_heart": true,
+        "heading": "From Happy Clients",
+        "heading_heart": true
+      }
+    },
+
+    "cta": {
+      "type": "cta-banner",
+      "settings": {
+        "eyebrow": "Let's make something sweet",
+        "show_heart": true,
+        "heading": "Your celebration deserves cookies as beautiful as the moment.",
+        "text": "",
+        "button_label": "Start your order",
+        "button_link": "",
+        "hide_deco_mobile": false
+      }
+    }
+  },
+  "order": ["hero", "occasions", "category-tiles", "about", "testimonials", "cta"]
+}

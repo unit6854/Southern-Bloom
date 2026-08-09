@@ -1,0 +1,25 @@
+<div class="account stripe-bg section">
+  <div class="container container--narrow">
+    <h1 class="account__title script">My addresses</h1>
+    <p class="account__link"><a href="{{ routes.account_url }}">Back to my account</a></p>
+
+    {%- form 'customer_address', customer.new_address -%}
+      {{ form.errors | default_errors }}
+      <h2 class="account__subtitle">Add a new address</h2>
+      <div class="field"><label class="field__label" for="AddrFirst">First name</label><input class="input" id="AddrFirst" type="text" name="address[first_name]"></div>
+      <div class="field"><label class="field__label" for="AddrLast">Last name</label><input class="input" id="AddrLast" type="text" name="address[last_name]"></div>
+      <div class="field"><label class="field__label" for="Addr1">Address</label><input class="input" id="Addr1" type="text" name="address[address1]"></div>
+      <div class="field"><label class="field__label" for="AddrCity">City</label><input class="input" id="AddrCity" type="text" name="address[city]"></div>
+      <div class="field"><label class="field__label" for="AddrZip">Postal code</label><input class="input" id="AddrZip" type="text" name="address[zip]"></div>
+      <div class="field"><label class="field__label" for="AddrPhone">Phone</label><input class="input" id="AddrPhone" type="tel" name="address[phone]"></div>
+      <button type="submit" class="btn btn--primary btn--wide" style="margin-top:20px;">Save address</button>
+    {%- endform -%}
+
+    {%- for address in customer.addresses -%}
+      <div class="account__address">
+        {{ address | format_address }}
+        <a href="{{ address.url }}" data-address-delete>Remove</a>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>

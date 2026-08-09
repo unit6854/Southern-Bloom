@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": { "type": "vendor", "settings": {} },
+        "title": { "type": "title", "settings": {} },
+        "price": { "type": "price", "settings": {} },
+        "divider": { "type": "divider", "settings": {} },
+        "description": { "type": "description", "settings": {} },
+        "buy": { "type": "buy_buttons", "settings": {} },
+        "custom": {
+          "type": "custom_order",
+          "settings": {
+            "text": "Looking for something custom? Start a custom order instead.",
+            "label": "Request a custom order",
+            "link": ""
+          }
+        },
+        "contact": { "type": "contact", "settings": {} }
+      },
+      "block_order": ["vendor", "title", "price", "divider", "description", "buy", "custom", "contact"],
+      "settings": {}
+    },
+    "related": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "You may also love",
+        "show_heart": true,
+        "heading": "More Sweet Things",
+        "columns": 4,
+        "limit": 4,
+        "button_label": "Shop all",
+        "button_link": ""
+      }
+    }
+  },
+  "order": ["main", "related"]
+}

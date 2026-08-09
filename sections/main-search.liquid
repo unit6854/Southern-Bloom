@@ -1,0 +1,61 @@
+<div class="search stripe-bg section">
+  <div class="container container--wide">
+    <h1 class="search__title script">{{ 'general.search.heading' | t }}</h1>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search__form">
+      <label class="visually-hidden" for="SearchInput">{{ 'general.search.heading' | t }}</label>
+      <input
+        id="SearchInput"
+        class="input search__input"
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="{{ 'general.search.placeholder' | t }}">
+      <button type="submit" class="btn btn--primary search__submit">
+        {{ 'general.search.submit' | t }}
+        {% render 'icon', name: 'arrow-right', class: 'btn__arrow' %}
+      </button>
+    </form>
+
+    {%- if search.performed -%}
+      <p class="search__count">
+        {%- if search.results_count > 0 -%}
+          {{ 'general.search.results_with_count' | t: count: search.results_count, terms: search.terms }}
+        {%- else -%}
+          {{ 'general.search.no_results' | t: terms: search.terms }}
+        {%- endif -%}
+      </p>
+
+      {%- if search.results_count > 0 -%}
+        {%- paginate search.results by 24 -%}
+          <ul class="product-grid" style="--grid-cols: 4;">
+            {%- for item in search.results -%}
+              <li class="product-grid__item">
+                {%- if item.object_type == 'product' -%}
+                  {% render 'product-card', product: item %}
+                {%- else -%}
+                  <a class="search__page-card" href="{{ item.url }}">
+                    <span class="search__page-title">{{ item.title }}</span>
+                    <span class="search__page-excerpt">{{ item.content | strip_html | truncatewords: 24 }}</span>
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+          {% render 'pagination', paginate: paginate %}
+        {%- endpaginate -%}
+      {%- endif -%}
+    {%- else -%}
+      <p class="search__count">{{ 'general.search.prompt' | t }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Search",
+  "tag": "section",
+  "class": "search-section",
+  "settings": []
+}
+{% endschema %}

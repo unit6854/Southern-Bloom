@@ -1,0 +1,31 @@
+<div class="notfound stripe-bg section">
+  <div class="container container--narrow notfound__inner">
+    <span class="notfound__icon">{% render 'icon', name: 'cookie' %}</span>
+    <h1 class="notfound__title script">{{ section.settings.heading | default: 'Oops!' }}</h1>
+    <p class="notfound__text">{{ section.settings.text | default: "This page has wandered off. Let's get you back to something sweet." }}</p>
+    <div class="notfound__actions">
+      <a href="{{ routes.root_url }}" class="btn btn--primary">
+        {{ 'general.404.link' | t }}
+        {% render 'icon', name: 'arrow-right', class: 'btn__arrow' %}
+      </a>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--outline">Browse the shop</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "404",
+  "tag": "section",
+  "class": "notfound-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Oops!" },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "This page has wandered off. Let's get you back to something sweet."
+    }
+  ]
+}
+{% endschema %}

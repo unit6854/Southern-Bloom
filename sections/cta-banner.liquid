@@ -1,0 +1,111 @@
+<div class="cta-banner stripe-bg{% if section.settings.hide_deco_mobile %} cta-banner--deco-desktop{% endif %}">
+
+  <div class="cta-banner__deco cta-banner__deco--left" aria-hidden="true">
+    {%- if section.settings.image_left != blank -%}
+      {{
+        section.settings.image_left
+        | image_url: width: 800
+        | image_tag: widths: '260,400,560,800', sizes: '(min-width: 990px) 26vw, 40vw', alt: '', loading: 'lazy'
+      }}
+    {%- else -%}
+      <img src="{{ 'placeholder-cta-left.webp' | asset_url }}" alt="" width="504" height="680" loading="lazy">
+    {%- endif -%}
+  </div>
+
+  <div class="cta-banner__deco cta-banner__deco--right" aria-hidden="true">
+    {%- if section.settings.image_right != blank -%}
+      {{
+        section.settings.image_right
+        | image_url: width: 800
+        | image_tag: widths: '260,400,560,800', sizes: '(min-width: 990px) 26vw, 40vw', alt: '', loading: 'lazy'
+      }}
+    {%- else -%}
+      <img src="{{ 'placeholder-cta-right.webp' | asset_url }}" alt="" width="711" height="765" loading="lazy">
+    {%- endif -%}
+  </div>
+
+  <div class="cta-banner__inner container">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="eyebrow cta-banner__eyebrow">
+        {{ section.settings.eyebrow }}
+        {%- if section.settings.show_heart -%}<span class="heart">{% render 'icon', name: 'heart' %}</span>{%- endif -%}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="cta-banner__heading display">{{ section.settings.heading | newline_to_br }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.text != blank -%}
+      <div class="cta-banner__text rte">{{ section.settings.text }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      {%- assign cta_link = section.settings.button_link | default: settings.order_form_url -%}
+      <a href="{{ cta_link }}" class="btn btn--primary cta-banner__button">
+        {{ section.settings.button_label }}
+        {% render 'icon', name: 'arrow-right', class: 'btn__arrow' %}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Call to action banner",
+  "tag": "section",
+  "class": "cta-banner-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small label",
+      "default": "Let's make something sweet"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_heart",
+      "label": "Show heart after label",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your celebration deserves cookies as beautiful as the moment."
+    },
+    { "type": "richtext", "id": "text", "label": "Body text" },
+    { "type": "header", "content": "Button" },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Label",
+      "default": "Start your order"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link",
+      "info": "Leave empty to use the custom order form URL from Theme settings."
+    },
+    { "type": "header", "content": "Decorative photos" },
+    {
+      "type": "image_picker",
+      "id": "image_left",
+      "label": "Left photo"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_right",
+      "label": "Right photo"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_deco_mobile",
+      "label": "Hide photos on mobile",
+      "default": false
+    }
+  ],
+  "presets": [{ "name": "Call to action banner" }]
+}
+{% endschema %}

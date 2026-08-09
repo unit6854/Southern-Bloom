@@ -1,0 +1,61 @@
+<div class="coll-list stripe-bg section">
+  <div class="container container--wide">
+    <ul class="coll-list__grid" style="--grid-cols: {{ section.settings.columns }};">
+      {%- for collection in collections -%}
+        {%- if collection.handle != 'frontpage' -%}
+          <li class="coll-list__item">
+            <a class="coll-card" href="{{ collection.url }}">
+              <span class="coll-card__media media">
+                {%- assign coll_img = collection.image | default: collection.featured_image -%}
+                {%- if coll_img -%}
+                  {{
+                    coll_img
+                    | image_url: width: 800
+                    | image_tag:
+                      widths: '260,400,560,800',
+                      sizes: '(min-width: 990px) 24vw, (min-width: 750px) 33vw, 47vw',
+                      alt: collection.title,
+                      loading: 'lazy'
+                  }}
+                {%- else -%}
+                  <span class="media__placeholder">{% render 'icon', name: 'cookie' %}</span>
+                {%- endif -%}
+              </span>
+              <span class="coll-card__label">{{ collection.title }}</span>
+              {%- if section.settings.show_count -%}
+                <span class="coll-card__count">
+                  {{ 'collections.general.items_with_count' | t: count: collection.all_products_count }}
+                </span>
+              {%- endif -%}
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "tag": "section",
+  "class": "coll-list-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns (desktop)",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_count",
+      "label": "Show product counts",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

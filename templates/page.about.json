@@ -1,0 +1,123 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "Hi, I'm",
+        "show_heart": true,
+        "heading": "Jessica",
+        "heading_style": "script",
+        "show_divider": true,
+        "text": "<p>The heart behind Southern Bloom Bakery Co.</p>",
+        "overlay": 55,
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+
+    "story": {
+      "type": "about-feature",
+      "settings": {
+        "image_position": "left",
+        "eyebrow": "My story",
+        "show_heart": true,
+        "name": "Baked with love",
+        "subheading": "Every cookie tells\na little story",
+        "text": "<p>Southern Bloom Bakery Co. started with a simple idea: that the sweetest moments deserve something just as beautiful to celebrate them with.</p><p>Every order is hand-iced in my kitchen, one cookie at a time. I take the time to match your colours, your theme and the little details that make your celebration yours.</p>",
+        "show_dandelion": true,
+        "button_label": "See the gallery",
+        "button_link": "/pages/gallery"
+      }
+    },
+
+    "values": {
+      "type": "feature-columns",
+      "blocks": {
+        "v1": {
+          "type": "feature",
+          "settings": {
+            "icon": "heart-line",
+            "heading": "Made with love",
+            "text": "<p>Every set is decorated by hand, never mass produced, and never rushed.</p>"
+          }
+        },
+        "v2": {
+          "type": "feature",
+          "settings": {
+            "icon": "cookie",
+            "heading": "As good as they look",
+            "text": "<p>Soft, buttery sugar cookies with a smooth royal icing finish.</p>"
+          }
+        },
+        "v3": {
+          "type": "feature",
+          "settings": {
+            "icon": "dandelion-small",
+            "heading": "Designed with you",
+            "text": "<p>Your colours, your theme, your details. We design your set together.</p>"
+          }
+        }
+      },
+      "block_order": ["v1", "v2", "v3"],
+      "settings": {
+        "eyebrow": "What you can expect",
+        "show_heart": true,
+        "heading": "A Little Promise",
+        "show_numbers": false,
+        "bg": "default"
+      }
+    },
+
+    "process": {
+      "type": "feature-columns",
+      "blocks": {
+        "p1": {
+          "type": "feature",
+          "settings": {
+            "icon": "mail",
+            "heading": "Tell me your vision",
+            "text": "<p>Send your date, colours, theme and quantity through the order form.</p>"
+          }
+        },
+        "p2": {
+          "type": "feature",
+          "settings": {
+            "icon": "cookie",
+            "heading": "We design together",
+            "text": "<p>I'll come back with ideas, a quote and a design plan for your set.</p>"
+          }
+        },
+        "p3": {
+          "type": "feature",
+          "settings": {
+            "icon": "heart-line",
+            "heading": "Pick up and celebrate",
+            "text": "<p>Your cookies are hand-iced fresh and packaged ready to gift or serve.</p>"
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "eyebrow": "How it works",
+        "show_heart": true,
+        "heading": "From Idea to Iced",
+        "show_numbers": true,
+        "bg": "alt"
+      }
+    },
+
+    "cta": {
+      "type": "cta-banner",
+      "settings": {
+        "eyebrow": "Let's make something sweet",
+        "show_heart": true,
+        "heading": "Your celebration deserves cookies as beautiful as the moment.",
+        "text": "",
+        "button_label": "Start your order",
+        "button_link": "",
+        "hide_deco_mobile": false
+      }
+    }
+  },
+  "order": ["banner", "story", "values", "process", "cta"]
+}

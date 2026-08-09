@@ -1,0 +1,40 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "Ready to order",
+        "show_heart": true,
+        "heading": "The Shop",
+        "heading_style": "script",
+        "show_divider": true,
+        "text": "<p>Ready-to-order cookie sets. Looking for something custom? Use the order form and we will design it together.</p>",
+        "overlay": 55,
+        "button_label": "Order custom cookies",
+        "button_link": ""
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "show_description": true,
+        "show_sort": true,
+        "columns": 4,
+        "per_page": 24
+      }
+    },
+    "cta": {
+      "type": "cta-banner",
+      "settings": {
+        "eyebrow": "Do not see what you need?",
+        "show_heart": true,
+        "heading": "Every set can be made just for you.",
+        "text": "",
+        "button_label": "Start your order",
+        "button_link": "",
+        "hide_deco_mobile": false
+      }
+    }
+  },
+  "order": ["banner", "main", "cta"]
+}

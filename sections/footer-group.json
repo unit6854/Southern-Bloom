@@ -1,0 +1,24 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "show_logo": true,
+        "newsletter_heading": "Let's stay in touch",
+        "newsletter_text": "<p>Be the first to know about new designs, special offers, and sweet inspiration!</p>",
+        "newsletter_placeholder": "Enter your email",
+        "newsletter_button": "Subscribe",
+        "tagline": "Made with love in the South",
+        "show_bar_heart": true,
+        "policy_menu": "footer",
+        "bg_color": "#fdf6f6",
+        "bar_color": "#d5738a"
+      }
+    }
+  },
+  "order": ["footer"]
+}
