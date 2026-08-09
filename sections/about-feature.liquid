@@ -3,7 +3,7 @@
 
     <div class="about-feature__figure">
       <div
-        class="about-feature__frame{% if section.settings.show_frame == false %} about-feature__frame--plain{% endif %}"
+        class="about-feature__frame{% if section.settings.contain_image %} about-feature__frame--contain{% endif %}"
         style="--about-ratio: {{ section.settings.image_ratio }}; --about-focal: {{ section.settings.image_focal }};"
       >
         <div class="about-feature__media media">
@@ -76,21 +76,22 @@
     },
     {
       "type": "checkbox",
-      "id": "show_frame",
-      "label": "Show decorative frame",
-      "default": true
+      "id": "contain_image",
+      "label": "Photo has its own frame",
+      "default": true,
+      "info": "Shows the whole image without cropping it, and removes the shadow. Turn off for a plain photo."
     },
     {
       "type": "select",
       "id": "image_ratio",
       "label": "Photo shape",
       "options": [
-        { "value": "4 / 5", "label": "Portrait" },
         { "value": "1 / 1", "label": "Square" },
+        { "value": "4 / 5", "label": "Portrait" },
         { "value": "3 / 4", "label": "Tall" },
         { "value": "4 / 3", "label": "Landscape" }
       ],
-      "default": "4 / 5"
+      "default": "1 / 1"
     },
     {
       "type": "select",
@@ -102,7 +103,7 @@
         { "value": "center bottom", "label": "Bottom" }
       ],
       "default": "center top",
-      "info": "Used when the photo has to be cropped to fit the shape above."
+      "info": "Only used when \"Photo has its own frame\" is off and the photo gets cropped."
     },
     { "type": "text", "id": "image_alt", "label": "Photo description (for screen readers)" },
     {

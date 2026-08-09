@@ -125,7 +125,8 @@
         "text": "",
         "button_label": "Start your order",
         "button_link": "",
-        "hide_deco_mobile": false
+        "min_height": 28,
+        "scrim": 0
       }
     }
   },

@@ -1,28 +1,36 @@
-<div class="cta-banner stripe-bg{% if section.settings.hide_deco_mobile %} cta-banner--deco-desktop{% endif %}">
+{%- liquid
+  assign mobile_img = section.settings.mobile_image | default: section.settings.image
+-%}
 
-  <div class="cta-banner__deco cta-banner__deco--left" aria-hidden="true">
-    {%- if section.settings.image_left != blank -%}
-      {{
-        section.settings.image_left
-        | image_url: width: 800
-        | image_tag: widths: '260,400,560,800', sizes: '(min-width: 990px) 26vw, 40vw', alt: '', loading: 'lazy'
-      }}
+<div
+  class="cta-banner stripe-bg"
+  style="--cta-min-height: {{ section.settings.min_height }}vw; --cta-scrim: {{ section.settings.scrim | divided_by: 100.0 }};"
+>
+  <div class="cta-banner__media media" aria-hidden="true">
+    {%- if section.settings.image != blank -%}
+      <picture>
+        {%- if mobile_img != blank -%}
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ mobile_img | image_url: width: 750 }} 750w, {{ mobile_img | image_url: width: 1100 }} 1100w"
+            sizes="100vw">
+        {%- endif -%}
+        <source
+          srcset="{{ section.settings.image | image_url: width: 1200 }} 1200w, {{ section.settings.image | image_url: width: 1800 }} 1800w, {{ section.settings.image | image_url: width: 2400 }} 2400w"
+          sizes="100vw">
+        <img src="{{ section.settings.image | image_url: width: 1800 }}" alt="" loading="lazy">
+      </picture>
     {%- else -%}
-      <img src="{{ 'placeholder-cta-left.webp' | asset_url }}" alt="" width="504" height="680" loading="lazy">
+      <picture>
+        <source media="(max-width: 749px)" srcset="{{ 'cta-bar-mobile.webp' | asset_url }}">
+        <img src="{{ 'cta-bar.webp' | asset_url }}" alt="" width="1952" height="544" loading="lazy">
+      </picture>
     {%- endif -%}
   </div>
 
-  <div class="cta-banner__deco cta-banner__deco--right" aria-hidden="true">
-    {%- if section.settings.image_right != blank -%}
-      {{
-        section.settings.image_right
-        | image_url: width: 800
-        | image_tag: widths: '260,400,560,800', sizes: '(min-width: 990px) 26vw, 40vw', alt: '', loading: 'lazy'
-      }}
-    {%- else -%}
-      <img src="{{ 'placeholder-cta-right.webp' | asset_url }}" alt="" width="711" height="765" loading="lazy">
-    {%- endif -%}
-  </div>
+  {%- if section.settings.scrim > 0 -%}
+    <span class="cta-banner__scrim" aria-hidden="true"></span>
+  {%- endif -%}
 
   <div class="cta-banner__inner container">
     {%- if section.settings.eyebrow != blank -%}
@@ -88,22 +96,39 @@
       "label": "Link",
       "info": "Leave empty to use the custom order form URL from Theme settings."
     },
-    { "type": "header", "content": "Decorative photos" },
+    { "type": "header", "content": "Background photo" },
     {
       "type": "image_picker",
-      "id": "image_left",
-      "label": "Left photo"
+      "id": "image",
+      "label": "Photo",
+      "info": "A wide banner with clear space in the middle works best. Leave empty to use the supplied bar."
     },
     {
       "type": "image_picker",
-      "id": "image_right",
-      "label": "Right photo"
+      "id": "mobile_image",
+      "label": "Photo — mobile",
+      "info": "Optional. Falls back to the photo above."
     },
     {
-      "type": "checkbox",
-      "id": "hide_deco_mobile",
-      "label": "Hide photos on mobile",
-      "default": false
+      "type": "range",
+      "id": "min_height",
+      "label": "Height (desktop)",
+      "min": 16,
+      "max": 40,
+      "step": 1,
+      "unit": "vw",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "scrim",
+      "label": "Fade behind the text",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 0,
+      "info": "Raise this if a busier photo makes the text hard to read."
     }
   ],
   "presets": [{ "name": "Call to action banner" }]

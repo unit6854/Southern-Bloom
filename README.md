@@ -68,24 +68,26 @@ filter section (for example `Birthdays`). Matching ignores case and spacing.
 
 ---
 
-## Placeholder images
+## Supplied photography
 
-These ship so the site looks complete before real photography lands. Replace
-them through the matching image picker — no code change needed.
+Every photo in the theme is real supplied artwork — there are no placeholder
+images left. All of them are replaceable through the matching image picker,
+no code change needed.
 
-| Asset | Used by | Replace via |
-|---|---|---|
+| Asset | Used by |
+|---|---|
+| `hero-bg.webp` / `hero-bg-mobile.webp` | Hero banner |
+| `cat-birthdays` / `cat-baby-showers` / `cat-weddings` / `cat-graduations` / `cat-and-more` | Category tiles |
+| `about-jessica.webp` | About section (carries its own ornate frame, transparent background) |
+| `cta-bar.webp` / `cta-bar-mobile.webp` | Call to action banner |
+| `gallery-01…64.webp` | Gallery page |
 
-| `placeholder-cta-left/right.webp` | CTA banner sides | Customize → Call to action banner |
-
-The category and CTA placeholders were cut from the low-resolution design
-mockup, so they are soft. They are intentionally temporary.
-
-`hero-bg.webp`, `hero-bg-mobile.webp`, `cat-birthdays.webp` and `about-jessica.webp` are **real
-supplied photography**, not placeholders.
+**The About photo** has its own frame baked in, so the section's *Photo has its
+own frame* setting is on. That shows the whole image uncropped and removes the
+theme's own shadow and border. Turn it off for an ordinary photo and it will
+fill the shape instead, cropped to the chosen focal point.
 
 ---
-
 ## The hero
 
 Two layouts, switchable in Customize → Hero slideshow → **Layout**:

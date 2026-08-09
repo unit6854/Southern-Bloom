@@ -298,6 +298,55 @@
 .hero__heading-top { display: block; color: var(--c-ink); }
 .hero__heading-accent { display: block; color: var(--c-rose-deep); }
 
+/* ---- Animated rose sweep on the accent lines -------------------------------
+   A tiled horizontal gradient clipped to the glyphs, drifting sideways.
+   The tile is sized and shifted in the SAME unit (--sweep), so one cycle moves
+   exactly one tile and the loop is seamless — percentage background-position
+   would not work here, since percentages resolve against the element box minus
+   the image, not against the tile itself.
+   The palette stays within readable rose values: going pastel would drop the
+   headline below usable contrast on the pale linen behind it. */
+.hero--animate-heading .hero__heading-accent {
+  /* Tile roughly the width of the headline, so one full colour pass is
+     visible across the phrase rather than a single flat tone drifting. */
+  --sweep: max(340px, 30vw);
+
+  /* The linen behind the headline samples #E3CECE at its lightest, where even
+     the existing rose sits near the contrast floor for large text. So the
+     sweep runs DOWNWARD from that rose into deeper plums — more drama, and
+     every stop is at least as legible as the static colour it replaced. */
+  background-image: linear-gradient(
+    90deg,
+    var(--c-rose-deep) 0%,     /* lightest stop = the original flat colour */
+    #8b3d56            35%,    /* deep plum */
+    #a8536e            70%,    /* mid */
+    var(--c-rose-deep) 100%    /* back to the start, so tiles join cleanly */
+  );
+  background-size: var(--sweep) 100%;
+  background-repeat: repeat;
+  background-position: 0 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: hero-sweep var(--sweep-duration, 9s) linear infinite;
+}
+
+/* Only make the glyphs transparent where the clip is actually supported,
+   otherwise the headline would vanish. */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hero--animate-heading .hero__heading-accent {
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+@keyframes hero-sweep {
+  to { background-position: var(--sweep) 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero--animate-heading .hero__heading-accent { animation: none; }
+}
+
 .hero__divider { margin: 22px 0 22px; max-width: 260px; }
 
 .hero__text {
@@ -593,26 +642,99 @@ a.occasions__link { cursor: pointer; }
 
 .cat-tiles__item { min-width: 0; }
 
+/* ---- Tile hover -------------------------------------------------------------
+   Layered so it reads as one gesture: the card lifts, the photo pushes in,
+   a rose veil rises from the bottom, a light sweeps across on the diagonal,
+   and four corner brackets draw themselves in. The label bar fills at the
+   same time. Everything shares one easing curve so it lands together. */
 .cat-tile {
+  --tile-ease: cubic-bezier(.22, 1, .36, 1);
+
   display: block;
   padding-bottom: 26px;    /* room for the label to hang below the photo */
+  transition: transform .55s var(--tile-ease);
+  will-change: transform;
 }
+.cat-tile:hover,
+.cat-tile:focus-visible { transform: translateY(-6px); }
+.cat-tile:active { transform: translateY(-2px); transition-duration: .1s; }
+
 .cat-tile__media {
+  position: relative;
   display: block;
   aspect-ratio: 1 / 1.03;
   border-radius: var(--card-radius);
   overflow: hidden;
+  box-shadow: 0 8px 20px -16px rgba(74, 50, 50, .55);
+  transition: box-shadow .55s var(--tile-ease);
 }
-.cat-tile__media img { transition: transform .6s cubic-bezier(.2, .6, .3, 1); }
-.cat-tile:hover .cat-tile__media img { transform: scale(1.06); }
+.cat-tile:hover .cat-tile__media,
+.cat-tile:focus-visible .cat-tile__media {
+  box-shadow: 0 20px 38px -20px rgba(160, 70, 95, .58);
+}
+
+.cat-tile__media img {
+  transition: transform .75s var(--tile-ease), filter .55s var(--tile-ease);
+}
+.cat-tile:hover .cat-tile__media img,
+.cat-tile:focus-visible .cat-tile__media img {
+  transform: scale(1.09);
+  filter: saturate(1.08);
+}
+
+/* Rose veil rising from the bottom + a diagonal light sweep, in one layer */
+.cat-tile__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, transparent 34%, rgba(255, 255, 255, .42) 50%, transparent 66%),
+    linear-gradient(to top, rgba(197, 92, 122, .46) 0%, rgba(197, 92, 122, .10) 42%, transparent 72%);
+  background-size: 240% 100%, 100% 100%;
+  background-position: 150% 0, 0 110%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition:
+    opacity .5s var(--tile-ease),
+    background-position .85s var(--tile-ease);
+}
+.cat-tile:hover .cat-tile__media::before,
+.cat-tile:focus-visible .cat-tile__media::before {
+  opacity: 1;
+  background-position: -60% 0, 0 0;
+}
+
+/* Corner brackets that draw themselves in. Both sit at the TOP, because the
+   label bar overlaps the bottom 26px of the photo and would hide them there. */
+.cat-tile__media::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(#fff, #fff) left top  / 0 1.5px no-repeat,
+    linear-gradient(#fff, #fff) left top  / 1.5px 0 no-repeat,
+    linear-gradient(#fff, #fff) right top / 0 1.5px no-repeat,
+    linear-gradient(#fff, #fff) right top / 1.5px 0 no-repeat;
+  opacity: 0;
+  transition: background-size .6s var(--tile-ease), opacity .4s var(--tile-ease);
+}
+.cat-tile:hover .cat-tile__media::after,
+.cat-tile:focus-visible .cat-tile__media::after {
+  opacity: .95;
+  background-size: 26px 1.5px, 1.5px 26px, 26px 1.5px, 1.5px 26px;
+}
 
 .cat-tile__label {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   display: block;
   margin: -26px 8px 0;
   padding: 9px 6px;
-  background: #fff;
+  background-color: #fff;
   border: 1px solid var(--c-rose-soft);
   border-radius: var(--card-radius);
   text-align: center;
@@ -627,19 +749,21 @@ a.occasions__link { cursor: pointer; }
   background-size: 0% 100%;
   background-position: left center;
   background-repeat: no-repeat;
-  transition: background-size .45s cubic-bezier(.22,1,.36,1),
-              color .35s cubic-bezier(.22,1,.36,1),
-              border-color .35s cubic-bezier(.22,1,.36,1),
-              box-shadow .35s cubic-bezier(.22,1,.36,1);
+  transition:
+    background-size .5s var(--tile-ease),
+    color .4s var(--tile-ease),
+    border-color .4s var(--tile-ease),
+    letter-spacing .5s var(--tile-ease),
+    box-shadow .4s var(--tile-ease);
 }
 .cat-tile:hover .cat-tile__label,
 .cat-tile:focus-visible .cat-tile__label {
   background-size: 100% 100%;
   border-color: var(--c-rose);
   color: #fff;
-  box-shadow: 0 10px 22px -14px rgba(160, 70, 95, .6);
+  letter-spacing: 0.155em;
+  box-shadow: 0 12px 24px -14px rgba(160, 70, 95, .65);
 }
-
 .cat-tiles__cta { margin-top: clamp(24px, 3vw, 38px); text-align: center; }
 
 /* ==========================================================================
@@ -648,70 +772,44 @@ a.occasions__link { cursor: pointer; }
 .about-feature { overflow: hidden; }
 .about-feature__grid { display: grid; grid-template-columns: 1fr; }
 
-/* ---- Framed portrait -------------------------------------------------------
-   The photo used to bleed to the section edge, which cropped the top of the
-   subject's head on tall screens. It now sits inset inside a frame at a fixed
-   shape, with the focal point defaulting to the top so faces survive cropping.
-   The frame is three layers: an offset hairline outline, the photo, and a fine
-   inner mat line, plus small corner ticks. */
+/* ---- Portrait --------------------------------------------------------------
+   The supplied artwork carries its own ornate frame on a transparent
+   background, so by default the photo is shown WHOLE (object-fit: contain)
+   with no box, shadow or border of ours — anything else would clip the frame.
+   Untick "Photo has its own frame" for a plain photo and it goes back to
+   filling the shape, cropped to the chosen focal point. */
 .about-feature__figure {
   display: flex;
   justify-content: center;
-  /* extra inline padding so the offset outline has room to breathe */
-  padding: clamp(30px, 7vw, 54px) calc(var(--gutter) + 12px) clamp(20px, 3.4vw, 28px);
+  padding: clamp(24px, 6vw, 48px) var(--gutter) clamp(16px, 3vw, 26px);
 }
 
 .about-feature__frame {
   position: relative;
   width: 100%;
-  max-width: 460px;
-}
-/* Offset outline sitting just outside the photo */
-.about-feature__frame::before {
-  content: "";
-  position: absolute;
-  inset: clamp(-18px, -2.2vw, -11px);
-  border: 1px solid var(--c-rose-soft);
-  border-radius: 2px;
-  pointer-events: none;
-  transition: inset .5s cubic-bezier(.22, 1, .36, 1),
-              border-color .5s cubic-bezier(.22, 1, .36, 1);
-}
-/* Corner ticks — four short rose rules that read as an artist's crop marks */
-.about-feature__frame::after {
-  content: "";
-  position: absolute;
-  inset: clamp(-18px, -2.2vw, -11px);
-  pointer-events: none;
-  background:
-    linear-gradient(var(--c-rose), var(--c-rose)) left top / 18px 2px no-repeat,
-    linear-gradient(var(--c-rose), var(--c-rose)) left top / 2px 18px no-repeat,
-    linear-gradient(var(--c-rose), var(--c-rose)) right bottom / 18px 2px no-repeat,
-    linear-gradient(var(--c-rose), var(--c-rose)) right bottom / 2px 18px no-repeat;
-  opacity: .85;
+  max-width: 480px;
 }
 
 .about-feature__media {
-  aspect-ratio: var(--about-ratio, 4 / 5);
+  aspect-ratio: var(--about-ratio, 1 / 1);
   border-radius: 2px;
   box-shadow: 0 22px 48px -26px rgba(74, 50, 50, .5);
 }
 .about-feature__media img { object-position: var(--about-focal, center top); }
-/* Inner mat line, drawn over the photo */
-.about-feature__media::after {
-  content: "";
-  position: absolute;
-  inset: 10px;
-  border: 1px solid rgba(255, 255, 255, .5);
-  border-radius: 1px;
-  pointer-events: none;
-  z-index: 2;
+
+/* Self-framed artwork: show all of it, and drop our own chrome. The .media
+   placeholder background has to go too, or it shows as a pale box through the
+   artwork's transparent corners. */
+.about-feature__frame--contain .about-feature__media {
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  overflow: visible;
 }
-
-.about-feature__frame--plain::before,
-.about-feature__frame--plain::after { display: none; }
-.about-feature__frame--plain .about-feature__media::after { display: none; }
-
+.about-feature__frame--contain .about-feature__media img {
+  object-fit: contain;
+  object-position: center center;
+}
 .about-feature__body {
   position: relative;
   display: flex;
@@ -853,50 +951,67 @@ a.occasions__link { cursor: pointer; }
 
 /* ==========================================================================
    CTA BANNER
+   One full-width banner photo with the copy centred over its clear middle.
+   On phones the banner is a strip above the copy instead, because cropping a
+   3.6:1 image to portrait would throw away both plates.
    ========================================================================== */
-.cta-banner {
-  position: relative;
-  overflow: hidden;
+.cta-banner { position: relative; overflow: hidden; }
+
+.cta-banner__media {
+  display: block;
+  aspect-ratio: 1952 / 544;
+  background: transparent;
 }
-.cta-banner__deco {
+
+.cta-banner__scrim {
   position: absolute;
-  top: 0; bottom: 0;
-  z-index: 0;
-  width: 30%;
-  max-width: 360px;
+  inset: 0;
+  z-index: 1;
   pointer-events: none;
+  background: radial-gradient(
+    ellipse 60% 90% at 50% 50%,
+    rgba(253, 249, 248, var(--cta-scrim, 0)) 0%,
+    rgba(253, 249, 248, 0) 100%
+  );
 }
-.cta-banner__deco img { width: 100%; height: 100%; object-fit: cover; }
-.cta-banner__deco--left  { left: 0;  mask-image: linear-gradient(to right, #000 38%, transparent 100%); -webkit-mask-image: linear-gradient(to right, #000 38%, transparent 100%); }
-.cta-banner__deco--right { right: 0; mask-image: linear-gradient(to left,  #000 38%, transparent 100%); -webkit-mask-image: linear-gradient(to left,  #000 38%, transparent 100%); }
 
 .cta-banner__inner {
   position: relative;
-  z-index: 1;
-  padding-block: clamp(58px, 8vw, 112px);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  padding-block: clamp(30px, 6vw, 48px);
 }
-.cta-banner__eyebrow { margin-bottom: 20px; }
+
+.cta-banner__eyebrow { margin-bottom: 14px; }
+
 .cta-banner__heading {
   font-family: var(--font-heading);
   font-weight: 500;
   color: var(--c-ink);
-  font-size: clamp(1.5rem, 1.05rem + 2.3vw, 2.7rem);
-  line-height: 1.26;
-  max-width: 16em;
-  margin-inline: auto;
-}
-.cta-banner__text { margin-top: 16px; color: var(--c-text); max-width: 46ch; margin-inline: auto; }
-.cta-banner__button { margin-top: clamp(26px, 3vw, 38px); }
-
-/* Keep the headline readable over the photos on narrow screens */
-@media (max-width: 749px) {
-  .cta-banner__deco { width: 42%; opacity: .32; }
-  .cta-banner__deco--left  { mask-image: linear-gradient(to right, #000 0%, transparent 88%); -webkit-mask-image: linear-gradient(to right, #000 0%, transparent 88%); }
-  .cta-banner__deco--right { mask-image: linear-gradient(to left,  #000 0%, transparent 88%); -webkit-mask-image: linear-gradient(to left,  #000 0%, transparent 88%); }
-  .cta-banner--deco-desktop .cta-banner__deco { display: none; }
+  font-size: clamp(1.42rem, 0.95rem + 2.1vw, 2.5rem);
+  line-height: 1.28;
+  max-width: 22ch;
 }
 
+.cta-banner__text { margin-top: 14px; max-width: 46ch; color: var(--c-text); }
+.cta-banner__button { margin-top: clamp(20px, 2.4vw, 30px); }
+
+@media (min-width: 750px) {
+  /* Photo fills the section; copy floats over the clear centre. */
+  .cta-banner__media {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+  }
+  .cta-banner__inner {
+    justify-content: center;
+    min-height: clamp(240px, var(--cta-min-height, 28vw), 460px);
+    padding-block: clamp(36px, 4vw, 60px);
+  }
+}
 /* ==========================================================================
    FOOTER
    ========================================================================== */

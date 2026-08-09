@@ -8,7 +8,7 @@
 -%}
 
 <div
-  class="hero hero--{{ layout }} stripe-bg"
+  class="hero hero--{{ layout }} stripe-bg{% if section.settings.animate_heading %} hero--animate-heading{% endif %}"
   data-hero
   data-autoplay="{{ section.settings.autoplay }}"
   data-interval="{{ section.settings.autoplay_speed | times: 1000 }}"
@@ -17,6 +17,7 @@
     --hero-min-height: {{ section.settings.min_height }}vw;
     --hero-text-width: {{ section.settings.text_width }}%;
     --hero-focal: {{ section.settings.focal_point }};
+    --sweep-duration: {{ section.settings.heading_speed }}s;
   "
 >
   <div class="hero__track" data-hero-track>
@@ -204,6 +205,24 @@
       "unit": "%",
       "default": 0,
       "info": "Raise this if you use a busy photo and the text is hard to read."
+    },
+    {
+      "type": "checkbox",
+      "id": "animate_heading",
+      "label": "Animate the rose heading colour",
+      "default": true,
+      "info": "Drifts a gradient of rose tones sideways across the coloured lines."
+    },
+    {
+      "type": "range",
+      "id": "heading_speed",
+      "label": "Colour drift speed",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "unit": "s",
+      "default": 9,
+      "info": "Seconds for one full pass. Higher is slower and calmer."
     },
     { "type": "header", "content": "Slideshow" },
     {
