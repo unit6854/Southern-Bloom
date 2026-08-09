@@ -89,20 +89,33 @@
         Must come AFTER the stylesheets: base.css sets `cursor: pointer` on
         buttons and .btn, and at equal specificity the later rule wins.
         It lives in Liquid rather than base.css because the images need
-        asset_url. Hotspot (16 10) is the centre of the seed head.
+        asset_url. Hotspot (16 13) is the centre of the heart.
+
+        Each rule is declared twice: a plain url() any browser understands,
+        then an image-set() that supersedes it where supported, so HiDPI
+        screens get the 64px art instead of an upscaled 32px one.
+
         Fine pointers only — a cursor is meaningless on touch, and this way
         phones never download the images.
       {%- endcomment -%}
       <style>
         @media (hover: hover) and (pointer: fine) {
           body {
-            cursor: url("{{ 'cursor-bloom.png' | asset_url }}") 16 10, auto;
+            cursor: url("{{ 'cursor-heart.png' | asset_url }}") 16 13, auto;
+            cursor: image-set(
+              url("{{ 'cursor-heart.png' | asset_url }}") 1x,
+              url("{{ 'cursor-heart-2x.png' | asset_url }}") 2x
+            ) 16 13, auto;
           }
           a, button, summary, label[for], [role="button"], [role="tab"],
           .btn, .cat-tile, .gallery-item, .occasions__link, select {
-            cursor: url("{{ 'cursor-bloom-link.png' | asset_url }}") 16 10, pointer;
+            cursor: url("{{ 'cursor-heart-link.png' | asset_url }}") 16 13, pointer;
+            cursor: image-set(
+              url("{{ 'cursor-heart-link.png' | asset_url }}") 1x,
+              url("{{ 'cursor-heart-link-2x.png' | asset_url }}") 2x
+            ) 16 13, pointer;
           }
-          /* Text entry keeps a real caret — a flower here would be unusable. */
+          /* Text entry keeps a real caret — a heart here would be unusable. */
           input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="reset"]),
           textarea {
             cursor: text;

@@ -115,9 +115,9 @@
       {
         "type": "checkbox",
         "id": "enable_custom_cursor",
-        "label": "Use the dandelion mouse pointer",
+        "label": "Use the heart mouse pointer",
         "default": true,
-        "info": "A small pink dandelion replaces the arrow on desktop. Touch screens are unaffected, and text boxes keep a normal caret."
+        "info": "A small pink heart replaces the arrow on desktop. Touch screens are unaffected, and text boxes keep a normal caret."
       },
 
       { "type": "header", "content": "Text" },
