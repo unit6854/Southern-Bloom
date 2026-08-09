@@ -75,13 +75,13 @@ them through the matching image picker — no code change needed.
 
 | Asset | Used by | Replace via |
 |---|---|---|
-| `placeholder-cat-*.webp` (5) | Category tiles | Customize → Category tiles → Tile → Image |
+| `placeholder-cat-*.webp` (4) | Category tiles 2–5 | Customize → Category tiles → Tile → Image |
 | `placeholder-cta-left/right.webp` | CTA banner sides | Customize → Call to action banner |
 
 The category and CTA placeholders were cut from the low-resolution design
 mockup, so they are soft. They are intentionally temporary.
 
-`hero-bg.webp`, `hero-bg-mobile.webp` and `about-jessica.webp` are **real
+`hero-bg.webp`, `hero-bg-mobile.webp`, `cat-birthdays.webp` and `about-jessica.webp` are **real
 supplied photography**, not placeholders.
 
 ---
