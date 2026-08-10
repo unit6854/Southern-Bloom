@@ -79,6 +79,10 @@
         </ul>
       </nav>
 
+      {%- if section.settings.show_social -%}
+        {% render 'social-icons', class: 'header__social hide-mobile' %}
+      {%- endif -%}
+
       <a
         href="{{ routes.cart_url }}"
         class="header__cart"
@@ -191,6 +195,13 @@
       "id": "sticky",
       "label": "Stick to top when scrolling",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social icons",
+      "default": true,
+      "info": "Desktop only — phones already show these in the menu drawer."
     }
   ],
   "enabled_on": { "groups": ["header"] }

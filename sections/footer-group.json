@@ -14,7 +14,10 @@
         "newsletter_button": "Subscribe",
         "tagline": "Made with love in the South",
         "show_bar_heart": true,
-        "policy_menu": "footer",
+        "policy_menu": "",
+        "show_legal_links": true,
+        "privacy_link": "",
+        "terms_link": "",
         "bg_color": "#fdf6f6",
         "bar_color": "#d5738a"
       }

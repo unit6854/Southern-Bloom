@@ -1,149 +1,153 @@
 {
-    "general":  {
-                    "meta":  {
-                                 "tags":  "Tagged \"{{ tags }}\"",
-                                 "page":  "Page {{ page }}"
-                             },
-                    "pagination":  {
-                                       "label":  "Pagination",
-                                       "previous":  "Previous",
-                                       "next":  "Next",
-                                       "page":  "Page {{ number }}"
-                                   },
-                    "search":  {
-                                   "heading":  "Search",
-                                   "placeholder":  "Search cookies, collections, pages",
-                                   "submit":  "Search",
-                                   "results_with_count":  {
-                                                              "one":  "{{ count }} result for \"{{ terms }}\"",
-                                                              "other":  "{{ count }} results for \"{{ terms }}\""
-                                                          },
-                                   "no_results":  "No results for \"{{ terms }}\". Try another search, or browse the shop.",
-                                   "prompt":  "Looking for something in particular? Search the shop below."
-                               },
-                    "breadcrumbs":  {
-                                        "label":  "Breadcrumbs",
-                                        "home":  "Home"
-                                    },
-                    "404":  {
-                                "title":  "Page not found",
-                                "subtext":  "This page has wandered off. Let\u0027s get you back to something sweet.",
-                                "link":  "Back to home",
-                                "shop_link":  "Browse the shop"
-                            }
-                },
-    "accessibility":  {
-                          "skip_to_text":  "Skip to content",
-                          "open_menu":  "Open menu",
-                          "close":  "Close",
-                          "cart":  "Cart",
-                          "primary_nav":  "Primary navigation",
-                          "secondary_nav":  "Secondary navigation",
-                          "slideshow":  "Slideshow",
-                          "previous_slide":  "Previous slide",
-                          "next_slide":  "Next slide",
-                          "go_to_slide":  "Go to slide {{ index }}",
-                          "refresh_page":  "Choosing a selection results in a full page refresh."
-                      },
-    "newsletter":  {
-                       "email_label":  "Email address",
-                       "success":  "Thank you for subscribing! Sweet things are coming your way."
-                   },
-    "products":  {
-                     "product":  {
-                                     "add_to_cart":  "Add to cart",
-                                     "sold_out":  "Sold out",
-                                     "unavailable":  "Unavailable",
-                                     "quantity":  "Quantity",
-                                     "decrease":  "Decrease quantity",
-                                     "increase":  "Increase quantity",
-                                     "from_price":  "From",
-                                     "sale":  "Sale",
-                                     "regular_price":  "Regular price",
-                                     "sale_price":  "Sale price",
-                                     "description":  "Description",
-                                     "view_full_details":  "View full details",
-                                     "vendor":  "Vendor",
-                                     "share":  "Share",
-                                     "custom_order_note":  "Looking for something custom? Start a custom order instead.",
-                                     "custom_order_link":  "Request a custom order"
-                                 },
-                     "facets":  {
-                                    "sort_by_label":  "Sort by",
-                                    "filter_by_label":  "Filter",
-                                    "clear":  "Clear all",
-                                    "apply":  "Apply"
-                                }
-                 },
-    "collections":  {
-                        "general":  {
-                                        "no_matches":  "No products found. Try another collection, or request a custom order.",
-                                        "items_with_count":  {
-                                                                 "one":  "{{ count }} item",
-                                                                 "other":  "{{ count }} items"
-                                                             },
-                                        "view_all":  "View all"
-                                    },
-                        "list":  {
-                                     "title":  "Shop by occasion"
-                                 }
-                    },
-    "cart":  {
-                 "general":  {
-                                 "title":  "Your cart",
-                                 "empty":  "Your cart is empty.",
-                                 "continue_shopping":  "Continue shopping",
-                                 "subtotal":  "Subtotal",
-                                 "taxes_and_shipping_at_checkout":  "Taxes and shipping calculated at checkout.",
-                                 "checkout":  "Checkout",
-                                 "remove":  "Remove",
-                                 "product":  "Product",
-                                 "price":  "Price",
-                                 "quantity":  "Quantity",
-                                 "total":  "Total",
-                                 "note":  "Order notes",
-                                 "note_placeholder":  "Dates, colours, allergies, inspiration — tell us anything that helps.",
-                                 "update":  "Update cart",
-                                 "item_count":  {
-                                                    "one":  "{{ count }} item",
-                                                    "other":  "{{ count }} items"
-                                                }
-                             }
-             },
-    "contact":  {
-                    "form":  {
-                                 "name":  "Name",
-                                 "email":  "Email",
-                                 "phone":  "Phone",
-                                 "event_date":  "Event date",
-                                 "occasion":  "Occasion",
-                                 "quantity":  "Approximate quantity",
-                                 "message":  "Tell me about your cookies",
-                                 "send":  "Send enquiry",
-                                 "success":  "Thank you! Your message is on its way. I\u0027ll be in touch soon.",
-                                 "error":  "Please check the highlighted fields and try again.",
-                                 "quantity_placeholder":  "e.g. 2 dozen"
-                             }
-                },
-    "gallery":  {
-                    "filter_all":  "All",
-                    "load_more":  "Load more",
-                    "empty":  "No photos in this category yet."
-                },
-    "onboarding":  {
-                       "product_title":  "Example cookie set",
-                       "collection_title":  "Example collection"
-                   },
-    "blog":  {
-                 "empty":  "No posts yet.",
-                 "back_to":  "Back to {{ title }}"
-             },
-    "password":  {
-                     "password_label":  "Password",
-                     "password_placeholder":  "Enter password",
-                     "enter":  "Enter",
-                     "email_label":  "Email",
-                     "email_placeholder":  "Enter your email",
-                     "notify":  "Notify me"
-                 }
+  "general": {
+    "404": {
+      "title": "Page not found",
+      "subtext": "This page has wandered off. Let's get you back to something sweet.",
+      "link": "Back to home",
+      "shop_link": "Browse the shop"
+    },
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {{ number }}"
+    },
+    "search": {
+      "heading": "Search",
+      "placeholder": "Search cookies, collections, pages",
+      "submit": "Search",
+      "results_with_count": {
+        "one": "{{ count }} result for \"{{ terms }}\"",
+        "other": "{{ count }} results for \"{{ terms }}\""
+      },
+      "no_results": "No results for \"{{ terms }}\". Try another search, or browse the shop.",
+      "prompt": "Looking for something in particular? Search the shop below."
+    },
+    "breadcrumbs": {
+      "label": "Breadcrumbs",
+      "home": "Home"
+    }
+  },
+  "accessibility": {
+    "skip_to_text": "Skip to content",
+    "open_menu": "Open menu",
+    "close": "Close",
+    "cart": "Cart",
+    "primary_nav": "Primary navigation",
+    "secondary_nav": "Secondary navigation",
+    "slideshow": "Slideshow",
+    "previous_slide": "Previous slide",
+    "next_slide": "Next slide",
+    "go_to_slide": "Go to slide {{ index }}",
+    "refresh_page": "Choosing a selection results in a full page refresh."
+  },
+  "newsletter": {
+    "email_label": "Email address",
+    "success": "Thank you for subscribing! Sweet things are coming your way."
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity",
+      "decrease": "Decrease quantity",
+      "increase": "Increase quantity",
+      "from_price": "From",
+      "sale": "Sale",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
+      "description": "Description",
+      "view_full_details": "View full details",
+      "vendor": "Vendor",
+      "share": "Share",
+      "custom_order_note": "Looking for something custom? Start a custom order instead.",
+      "custom_order_link": "Request a custom order"
+    },
+    "facets": {
+      "sort_by_label": "Sort by",
+      "filter_by_label": "Filter",
+      "clear": "Clear all",
+      "apply": "Apply"
+    }
+  },
+  "collections": {
+    "general": {
+      "no_matches": "No products found. Try another collection, or request a custom order.",
+      "items_with_count": {
+        "one": "{{ count }} item",
+        "other": "{{ count }} items"
+      },
+      "view_all": "View all"
+    },
+    "list": {
+      "title": "Shop by occasion"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty.",
+      "continue_shopping": "Continue shopping",
+      "subtotal": "Subtotal",
+      "taxes_and_shipping_at_checkout": "Taxes and shipping calculated at checkout.",
+      "checkout": "Checkout",
+      "remove": "Remove",
+      "product": "Product",
+      "price": "Price",
+      "quantity": "Quantity",
+      "total": "Total",
+      "note": "Order notes",
+      "note_placeholder": "Dates, colours, allergies, inspiration — tell us anything that helps.",
+      "update": "Update cart",
+      "item_count": {
+        "one": "{{ count }} item",
+        "other": "{{ count }} items"
+      }
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "event_date": "Event date",
+      "occasion": "Occasion",
+      "quantity": "Approximate quantity",
+      "message": "Tell me about your cookies",
+      "send": "Send enquiry",
+      "success": "Thank you! Your message is on its way. I'll be in touch soon.",
+      "error": "Please check the highlighted fields and try again.",
+      "quantity_placeholder": "e.g. 2 dozen"
+    }
+  },
+  "gallery": {
+    "filter_all": "All",
+    "load_more": "Load more",
+    "empty": "No photos in this category yet."
+  },
+  "onboarding": {
+    "product_title": "Example cookie set",
+    "collection_title": "Example collection"
+  },
+  "blog": {
+    "empty": "No posts yet.",
+    "back_to": "Back to {{ title }}"
+  },
+  "password": {
+    "password_label": "Password",
+    "password_placeholder": "Enter password",
+    "enter": "Enter",
+    "email_label": "Email",
+    "email_placeholder": "Enter your email",
+    "notify": "Notify me"
+  },
+  "footer": {
+    "privacy_policy": "Privacy Policy",
+    "terms_of_service": "Terms of Service"
+  }
 }

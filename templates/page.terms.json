@@ -1,0 +1,35 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "The fine print",
+        "show_heart": true,
+        "heading": "Terms of Service",
+        "heading_style": "script",
+        "show_divider": true,
+        "text": "<p>Last updated August 2026</p>",
+        "overlay": 55,
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+
+    "body": {
+      "type": "rich-text",
+      "settings": {
+        "eyebrow": "",
+        "show_heart": false,
+        "heading": "",
+        "heading_style": "serif",
+        "show_divider": false,
+        "align": "left",
+        "bg": "default",
+        "button_label": "",
+        "button_link": "",
+        "text": "<p>These Terms of Service (\"Terms\") govern your use of the Southern Bloom Bakery Co. website and your purchase of custom sugar cookies from us. By browsing this site or placing an order, you agree to these Terms.</p><h3>Custom orders</h3><p>All cookies are made to order based on the details, inspiration images, and preferences you provide through our custom order form or contact form. Because every set is handmade, minor variations in color, size, and design from any reference photo or mockup are normal and expected, and are not considered a defect.</p><p>An order is not confirmed on our calendar until we have agreed on the design, quantity, and pricing, and, where applicable, received any required deposit or payment. Availability is limited and is not guaranteed until confirmed in writing.</p><h3>Allergen disclaimer</h3><p>Our cookies are prepared in a kitchen that also handles wheat, eggs, dairy, tree nuts, peanuts, and soy, among other common allergens. While we take care in preparing your order, we cannot guarantee that any product is completely free of allergens or safe for individuals with severe allergies or intolerances, as we are not a certified allergen-free facility. It is the customer's responsibility to inform us of any allergies or dietary concerns before ordering; however, we cannot be held liable for allergic reactions or adverse health effects resulting from consumption of our products.</p><h3>Pricing and payment</h3><p>Prices are provided as quotes and are subject to change until an order is confirmed. Accepted payment methods will be communicated at the time of quoting. Full or partial payment may be required in advance to secure your order date.</p><h3>Cancellations and refunds</h3><p>Because ingredients, time, and calendar space are reserved specifically for your order, deposits and payments are generally non-refundable once an order has been confirmed. Cancellations made with little notice before the event or pickup date may not be eligible for any refund. We handle cancellation requests on a case-by-case basis and will always work with you where we reasonably can.</p><h3>Pickup, delivery, and perishability</h3><p>You are responsible for providing accurate pickup or delivery information and for picking up or receiving your order at the agreed time. Sugar cookies are a perishable, handmade product best enjoyed within a few days of pickup and stored as instructed. We are not responsible for the condition of cookies once they have left our care, including damage during transport, improper storage, or delays caused by circumstances beyond our control (such as weather or delivery carrier issues).</p><h3>Intellectual property</h3><p>All content on this website — including photos, text, and original cookie designs — is the property of Southern Bloom Bakery Co. and may not be copied, reproduced, or used for commercial purposes without our written permission. Custom designs created for one customer's order are not to be replicated or resold by another party.</p><h3>Limitation of liability</h3><p>To the fullest extent permitted by law, Southern Bloom Bakery Co. shall not be liable for any indirect, incidental, or consequential damages arising from the purchase or use of our products or this website. Our total liability for any claim related to an order is limited to the amount you paid for that order.</p><h3>Governing law</h3><p>These Terms are governed by the laws of the State of Tennessee, without regard to its conflict of law principles.</p><h3>Changes to these Terms</h3><p>We may update these Terms from time to time. Continued use of our website or services after changes are posted constitutes acceptance of the updated Terms.</p><h3>Contact us</h3><p>Questions about these Terms can be sent to southernbloombakeryco@gmail.com or (615) 584-8190.</p>"
+      }
+    }
+  },
+  "order": ["banner", "body"]
+}

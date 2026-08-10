@@ -140,11 +140,23 @@
         {%- endif -%}
       </p>
 
-      {%- if section.settings.policy_menu != blank -%}
+      {%- if section.settings.policy_menu != blank and linklists[section.settings.policy_menu].links.size > 0 -%}
+        {%- comment -%} A real menu, if the merchant has set one up, always wins. {%- endcomment -%}
         <ul class="footer__policies">
           {%- for link in linklists[section.settings.policy_menu].links -%}
             <li><a href="{{ link.url }}">{{ link.title }}</a></li>
           {%- endfor -%}
+        </ul>
+      {%- elsif section.settings.show_legal_links -%}
+        {%- comment -%}
+          Fallback so the links work immediately without requiring a "footer"
+          navigation menu to be built in the admin first. Points at the two
+          bundled policy pages/templates — Content -> Pages -> add pages with
+          handles privacy-policy / terms-of-service, template: privacy / terms.
+        {%- endcomment -%}
+        <ul class="footer__policies">
+          <li><a href="{{ section.settings.privacy_link | default: '/pages/privacy-policy' }}">{{ 'footer.privacy_policy' | t }}</a></li>
+          <li><a href="{{ section.settings.terms_link | default: '/pages/terms-of-service' }}">{{ 'footer.terms_of_service' | t }}</a></li>
         </ul>
       {%- endif -%}
     </div>
@@ -206,7 +218,25 @@
       "type": "link_list",
       "id": "policy_menu",
       "label": "Policy menu",
-      "default": "footer"
+      "info": "Optional. Overrides the two links below if the menu exists and has items."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_legal_links",
+      "label": "Show Privacy Policy / Terms of Service links",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "privacy_link",
+      "label": "Privacy Policy link",
+      "info": "Leave empty to use the built-in Privacy Policy page."
+    },
+    {
+      "type": "url",
+      "id": "terms_link",
+      "label": "Terms of Service link",
+      "info": "Leave empty to use the built-in Terms of Service page."
     },
     { "type": "header", "content": "Colours" },
     {

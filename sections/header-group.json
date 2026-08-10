@@ -28,7 +28,8 @@
         "split_after": 2,
         "drawer_button_label": "Order custom cookies",
         "drawer_button_link": "",
-        "sticky": true
+        "sticky": true,
+        "show_social": true
       }
     }
   },

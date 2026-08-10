@@ -1124,19 +1124,43 @@ a.occasions__link { cursor: pointer; }
 .newsletter-form__msg--error { color: #a33552; }
 .newsletter-form__msg--success { color: #2f6b47; }
 
-.social-icons { display: flex; gap: 12px; justify-content: center; }
+/* The icon glyphs already include their own filled circle (see icon.liquid),
+   so `color` alone gives a solid badge — the ring here is a box-shadow
+   "cutout" matching the page background, which lifts each badge off
+   whatever it's sitting on (footer, header) like a little sticker, and a
+   soft shadow gives them some bounce/weight. Playful, on-brand hover: a
+   pop of scale plus a small alternating tilt, rather than a plain lift. */
+.social-icons { display: flex; gap: 13px; justify-content: center; }
 .social-icons__link {
   display: grid;
   place-items: center;
-  width: 38px; height: 38px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
   color: var(--c-rose);
-  transition: color .3s cubic-bezier(.22,1,.36,1), transform .35s cubic-bezier(.34,1.56,.64,1);
+  box-shadow: 0 0 0 3px var(--c-bg), 0 6px 14px -7px rgba(74, 50, 50, .45);
+  transition:
+    color .3s cubic-bezier(.22, 1, .36, 1),
+    transform .45s cubic-bezier(.34, 1.56, .64, 1),
+    box-shadow .3s ease;
 }
 .social-icons__link svg { width: 100%; height: 100%; }
 .social-icons__link:hover,
 .social-icons__link:focus-visible {
   color: var(--c-rose-deep);
-  transform: translateY(-3px) scale(1.06);
+  transform: translateY(-4px) scale(1.14) rotate(-7deg);
+  box-shadow: 0 0 0 3px var(--c-bg), 0 14px 22px -9px rgba(160, 70, 95, .55);
+}
+.social-icons__link:nth-child(even):hover,
+.social-icons__link:nth-child(even):focus-visible { transform: translateY(-4px) scale(1.14) rotate(7deg); }
+.social-icons__link:active { transform: translateY(-1px) scale(1.05); transition-duration: .1s; }
+
+/* Header instance: smaller and tighter so it sits comfortably beside the
+   cart icon without crowding the nav row. Desktop only — see hide-mobile
+   on the render call; phones already get these in the menu drawer. */
+.header__social.social-icons { gap: 9px; margin-right: 2px; }
+.header__social .social-icons__link {
+  width: 30px; height: 30px;
+  box-shadow: 0 0 0 2px var(--c-bg), 0 4px 10px -6px rgba(74, 50, 50, .4);
 }
 
 .footer__columns {
