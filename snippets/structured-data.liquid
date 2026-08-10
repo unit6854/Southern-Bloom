@@ -1,0 +1,86 @@
+{%- comment -%}
+  JSON-LD structured data. Purely invisible metadata for search engines —
+  no rendered output, so safe to add without touching the design.
+
+  - Bakery (LocalBusiness): sitewide, every page. No street address is given
+    in Theme settings (a service-area business, not a public storefront), so
+    this deliberately uses `areaServed` rather than fabricating a `address`
+    Google/schema.org don't have — that would be worse than omitting it.
+  - Product: product pages only, using data already on the page.
+{%- endcomment -%}
+{%- liquid
+  assign sd_logo = settings.logo_mark | default: settings.logo_image
+  if sd_logo != blank
+    assign sd_logo_url = sd_logo | image_url: width: 512
+    unless sd_logo_url contains 'http'
+      assign sd_logo_url = sd_logo_url | prepend: 'https:'
+    endunless
+  else
+    assign sd_logo_url = 'logo-mark.webp' | asset_url
+    unless sd_logo_url contains 'http'
+      assign sd_logo_url = sd_logo_url | prepend: 'https:'
+    endunless
+  endif
+
+  assign sd_same_as = ''
+  if settings.social_instagram_link != blank
+    assign sd_same_as = sd_same_as | append: settings.social_instagram_link | append: ','
+  endif
+  if settings.social_facebook_link != blank
+    assign sd_same_as = sd_same_as | append: settings.social_facebook_link | append: ','
+  endif
+  if settings.social_pinterest_link != blank
+    assign sd_same_as = sd_same_as | append: settings.social_pinterest_link | append: ','
+  endif
+  if settings.social_tiktok_link != blank
+    assign sd_same_as = sd_same_as | append: settings.social_tiktok_link | append: ','
+  endif
+  assign sd_same_as_list = sd_same_as | split: ','
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Bakery",
+  "name": {{ shop.name | json }},
+  "url": {{ canonical_url | json }},
+  "logo": {{ sd_logo_url | json }},
+  "image": {{ sd_logo_url | json }}
+  {%- if settings.meta_description != blank -%}, "description": {{ settings.meta_description | json }}{%- endif -%}
+  {%- if settings.contact_phone != blank -%}, "telephone": {{ settings.contact_phone | json }}{%- endif -%}
+  {%- if settings.contact_email != blank -%}, "email": {{ settings.contact_email | json }}{%- endif -%}
+  {%- if settings.service_area != blank -%}, "areaServed": {{ settings.service_area | json }}{%- endif -%}
+  {%- if sd_same_as_list.size > 0 -%}, "sameAs": {{ sd_same_as_list | json }}{%- endif -%}
+}
+</script>
+
+{%- if request.page_type == 'product' and product -%}
+  {%- liquid
+    assign sd_price = product.selected_or_first_available_variant.price | default: product.price
+    assign sd_availability = 'https://schema.org/OutOfStock'
+    if product.selected_or_first_available_variant.available or product.available
+      assign sd_availability = 'https://schema.org/InStock'
+    endif
+    assign sd_product_img = product.featured_image | image_url: width: 1200
+    unless sd_product_img contains 'http'
+      assign sd_product_img = sd_product_img | prepend: 'https:'
+    endunless
+  -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "description": {{ product.description | strip_html | json }},
+    "image": {{ sd_product_img | json }},
+    "sku": {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+    "brand": { "@type": "Brand", "name": {{ shop.name | json }} },
+    "offers": {
+      "@type": "Offer",
+      "url": {{ canonical_url | json }},
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "price": {{ sd_price | money_without_currency | strip_html | json }},
+      "availability": {{ sd_availability | json }}
+    }
+  }
+  </script>
+{%- endif -%}

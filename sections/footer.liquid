@@ -51,7 +51,7 @@
                 class="newsletter-form__input"
                 type="email"
                 name="contact[email]"
-                value="{{ form.email }}"
+                value="{{ form.email | escape }}"
                 placeholder="{{ section.settings.newsletter_placeholder | default: 'Enter your email' }}"
                 autocomplete="email"
                 required

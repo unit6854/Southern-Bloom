@@ -28,7 +28,38 @@
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
+    {%- comment -%}
+      `page_description` isn't a Shopify-populated global — it's a plain
+      variable, and nothing else in the theme was ever setting it, so every
+      product, collection, article and page shared one identical sitewide
+      description. Product/collection/article/page objects are already
+      available here regardless of page type, since Shopify resolves them
+      from the URL before the layout renders, so this can run in <head>
+      even though the matching section (which also reads these same
+      objects) isn't rendered until later in the document.
+    {%- endcomment -%}
     {%- liquid
+      assign page_description = settings.meta_description
+      case request.page_type
+        when 'product'
+          if product.description != blank
+            assign page_description = product.description | strip_html | truncate: 160
+          endif
+        when 'collection'
+          if collection.description != blank
+            assign page_description = collection.description | strip_html | truncate: 160
+          endif
+        when 'article'
+          if article.excerpt != blank
+            assign page_description = article.excerpt | strip_html | truncate: 160
+          elsif article.content != blank
+            assign page_description = article.content | strip_html | truncate: 160
+          endif
+        when 'page'
+          if page.content != blank
+            assign page_description = page.content | strip_html | truncate: 160
+          endif
+      endcase
       assign meta_desc = page_description | default: settings.meta_description
     -%}
     {%- if meta_desc != blank -%}
@@ -36,6 +67,7 @@
     {%- endif -%}
 
     {% render 'meta-tags' %}
+    {% render 'structured-data' %}
 
     {%- comment -%} ---- Fonts ---- {%- endcomment -%}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -133,7 +165,17 @@
         }
       </style>
     {%- endif -%}
-    {{ 'pages.css' | asset_url | stylesheet_tag }}
+    {%- comment -%}
+      pages.css only styles templates other than the homepage (gallery, shop,
+      product, cart, contact, account, 404, password — see the file's own
+      header comment). None of its ~180 selectors are used by any section
+      that can appear on index, so it's skipped there: roughly 28KB of
+      render-blocking CSS the homepage — the highest-traffic entry point —
+      was downloading and parsing for nothing.
+    {%- endcomment -%}
+    {%- unless request.page_type == 'index' -%}
+      {{ 'pages.css' | asset_url | stylesheet_tag }}
+    {%- endunless -%}
 
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
     <script src="{{ 'theme.js' | asset_url }}" defer></script>

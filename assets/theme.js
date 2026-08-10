@@ -7,6 +7,24 @@
 
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* `init()` re-runs in full on every `shopify:section:load` — the theme
+     editor fires it whenever ANY section on the page is saved, not just the
+     one a given feature belongs to. Elements that survive that reload (i.e.
+     everything except the section actually being edited) would otherwise
+     accumulate a fresh set of listeners/intervals on every unrelated save:
+     harmless for a click handler that just re-runs the same idempotent
+     toggle, but a real bug for anything with state — a hero slideshow whose
+     autoplay speeds up with every stacked interval, a quantity stepper that
+     jumps by 2 because two "+1" listeners both fire, a lightbox that opens
+     itself twice, overlapping. Marking the element itself (rather than a
+     module-level flag) means a section that genuinely IS reloaded — a fresh
+     DOM node, unmarked — still initializes correctly. */
+  function once(el) {
+    if (!el || el.dataset.sbBound) return false;
+    el.dataset.sbBound = 'true';
+    return true;
+  }
+
   /* ------------------------------------------------------------------ */
   /* Mobile navigation drawer                                            */
   /* ------------------------------------------------------------------ */
@@ -14,6 +32,7 @@
     var nav = document.querySelector('[data-mobile-nav]');
     var toggle = document.querySelector('[data-menu-toggle]');
     if (!nav || !toggle) return;
+    if (!once(nav)) return;
 
     var lastFocused = null;
 
@@ -104,6 +123,7 @@
     document.querySelectorAll('[data-announcement]').forEach(function (bar) {
       var items = bar.querySelectorAll('.announcement__item');
       if (items.length < 2 || prefersReduced) return;
+      if (!once(bar)) return;
 
       var i = 0;
       var speed = (parseInt(bar.dataset.speed, 10) || 5) * 1000;
@@ -122,6 +142,7 @@
     document.querySelectorAll('[data-hero]').forEach(function (hero) {
       var slides = hero.querySelectorAll('[data-hero-slide]');
       if (slides.length < 2) return;
+      if (!once(hero)) return;
 
       var dots = hero.querySelectorAll('[data-hero-dot]');
       var current = 0;
@@ -195,6 +216,7 @@
 
     if (filters.length && items.length) {
       filters.forEach(function (btn) {
+        if (!once(btn)) return;
         btn.addEventListener('click', function () {
           var cat = btn.dataset.category;
           filters.forEach(function (b) {
@@ -215,6 +237,7 @@
 
     // "Load more" — hides overflow items until asked for
     document.querySelectorAll('[data-gallery-more]').forEach(function (btn) {
+      if (!once(btn)) return;
       btn.addEventListener('click', function () {
         document.querySelectorAll('[data-gallery-item].is-hidden-overflow').forEach(function (el) {
           el.classList.remove('is-hidden-overflow');
@@ -231,6 +254,14 @@
       return i.querySelector('[data-lightbox]');
     });
     if (!triggers.length) return;
+    // One modal for the whole page, appended straight to <body> rather than
+    // living inside any section — a per-element guard can't mark it, so this
+    // is the one place a plain module-level flag is the right tool (same as
+    // smooth-scroll/sticky-header). Without it, editing an unrelated section
+    // re-ran this on the same gallery items and appended a second overlapping
+    // lightbox, each with its own listeners, so a click opened both at once.
+    if (window.__sbLightboxBound) return;
+    window.__sbLightboxBound = true;
 
     var box = document.createElement('div');
     box.className = 'lightbox';
@@ -305,6 +336,7 @@
   function initCartDrawer() {
     var drawer = document.querySelector('[data-cart-drawer]');
     if (!drawer) return;
+    if (!once(drawer)) return;
 
     function open(e) {
       if (e) e.preventDefault();
@@ -336,6 +368,7 @@
     document.querySelectorAll('[data-product-media]').forEach(function (root) {
       var main = root.querySelector('[data-product-main-img]');
       if (!main) return;
+      if (!once(root)) return;
       root.querySelectorAll('[data-product-thumb]').forEach(function (thumb) {
         thumb.addEventListener('click', function () {
           main.src = thumb.dataset.full;
@@ -356,6 +389,7 @@
     document.querySelectorAll('[data-qty]').forEach(function (root) {
       var input = root.querySelector('input');
       if (!input) return;
+      if (!once(root)) return;
       root.querySelectorAll('[data-qty-change]').forEach(function (btn) {
         btn.addEventListener('click', function () {
           var step = parseInt(btn.dataset.qtyChange, 10);
@@ -372,7 +406,9 @@
   /* Reveal-on-scroll                                                    */
   /* ------------------------------------------------------------------ */
   function initReveal() {
-    var els = document.querySelectorAll('[data-reveal]');
+    var els = Array.prototype.filter.call(document.querySelectorAll('[data-reveal]'), function (el) {
+      return once(el);
+    });
     if (!els.length) return;
     if (prefersReduced || !('IntersectionObserver' in window)) {
       els.forEach(function (el) { el.classList.add('is-revealed'); });
@@ -424,6 +460,15 @@
     // panel) should scroll natively — only take over the wheel event when
     // no scrollable ancestor between it and <body> can still move.
     function hasOwnScroll(el, deltaY) {
+      // The only elements in the theme with their own scrollbar (cart
+      // drawer, mobile nav) are exactly the ones that lock body scroll while
+      // open, so that's a one-line, allocation-free way to skip the ancestor
+      // walk below entirely on every normal wheel tick — the walk calls
+      // getComputedStyle on each ancestor up to <body>, which on a page like
+      // the hero (content-inner > content > slide > track > hero > section)
+      // is 5+ style reads per event, and wheel fires at high frequency
+      // during a scroll gesture.
+      if (document.body.style.overflow !== 'hidden') return false;
       // e.target is an Element for real wheel events, but can be the document
       // (or, in synthetic/edge cases, something else entirely) — getComputedStyle
       // throws on anything that isn't one, so bail out to "no nested scroller".

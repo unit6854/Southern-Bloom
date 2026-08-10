@@ -84,11 +84,11 @@
           <div class="contact-form__row">
             <div class="field">
               <label class="field__label" for="ContactName">{{ 'contact.form.name' | t }}</label>
-              <input class="input" id="ContactName" type="text" name="contact[name]" value="{{ form.name }}" autocomplete="name" required>
+              <input class="input" id="ContactName" type="text" name="contact[name]" value="{{ form.name | escape }}" autocomplete="name" required>
             </div>
             <div class="field">
               <label class="field__label" for="ContactEmail">{{ 'contact.form.email' | t }}</label>
-              <input class="input" id="ContactEmail" type="email" name="contact[email]" value="{{ form.email }}" autocomplete="email" required>
+              <input class="input" id="ContactEmail" type="email" name="contact[email]" value="{{ form.email | escape }}" autocomplete="email" required>
             </div>
           </div>
 
@@ -121,7 +121,7 @@
 
           <div class="field">
             <label class="field__label" for="ContactBody">{{ 'contact.form.message' | t }}</label>
-            <textarea class="textarea" id="ContactBody" name="contact[body]" required>{{ form.body }}</textarea>
+            <textarea class="textarea" id="ContactBody" name="contact[body]" required>{{ form.body | escape }}</textarea>
           </div>
 
           <button type="submit" class="btn btn--primary contact-form__submit">
