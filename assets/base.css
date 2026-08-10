@@ -22,7 +22,14 @@ body {
   background-color: var(--c-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* `clip` prevents the same horizontal bleed as `hidden` (full-bleed hero,
+     off-canvas drawers, etc.) without the classic side effect: ANY ancestor
+     with overflow other than `visible` disqualifies position:sticky
+     descendants from sticking to the viewport, even with nothing to actually
+     scroll. That silently broke the header's "stick to top" setting.
+     `hidden` stays first as a fallback for older Safari (pre-16). */
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 img, svg, video { display: block; max-width: 100%; height: auto; }

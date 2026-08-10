@@ -112,13 +112,6 @@
         "label": "Show soft stripe texture",
         "default": true
       },
-      {
-        "type": "checkbox",
-        "id": "enable_custom_cursor",
-        "label": "Use the heart mouse pointer",
-        "default": true,
-        "info": "A small pink heart replaces the arrow on desktop. Touch screens are unaffected, and text boxes keep a normal caret."
-      },
 
       { "type": "header", "content": "Text" },
       {
@@ -144,6 +137,26 @@
         "id": "color_line",
         "label": "Borders & rules",
         "default": "#eddfe1"
+      }
+    ]
+  },
+
+  {
+    "name": "Motion & interactions",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_custom_cursor",
+        "label": "Use the heart mouse pointer",
+        "default": true,
+        "info": "A small pink heart replaces the arrow on desktop. Touch screens are unaffected, and text boxes keep a normal caret."
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_smooth_scroll",
+        "label": "Smooth momentum scrolling",
+        "default": true,
+        "info": "Gives the page a little weight as you scroll with a mouse or trackpad. Touch scrolling is native either way, and this always turns off for visitors who ask their system to reduce motion."
       }
     ]
   },

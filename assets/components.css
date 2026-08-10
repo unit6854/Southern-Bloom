@@ -46,14 +46,25 @@
 }
 
 /* Opt-in via the section's "Stick to top when scrolling" setting.
+   Plain `position: sticky` cannot work here: `{% sections 'header-group' %}`
+   wraps the header in its own <section class="header-section">, sized
+   exactly to the header's own height. That leaves the header zero "travel"
+   room inside its containing block, so it would immediately scroll away
+   with the page instead of holding — sticky needs a taller ancestor to have
+   any visible effect at all. theme.js toggles `.is-pinned` once the page
+   scrolls past the header's natural position; `header__sticky-spacer` (also
+   JS-sized) fills the gap position:fixed leaves in the flow.
    background-color is set explicitly because .stripe-bg only paints the
    stripe image — without it the page would show through once it detaches. */
-.header--sticky {
-  position: sticky;
+.header--sticky.is-pinned {
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   background-color: var(--c-bg);
   box-shadow: 0 6px 20px -18px rgba(74, 50, 50, .55);
 }
+.header__sticky-spacer[hidden] { display: none; }
 .header__inner {
   display: grid;
   grid-template-columns: auto 1fr auto;

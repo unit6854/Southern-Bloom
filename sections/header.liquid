@@ -141,6 +141,14 @@
     </div>
   </div>
 </header>
+{%- if section.settings.sticky -%}
+  {%- comment -%}
+    Fills the gap left when theme.js flips the header to position:fixed.
+    Height is set by JS to match the header's real rendered height, so it
+    stays correct across breakpoints and after web fonts swap in.
+  {%- endcomment -%}
+  <div class="header__sticky-spacer" data-header-spacer hidden></div>
+{%- endif -%}
 
 {% schema %}
 {

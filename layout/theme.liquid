@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="{{ request.locale.iso_code }}">
+<html class="no-js" lang="{{ request.locale.iso_code }}" data-smooth-scroll="{{ settings.enable_smooth_scroll }}">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +10,15 @@
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
       <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+    {%- else -%}
+      {%- comment -%}
+        Bundled fallback (the logo mark, squared up) so the browser tab and
+        home-screen icon are branded before the client uploads their own via
+        Theme settings -> Logo & branding -> Favicon.
+      {%- endcomment -%}
+      <link rel="icon" type="image/png" sizes="32x32" href="{{ 'favicon.png' | asset_url }}">
+      <link rel="icon" type="image/png" sizes="512x512" href="{{ 'favicon-512.png' | asset_url }}">
+      <link rel="apple-touch-icon" href="{{ 'favicon-180.png' | asset_url }}">
     {%- endif -%}
 
     <title>

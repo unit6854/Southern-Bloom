@@ -46,6 +46,58 @@
   }
 
   /* ------------------------------------------------------------------ */
+  /* Sticky header                                                        */
+  /* Native `position: sticky` doesn't work here: Shopify wraps the header */
+  /* in its own <section> sized exactly to the header's height, leaving   */
+  /* zero travel room for sticky to hold. Fixed + a JS-toggled class, with */
+  /* a spacer to prevent the content jump, does the same job instead.     */
+  /* ------------------------------------------------------------------ */
+  function initStickyHeader() {
+    var header = document.querySelector('.header--sticky');
+    var spacer = document.querySelector('[data-header-spacer]');
+    if (!header || !spacer) return;
+    // init() re-runs on shopify:section:load; this only needs to bind once.
+    if (window.__sbStickyHeaderBound) return;
+    window.__sbStickyHeaderBound = true;
+
+    var pinPoint = 0;
+
+    function measure() {
+      // Document-relative offset, valid however far the page is already
+      // scrolled — only meaningful while NOT pinned (fixed positioning
+      // would otherwise make the header its own reference point).
+      if (!header.classList.contains('is-pinned')) {
+        pinPoint = header.getBoundingClientRect().top + window.scrollY;
+      }
+    }
+
+    function update() {
+      var shouldPin = window.scrollY > pinPoint;
+      var isPinned = header.classList.contains('is-pinned');
+      if (shouldPin && !isPinned) {
+        spacer.style.height = header.getBoundingClientRect().height + 'px';
+        spacer.hidden = false;
+        header.classList.add('is-pinned');
+      } else if (!shouldPin && isPinned) {
+        header.classList.remove('is-pinned');
+        spacer.hidden = true;
+      } else if (isPinned) {
+        // keep the spacer in step if the header's own height changes while
+        // pinned (a web font swapping in, the window growing/shrinking)
+        spacer.style.height = header.getBoundingClientRect().height + 'px';
+      }
+    }
+
+    measure();
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', function () {
+      measure();
+      update();
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
   /* Rotating announcement bar                                           */
   /* ------------------------------------------------------------------ */
   function initAnnouncement() {
@@ -338,10 +390,106 @@
   }
 
   /* ------------------------------------------------------------------ */
+  /* Smooth momentum scrolling                                           */
+  /* A lerp'd wheel handler gives the page some weight without touching  */
+  /* layout, position:sticky, or the native scrollbar — every frame still */
+  /* calls window.scrollTo with a real scrollY, so the scrollbar thumb    */
+  /* (pink, styled in base.css) tracks it exactly like a native scroll.   */
+  /* Deliberately desktop-only: touchscreens already have native          */
+  /* momentum scrolling that this would only fight with.                  */
+  /* ------------------------------------------------------------------ */
+  function initSmoothScroll() {
+    if (prefersReduced) return;
+    if (document.documentElement.dataset.smoothScroll !== 'true') return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (!('requestAnimationFrame' in window)) return;
+    // init() re-runs on shopify:section:load (theme editor re-renders a
+    // section); the listeners below are page-level and must attach once.
+    if (window.__sbSmoothScrollBound) return;
+    window.__sbSmoothScrollBound = true;
+
+    var EASE = 0.09;      // lower = heavier, slower to catch up to the target
+    var EPSILON = 0.4;    // px; below this the lerp snaps instead of creeping forever
+
+    var current = window.scrollY;
+    var target = current;
+    var expected = current;
+    var raf = null;
+
+    function maxScroll() {
+      return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    }
+
+    // Elements with their own vertical scrollbar (cart drawer, mobile nav
+    // panel) should scroll natively — only take over the wheel event when
+    // no scrollable ancestor between it and <body> can still move.
+    function hasOwnScroll(el, deltaY) {
+      // e.target is an Element for real wheel events, but can be the document
+      // (or, in synthetic/edge cases, something else entirely) — getComputedStyle
+      // throws on anything that isn't one, so bail out to "no nested scroller".
+      if (!(el instanceof Element)) return false;
+      while (el && el !== document.body && el !== document.documentElement) {
+        var style = window.getComputedStyle(el);
+        if (/(auto|scroll)/.test(style.overflowY) && el.scrollHeight > el.clientHeight) {
+          var atTop = el.scrollTop <= 0;
+          var atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+          if (!(deltaY < 0 && atTop) && !(deltaY > 0 && atBottom)) return true;
+        }
+        el = el.parentElement;
+      }
+      return false;
+    }
+
+    function step() {
+      current += (target - current) * EASE;
+      if (Math.abs(target - current) < EPSILON) {
+        current = target;
+        raf = null;
+      } else {
+        raf = requestAnimationFrame(step);
+      }
+      expected = current;
+      // behavior:'instant' overrides the CSS `scroll-behavior: smooth` on
+      // <html> (used for anchor links) — without it every one of our own
+      // per-frame calls would itself be smoothed, doubling up the motion.
+      window.scrollTo({ top: current, left: 0, behavior: 'instant' });
+    }
+
+    window.addEventListener('wheel', function (e) {
+      if (e.ctrlKey) return;                               // pinch-zoom gesture
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;  // horizontal swipe row
+      if (hasOwnScroll(e.target, e.deltaY)) return;         // nested scroller has room
+
+      var dy = e.deltaY;
+      if (e.deltaMode === 1) dy *= 18;                      // "line" mode -> px
+      else if (e.deltaMode === 2) dy *= window.innerHeight; // "page" mode -> px
+
+      e.preventDefault();
+      target = Math.min(maxScroll(), Math.max(0, target + dy));
+      if (!raf) raf = requestAnimationFrame(step);
+    }, { passive: false });
+
+    // Keyboard scrolling, scrollbar-thumb dragging, and anchor-link jumps
+    // move window.scrollY without going through the wheel handler above.
+    // If a scroll happens that we did not just cause ourselves, adopt the
+    // new position instantly rather than snapping back to a stale target.
+    window.addEventListener('scroll', function () {
+      if (Math.abs(window.scrollY - expected) > 2) {
+        current = target = window.scrollY;
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', function () {
+      target = Math.min(target, maxScroll());
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
   /* Boot                                                                */
   /* ------------------------------------------------------------------ */
   function init() {
     initMobileNav();
+    initStickyHeader();
     initAnnouncement();
     initHero();
     initGallery();
@@ -349,6 +497,7 @@
     initProductMedia();
     initQuantity();
     initReveal();
+    initSmoothScroll();
   }
 
   if (document.readyState === 'loading') {
