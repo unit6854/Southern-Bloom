@@ -73,7 +73,9 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 12px;
-  padding-block: 14px;
+  /* asymmetric on purpose: +20px above only, to open the gap between the
+     announcement bar and the wordmark without moving the header lower */
+  padding-block: 34px 14px;
 }
 
 .header__burger {
@@ -88,6 +90,46 @@
 .header__logo { justify-self: center; text-align: center; min-width: 0; }
 .header__logo-heading { margin: 0; font-weight: inherit; font-size: inherit; }
 .header__logo-link { display: inline-block; }
+
+/* Rose glow behind the wordmark on hover. Safe to do with a pseudo-element
+   here (unlike the buttons in the note about background-image hovers) because
+   the link wraps a real element, not a bare text node, so the wordmark can be
+   lifted above the glow with z-index. isolation:isolate keeps those z-indexes
+   local instead of fighting .header{z-index:20}. Gated on a real pointer so a
+   tap on mobile cannot leave the glow stuck on. */
+@media (hover: hover) and (pointer: fine) {
+  .header__logo-link { position: relative; isolation: isolate; }
+  .header__logo-link::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    width: 116%;
+    height: 128%;
+    translate: -50% -50%;
+    scale: 0.84;
+    border-radius: 50%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(213, 115, 138, 0.42) 0%,
+      rgba(213, 115, 138, 0.24) 40%,
+      rgba(213, 115, 138, 0.08) 62%,
+      rgba(213, 115, 138, 0) 74%
+    );
+    filter: blur(7px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+                scale 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .header__logo-link > * { position: relative; z-index: 1; }
+  .header__logo-link:hover::before,
+  .header__logo-link:focus-visible::before { opacity: 1; scale: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header__logo-link::before { transition: none; scale: 1; }
+}
 .header__logo-img { width: auto; max-height: 74px; object-fit: contain; }
 
 .header__wordmark { display: block; }
@@ -199,8 +241,10 @@
   .header__inner {
     grid-template-columns: 1fr auto 1fr;
     /* Trimmed ~20px off the top and bottom — the bar read as too tall
-       against the wordmark, which already carries its own line-box space. */
-    padding-block: clamp(5px, 0.45vw, 8px);
+       against the wordmark, which already carries its own line-box space.
+       The top then got 20px back by client request, to open the gap between
+       the announcement bar and the wordmark; the bottom stays trimmed. */
+    padding-block: calc(clamp(5px, 0.45vw, 8px) + 20px) clamp(5px, 0.45vw, 8px);
   }
   .header__nav--left { justify-self: start; }
   .header__logo-img { max-height: 92px; }
