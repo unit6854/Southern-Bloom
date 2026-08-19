@@ -308,14 +308,12 @@
       {
         "type": "text",
         "id": "social_pinterest_link",
-        "label": "Pinterest",
-        "default": ""
+        "label": "Pinterest"
       },
       {
         "type": "text",
         "id": "social_tiktok_link",
-        "label": "TikTok",
-        "default": ""
+        "label": "TikTok"
       }
     ]
   },
