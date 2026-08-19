@@ -105,19 +105,21 @@
     z-index: 0;
     left: 50%;
     top: 50%;
-    width: 116%;
-    height: 128%;
+    width: 139%;
+    height: 168%;
     translate: -50% -50%;
     scale: 0.84;
     border-radius: 50%;
     background: radial-gradient(
       ellipse at center,
-      rgba(213, 115, 138, 0.42) 0%,
-      rgba(213, 115, 138, 0.24) 40%,
-      rgba(213, 115, 138, 0.08) 62%,
-      rgba(213, 115, 138, 0) 74%
+      rgba(213, 115, 138, 0.23) 0%,
+      rgba(213, 115, 138, 0.21) 28%,
+      rgba(213, 115, 138, 0.15) 50%,
+      rgba(213, 115, 138, 0.08) 68%,
+      rgba(213, 115, 138, 0.03) 82%,
+      rgba(213, 115, 138, 0) 100%
     );
-    filter: blur(7px);
+    filter: blur(16px);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.38s cubic-bezier(0.22, 1, 0.36, 1),
