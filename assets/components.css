@@ -14,7 +14,12 @@
 .announcement__viewport {
   position: relative;
   display: grid;
-  padding: 11px 16px;
+  padding: 4.5px 16px;
+  /* the size lives on the block, not the inline .announcement__text: an inline
+     box cannot shrink its line box, so the block strut would otherwise hold the
+     bar at the inherited 28px regardless of how small the text is set */
+  font-size: clamp(0.5rem, 0.44rem + 0.27vw, 0.64rem);
+  line-height: 1.35;
 }
 .announcement__item {
   grid-area: 1 / 1;
@@ -26,11 +31,9 @@
 .announcement__text {
   /* inline (not flex) so the heart stays with the last word when the text wraps */
   display: inline;
-  font-size: clamp(0.63rem, 0.55rem + 0.34vw, 0.8rem);
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  line-height: 1.4;
 }
 .announcement__heart { margin-left: 0.55em; white-space: nowrap; }
 .announcement__heart svg { width: 1em; height: 1em; }
