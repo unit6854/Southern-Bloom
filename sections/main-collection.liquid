@@ -1,4 +1,4 @@
-<div class="collection stripe-bg section">
+<div class="collection stripe-bg section{% if section.settings.tight_top %} section--tight-top{% endif %}">
   <div class="container container--wide">
 
     {%- if section.settings.show_description and collection.description != blank -%}
@@ -54,6 +54,13 @@
   "tag": "section",
   "class": "collection-section",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "tight_top",
+      "label": "Reduce space above the grid",
+      "default": false,
+      "info": "Turn on when the banner above is set to Compact."
+    },
     {
       "type": "checkbox",
       "id": "show_description",

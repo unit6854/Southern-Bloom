@@ -2,7 +2,7 @@
   assign heading = section.settings.heading | default: page.title | default: collection.title
 -%}
 
-<div class="page-hero stripe-bg{% if section.settings.image != blank %} page-hero--image{% endif %}">
+<div class="page-hero stripe-bg page-hero--{{ section.settings.size | default: 'standard' }}{% if section.settings.image != blank %} page-hero--image{% endif %}">
   {%- if section.settings.image != blank -%}
     <div class="page-hero__bg media" aria-hidden="true">
       {{
@@ -56,6 +56,17 @@
   "tag": "section",
   "class": "page-hero-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "size",
+      "label": "Banner size",
+      "options": [
+        { "value": "compact", "label": "Compact" },
+        { "value": "standard", "label": "Standard" }
+      ],
+      "default": "standard",
+      "info": "Compact keeps whatever follows the banner visible without scrolling."
+    },
     {
       "type": "text",
       "id": "eyebrow",

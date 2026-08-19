@@ -3,6 +3,7 @@
     "banner": {
       "type": "page-hero",
       "settings": {
+        "size": "compact",
         "eyebrow": "Ready to order",
         "show_heart": true,
         "heading": "The Shop",
@@ -10,13 +11,14 @@
         "show_divider": true,
         "text": "<p>Ready-to-order cookie sets. Looking for something custom? Use the order form and we will design it together.</p>",
         "overlay": 55,
-        "button_label": "Order custom cookies",
+        "button_label": "",
         "button_link": ""
       }
     },
     "main": {
       "type": "main-collection",
       "settings": {
+        "tight_top": true,
         "show_description": true,
         "show_sort": true,
         "columns": 4,

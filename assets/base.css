@@ -117,6 +117,9 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .section { padding-block: var(--section-pad); }
 .section--tight { padding-block: calc(var(--section-pad) * 0.62); }
 .section--flush { padding-block: 0; }
+/* Trims only the top, for a section sitting directly under a compact banner
+   that already carries its own bottom padding. */
+.section--tight-top { padding-top: calc(var(--section-pad) * 0.34); }
 
 :root {
   --gutter: 22px;
