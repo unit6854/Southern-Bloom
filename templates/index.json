@@ -21,7 +21,8 @@
       "settings": {
         "autoplay": true,
         "autoplay_speed": 7,
-        "image_ratio": "4 / 3"
+        "image_ratio": "4 / 3",
+        "scrim": 40
       }
     },
 

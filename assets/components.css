@@ -510,11 +510,16 @@
     position: absolute;
     inset: 0;
     z-index: 1;
+    /* 135deg, not "to bottom right": the hero is ~2.36:1, and a corner-to-
+       corner keyword would flatten the wash to the box diagonal. An explicit
+       angle keeps it a true 45 degrees off the top-left however wide it gets. */
     background: linear-gradient(
-      to right,
+      135deg,
       rgba(253, 249, 248, var(--hero-scrim, 0)) 0%,
-      rgba(253, 249, 248, calc(var(--hero-scrim, 0) * 0.75)) 45%,
-      rgba(253, 249, 248, 0) 72%
+      rgba(253, 249, 248, calc(var(--hero-scrim, 0) * 0.72)) 28%,
+      rgba(253, 249, 248, calc(var(--hero-scrim, 0) * 0.36)) 50%,
+      rgba(253, 249, 248, calc(var(--hero-scrim, 0) * 0.12)) 66%,
+      rgba(253, 249, 248, 0) 80%
     );
   }
   .hero--overlay .hero__content {
