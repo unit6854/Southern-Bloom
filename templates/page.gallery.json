@@ -1,0 +1,687 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "A little sweetness",
+        "show_heart": true,
+        "heading": "The Gallery",
+        "heading_style": "script",
+        "show_divider": true,
+        "text": "<p>A look at cookies I've made for birthdays, baby showers, weddings, graduations and everything in between.</p>",
+        "overlay": 55,
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "filter": {
+      "type": "gallery-filter",
+      "blocks": {
+        "c-1": {
+          "type": "category",
+          "settings": {
+            "category": "Birthdays"
+          }
+        },
+        "c-2": {
+          "type": "category",
+          "settings": {
+            "category": "Baby showers"
+          }
+        },
+        "c-3": {
+          "type": "category",
+          "settings": {
+            "category": "Weddings"
+          }
+        },
+        "c-4": {
+          "type": "category",
+          "settings": {
+            "category": "Graduations"
+          }
+        },
+        "c-5": {
+          "type": "category",
+          "settings": {
+            "category": "And more"
+          }
+        }
+      },
+      "block_order": [
+        "c-1",
+        "c-2",
+        "c-3",
+        "c-4",
+        "c-5"
+      ],
+      "settings": {
+        "show_all": true,
+        "all_label": "All"
+      }
+    },
+    "grid-1": {
+      "type": "gallery-grid",
+      "blocks": {
+        "photo-1": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-01.webp"
+          }
+        },
+        "photo-2": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-02.webp"
+          }
+        },
+        "photo-3": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-03.webp"
+          }
+        },
+        "photo-4": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-04.webp"
+          }
+        },
+        "photo-5": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-05.webp"
+          }
+        },
+        "photo-6": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-06.webp"
+          }
+        },
+        "photo-7": {
+          "type": "photo",
+          "settings": {
+            "category": "Weddings",
+            "caption": "",
+            "fallback_asset": "gallery-07.webp"
+          }
+        },
+        "photo-8": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-08.webp"
+          }
+        },
+        "photo-9": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-09.webp"
+          }
+        },
+        "photo-10": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-10.webp"
+          }
+        },
+        "photo-11": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-11.webp"
+          }
+        },
+        "photo-12": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-12.webp"
+          }
+        },
+        "photo-13": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-13.webp"
+          }
+        },
+        "photo-14": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-14.webp"
+          }
+        },
+        "photo-15": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-15.webp"
+          }
+        },
+        "photo-16": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-16.webp"
+          }
+        },
+        "photo-17": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-17.webp"
+          }
+        },
+        "photo-18": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-18.webp"
+          }
+        },
+        "photo-19": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-19.webp"
+          }
+        },
+        "photo-20": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-20.webp"
+          }
+        },
+        "photo-21": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-21.webp"
+          }
+        },
+        "photo-22": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-22.webp"
+          }
+        },
+        "photo-23": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-23.webp"
+          }
+        },
+        "photo-24": {
+          "type": "photo",
+          "settings": {
+            "category": "Graduations",
+            "caption": "",
+            "fallback_asset": "gallery-24.webp"
+          }
+        },
+        "photo-25": {
+          "type": "photo",
+          "settings": {
+            "category": "Graduations",
+            "caption": "",
+            "fallback_asset": "gallery-25.webp"
+          }
+        },
+        "photo-26": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-26.webp"
+          }
+        },
+        "photo-27": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-27.webp"
+          }
+        },
+        "photo-28": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-28.webp"
+          }
+        },
+        "photo-29": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-29.webp"
+          }
+        },
+        "photo-30": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-30.webp"
+          }
+        },
+        "photo-31": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-31.webp"
+          }
+        },
+        "photo-32": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-32.webp"
+          }
+        }
+      },
+      "block_order": [
+        "photo-1",
+        "photo-2",
+        "photo-3",
+        "photo-4",
+        "photo-5",
+        "photo-6",
+        "photo-7",
+        "photo-8",
+        "photo-9",
+        "photo-10",
+        "photo-11",
+        "photo-12",
+        "photo-13",
+        "photo-14",
+        "photo-15",
+        "photo-16",
+        "photo-17",
+        "photo-18",
+        "photo-19",
+        "photo-20",
+        "photo-21",
+        "photo-22",
+        "photo-23",
+        "photo-24",
+        "photo-25",
+        "photo-26",
+        "photo-27",
+        "photo-28",
+        "photo-29",
+        "photo-30",
+        "photo-31",
+        "photo-32"
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": "",
+        "columns": 4,
+        "show_captions": false,
+        "tight_top": false
+      }
+    },
+    "grid-2": {
+      "type": "gallery-grid",
+      "blocks": {
+        "photo-33": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-33.webp"
+          }
+        },
+        "photo-34": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-34.webp"
+          }
+        },
+        "photo-35": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-35.webp"
+          }
+        },
+        "photo-36": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-36.webp"
+          }
+        },
+        "photo-37": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-37.webp"
+          }
+        },
+        "photo-38": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-38.webp"
+          }
+        },
+        "photo-39": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-39.webp"
+          }
+        },
+        "photo-40": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-40.webp"
+          }
+        },
+        "photo-41": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-41.webp"
+          }
+        },
+        "photo-42": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-42.webp"
+          }
+        },
+        "photo-43": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-43.webp"
+          }
+        },
+        "photo-44": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-44.webp"
+          }
+        },
+        "photo-45": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-45.webp"
+          }
+        },
+        "photo-46": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-46.webp"
+          }
+        },
+        "photo-47": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-47.webp"
+          }
+        },
+        "photo-48": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-48.webp"
+          }
+        },
+        "photo-49": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-49.webp"
+          }
+        },
+        "photo-50": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-50.webp"
+          }
+        },
+        "photo-51": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-51.webp"
+          }
+        },
+        "photo-52": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-52.webp"
+          }
+        },
+        "photo-53": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-53.webp"
+          }
+        },
+        "photo-54": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-54.webp"
+          }
+        },
+        "photo-55": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-55.webp"
+          }
+        },
+        "photo-56": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-56.webp"
+          }
+        },
+        "photo-57": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-57.webp"
+          }
+        },
+        "photo-58": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-58.webp"
+          }
+        },
+        "photo-59": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-59.webp"
+          }
+        },
+        "photo-60": {
+          "type": "photo",
+          "settings": {
+            "category": "Weddings",
+            "caption": "",
+            "fallback_asset": "gallery-60.webp"
+          }
+        },
+        "photo-61": {
+          "type": "photo",
+          "settings": {
+            "category": "And more",
+            "caption": "",
+            "fallback_asset": "gallery-61.webp"
+          }
+        },
+        "photo-62": {
+          "type": "photo",
+          "settings": {
+            "category": "Baby showers",
+            "caption": "",
+            "fallback_asset": "gallery-62.webp"
+          }
+        },
+        "photo-63": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-63.webp"
+          }
+        },
+        "photo-64": {
+          "type": "photo",
+          "settings": {
+            "category": "Birthdays",
+            "caption": "",
+            "fallback_asset": "gallery-64.webp"
+          }
+        }
+      },
+      "block_order": [
+        "photo-33",
+        "photo-34",
+        "photo-35",
+        "photo-36",
+        "photo-37",
+        "photo-38",
+        "photo-39",
+        "photo-40",
+        "photo-41",
+        "photo-42",
+        "photo-43",
+        "photo-44",
+        "photo-45",
+        "photo-46",
+        "photo-47",
+        "photo-48",
+        "photo-49",
+        "photo-50",
+        "photo-51",
+        "photo-52",
+        "photo-53",
+        "photo-54",
+        "photo-55",
+        "photo-56",
+        "photo-57",
+        "photo-58",
+        "photo-59",
+        "photo-60",
+        "photo-61",
+        "photo-62",
+        "photo-63",
+        "photo-64"
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": "",
+        "columns": 4,
+        "show_captions": false,
+        "tight_top": true
+      }
+    },
+    "cta": {
+      "type": "cta-banner",
+      "settings": {
+        "eyebrow": "See something you love?",
+        "show_heart": true,
+        "heading": "Let's design a set just for your celebration.",
+        "text": "",
+        "button_label": "Start your order",
+        "button_link": "",
+        "hide_deco_mobile": false
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "filter",
+    "grid-1",
+    "grid-2",
+    "cta"
+  ]
+}
